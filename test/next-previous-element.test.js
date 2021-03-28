@@ -21,6 +21,7 @@ beforeAll(() => {
     </p>
 </div>
  `;
+    paragraphNodes = document.querySelectorAll('p');
 });
 
 describe("getPreviousElement tests", function () {
@@ -32,7 +33,6 @@ describe("getPreviousElement tests", function () {
         expect(np.getPreviousElement(textNode)).toBe(null);
     });
     test('getPreviousElement returns previous element sibling', () => {
-        const paragraphNodes = document.querySelectorAll('p');
         expect(np.getPreviousElement(paragraphNodes[2])).toBe(paragraphNodes[1]);
     });
     test('getPreviousElement returns parent element', () => {
@@ -52,5 +52,18 @@ describe("getNextElement tests", function () {
     test('getNextElement is null for single node', () => {
         const textNode = document.createTextNode("This is a test");
         expect(np.getNextElement(textNode)).toBe(null);
+    });
+    test('getNextElement returns next element sibling', () => {
+        expect(np.getNextElement(paragraphNodes[0])).toBe(paragraphNodes[1]);
+    });
+    test('getNextElement returns first child', () => {
+        expect(np.getNextElement(paragraphNodes[1])).toBe(paragraphNodes[1].firstElementChild);
+    });
+     test('getNextElement returns parent\'s next element sibling', () => {
+        const anchorNode = document.querySelector('a');
+        expect(np.getNextElement(anchorNode)).toBe(anchorNode.parentElement.nextElementSibling);
+    });
+    test('getNextElement returns null for last element', () => {
+        expect(np.getNextElement(paragraphNodes[paragraphNodes.length - 1])).toBe(null);
     });
 });
