@@ -42,5 +42,29 @@ describe("QuickKey class tests", function () {
             expect(node.nodeName).toBe(quickKey.selector.toUpperCase());
         });
     });
-    
+    test('nextNode returns first match if current node index < 0', () => {
+        quickKey.currentNodeIndex = -1;
+        expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
+    });
+    test('nextNode returns next match for each node in the list before the last one', () => {
+        for (let index = 0; index < quickKey.nodes.length - 2; index++) {
+            quickKey.currentNodeIndex = index;
+            expect(quickKey.nextNode()).toBe(quickKey.nodes[index + 1]);
+        }
+    });
+    test('nextNode returns first match for last node in list', () => {
+        quickKey.currentNodeIndex = quickKey.nodes.length - 1;
+        expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
+    });
+    test('nextNode returns the only match in the list', () => {
+        quickKey = new QuickKey( 'div', 'div', document.body);
+        expect(quickKey.nodes.length).toEqual(1);
+        expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
+        expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
+    });
+    test('nextNode returns undefined for empty node list', () => {
+        quickKey = new QuickKey( 'test', 'test', document.body);
+        expect(quickKey.nodes.length).toEqual(0);
+        expect(quickKey.nextNode()).toBe(undefined);
+    });
 });
