@@ -42,6 +42,7 @@ describe("QuickKey class tests", function () {
             expect(node.nodeName).toBe(quickKey.selector.toUpperCase());
         });
     });
+
     test('nextNode returns first match if current node index < 0', () => {
         quickKey.currentNodeIndex = -1;
         expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
@@ -66,5 +67,31 @@ describe("QuickKey class tests", function () {
         quickKey = new QuickKey( 'test', 'test', document.body);
         expect(quickKey.nodes.length).toEqual(0);
         expect(quickKey.nextNode()).toBe(undefined);
+    });
+
+    test('previousNode returns last match if current node index < 0', () => {
+        quickKey.currentNodeIndex = -1;
+        expect(quickKey.previousNode()).toBe(quickKey.nodes[quickKey.nodes.length - 1]);
+    });
+    test('previousNode returns previous match for each node in the list after the first one', () => {
+        for (let index = quickKey.nodes.length - 1; index > 0; index--) {
+            quickKey.currentNodeIndex = index;
+            expect(quickKey.previousNode()).toBe(quickKey.nodes[index - 1]);
+        }
+    });
+    test('previousNode returns last match for first node in list', () => {
+        quickKey.currentNodeIndex = 0
+        expect(quickKey.previousNode()).toBe(quickKey.nodes[quickKey.nodes.length - 1]);
+    });    
+    test('previousNode returns the only match in the list', () => {
+        quickKey = new QuickKey( 'div', 'div', document.body);
+        expect(quickKey.nodes.length).toEqual(1);
+        expect(quickKey.previousNode()).toBe(quickKey.nodes[0]);
+        expect(quickKey.previousNode()).toBe(quickKey.nodes[0]);
+    });
+    test('previousNode returns undefined for empty node list', () => {
+        quickKey = new QuickKey( 'test', 'test', document.body);
+        expect(quickKey.nodes.length).toEqual(0);
+        expect(quickKey.previousNode()).toBe(undefined);
     });
 });
