@@ -42,6 +42,23 @@ describe("QuickKey class tests", function () {
             expect(node.nodeName).toBe(quickKey.selector.toUpperCase());
         });
     });
+    
+    test('currentNode returns undefined in current node index < 0', () => {
+        quickKey.currentNodeIndex = -1;
+        expect(quickKey.currentNode()).toBe(undefined);
+    });
+    test('currentNode returns current match for each node in the list', () => {
+        for (let index = 0; index < quickKey.nodes.length - 1; index++) {
+            quickKey.nextNode();
+            expect(quickKey.currentNode()).toBe(quickKey.nodes[index]);
+        }
+    });
+    test('currentNode returns undefined for empty node list', () => {
+        quickKey = new QuickKey( 'test', 'test', document.body);
+        expect(quickKey.nodes.length).toEqual(0);
+        expect(quickKey.currentNode()).toBe(undefined);
+    });
+
 
     test('nextNode returns first match if current node index < 0', () => {
         quickKey.currentNodeIndex = -1;
