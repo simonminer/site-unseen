@@ -59,7 +59,6 @@ describe("QuickKey class tests", function () {
         expect(quickKey.currentNode()).toBe(undefined);
     });
 
-
     test('nextNode returns first match if current node index < 0', () => {
         quickKey.currentNodeIndex = -1;
         expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
