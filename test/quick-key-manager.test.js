@@ -18,9 +18,18 @@ beforeAll(() => {
 `;
 });
 
+const keyData = {
+    'h': 'h1, h2, h3',
+    'l': 'a'
+};
 describe("QuickKeyManager class tests", function () {
-    test('constructor creates object', () => {
-        var qkm = new QuickKeyManager();
+    test('constructor sets up quick keys map', () => {
+        var qkm = new QuickKeyManager(keyData, document.getElementById('content'));
         expect(qkm instanceof QuickKeyManager).toBe(true);
+        expect(qkm.quickKeys.size).toBe(Object.keys(keyData).length);
+        qkm.quickKeys.forEach( (value, key) => {
+            expect(value.selector).toBe(keyData[key]);
+        });
     });
+
 });
