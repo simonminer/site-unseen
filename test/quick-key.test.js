@@ -1,4 +1,4 @@
-const QuickKey = require("../lib/quick-key.js").QuickKey;
+const QuickKey = require("../modules/quick-key.js").QuickKey;
 
 // One-time setup.
 const key = 'a';

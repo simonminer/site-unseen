@@ -1,4 +1,4 @@
-const QuickKeyManager = require("../lib/quick-key-manager.js").QuickKeyManager;
+const QuickKeyManager = require("../modules/quick-key-manager.js").QuickKeyManager;
 
 // One-time setup.
 beforeAll(() => {
@@ -36,6 +36,7 @@ describe("QuickKeyManager class tests", function () {
     test('bindKeys sets up event listener', () => {
         var qkm = new QuickKeyManager(keyData, document.getElementById('content'));
         expect(qkm.bindKeys()).toBe(undefined);
+        expect(document.even)
     });
 
 });

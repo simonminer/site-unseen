@@ -1,4 +1,4 @@
-const np = require("../lib/next-previous-element");
+const np = require("../modules/next-previous-element");
 
 // One-time setup.
 var paragraphNodes = [];
