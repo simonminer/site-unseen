@@ -30,13 +30,32 @@ export class QuickKeyManager {
     }
 
     /**
-     * Binds the quick keys so that pressing them moves through their list of nodes.
+     * Binds the specified function to the node returned
+     * by the pressed quick key. The lowercase quick key yields
+     * the next matching node, and the uppercase quick key yields
+     * the previous matching node.
+     * 
+     * The specified function must take two parameters:
+     * - The node returned by the quick key.
+     * - The event processed by the "keydown" listener.
      * @method
+     * @param {func} - The function to call on the node returned by pressing the quick key.
      */
-    bindKeys() {
-        document.addEventListener( 'keydown', function (e) {
+    bindQuickKeysToFunction(func) {
+        document.addEventListener( 'keydown', function (e) {           
+            // If the lowercase quick key is pressed...
+            // use the next matching node.
+            var node = null;
             if (this.quickKeys.has(e.key)) {
-                this.quickKeys.get(e.key).nextNode();
+                node = this.quickKeys.get(e.key).nextNode();
+            }
+            // If the uppercase quick key is pressed, 
+            // use the previous matching node.
+            else if (e.key === e.key.toUpperCase() && this.quickKeys.has(e.key.toLowerCase)) {
+                node = this.quickKeys.get(e.key.toLowerCase()).previousNode();
+            }
+            if (node) {
+                func(node, e);
             }
         });
     }

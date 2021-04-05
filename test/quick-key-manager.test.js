@@ -33,10 +33,9 @@ describe("QuickKeyManager class tests", function () {
         });
         expect(qkm.quickKeys.has('z')).toBe(false);
     });
-    test('bindKeys sets up event listener', () => {
+    test('bindQuickKeysToFunction sets up event listener', () => {
         var qkm = new QuickKeyManager(keyData, document.getElementById('content'));
-        expect(qkm.bindKeys()).toBe(undefined);
-        expect(document.even)
+        expect(qkm.bindQuickKeysToFunction()).toBe(undefined);
     });
 
 });
