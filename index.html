@@ -3,15 +3,30 @@
         <title>Quick Key Manager Test</title>
     </head>
     <body>
-        <h1>Top Level Heading</h1>
+        <main id="contents" tabindex="0">
+        <h1 tabindex="0">Top Level Heading</h1>
         <ul>
             <li><a href="#">Link 1</a></li>
             <li><a href="#">Link 2</a></li>
             <li><a href="#">Link 3</a></li>
         </ul>
-        <h2>Subheading</h2>
+        <h2 tabindex="0">Subheading</h2>
         <a href="#">Another Link</a>
-        <h2>Third Heading</h2>
+        <h2 tabindex="0">A Simple Form</h2>
+        <form>
+            <label>Enter something interesting:
+            <input type="text"/>
+            </label>
+            <input type="reset" value="Reset"/>
+            <input type="submit" value="Submit">
+        </form>
         <script type="module" src="main.js"></script>
+        </main>
+        <footer tabindex="0">
+            <dl>
+                <dt>Copyright</dt>
+                <dd>2021</dd>
+            </dl>
+        </footer>
     </body>
 </html>
