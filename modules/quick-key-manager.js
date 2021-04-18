@@ -42,21 +42,26 @@ export class QuickKeyManager {
      * @param {func} - The function to call on the node returned by pressing the quick key.
      */
     bindQuickKeysToFunction(func) {
+        // Store this object in a place where it can be referenced later.
+        document.quickKeyManager = this;
+
         document.addEventListener( 'keydown', function (e) {           
             // If the lowercase quick key is pressed...
             // use the next matching node.
+            var qkm = document.quickKeyManager;
             var node = null;
-            if (this.quickKeys.has(e.key)) {
-                node = this.quickKeys.get(e.key).nextNode();
+            if (qkm.quickKeys.has(e.key)) {
+                node = qkm.quickKeys.get(e.key).nextNode();
             }
             // If the uppercase quick key is pressed, 
             // use the previous matching node.
-            else if (e.key === e.key.toUpperCase() && this.quickKeys.has(e.key.toLowerCase)) {
-                node = this.quickKeys.get(e.key.toLowerCase()).previousNode();
+            else if (e.key === e.key.toUpperCase() && qkm.quickKeys.has(e.key.toLowerCase)) {
+                node = qkm.quickKeys.get(e.key.toLowerCase()).previousNode();
             }
             if (node) {
                 func(node, e);
             }
         });
+        return true;
     }
 }

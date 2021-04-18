@@ -34,8 +34,13 @@ describe("QuickKeyManager class tests", function () {
         expect(qkm.quickKeys.has('z')).toBe(false);
     });
     test('bindQuickKeysToFunction sets up event listener', () => {
+        function returnTrue() {
+            return true;
+        }
         var qkm = new QuickKeyManager(keyData, document.getElementById('content'));
-        expect(qkm.bindQuickKeysToFunction()).toBe(undefined);
+        expect(qkm.bindQuickKeysToFunction(returnTrue)).toBe(true);
+        expect(typeof document.quickKeyManager).toBe("object");
+        expect(document.quickKeyManager.quickKeys instanceof Map).toBe(true);
     });
 
 });
