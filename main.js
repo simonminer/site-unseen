@@ -21,6 +21,10 @@ let keyData = {
 let qkm = new QuickKeyManager(keyData, document.body);
 
 // Check if the pressed key is a quick key.
+// TODO Figure out how to define this event listener
+// within QuickKeyManager.bindQuickKeysToFunction. Not
+// sure how to access object's quick keys from there.
+// "this" doesn't work. 
 document.addEventListener( 'keydown', function (e) {
     // If the pressed key is the lowercase version of a quick key,
     // target the next matching node.
