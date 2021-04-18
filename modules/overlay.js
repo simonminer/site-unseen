@@ -26,6 +26,7 @@ export class Overlay {
     }
 
     /**
+     * @method
      * Generates and returns the HTML for the screen reader overlay.
      */
     generate() {
