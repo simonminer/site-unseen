@@ -20,7 +20,7 @@ beforeAll(() => {
 
 afterEach(() => {
     document.quickKeyManager = undefined;
-    document.removeEventListener("keydown", QuickKeyManager.eventHandler);
+    document.removeEventListener("keydown", QuickKeyManager.eventHandlerFunction);
 });
 
 const keyData = {
@@ -47,6 +47,7 @@ describe("QuickKeyManager class tests", function () {
     test('bindQuickKeysToFunction sets up event listener', () => {
         var qkm = new QuickKeyManager(keyData, document.getElementById('content'));
         expect(qkm.bindQuickKeysToFunction(returnTrue)).toBe(true);
+        expect(qkm.quickKeyFunction).toBe(returnTrue);
         expect(typeof document.quickKeyManager).toBe("object");
         expect(document.quickKeyManager.quickKeys instanceof Map).toBe(true);
     });
@@ -58,6 +59,7 @@ describe("QuickKeyManager class tests", function () {
             expect(value.selector).toBe(keyData[key]);
         });
         expect(qkm.quickKeys.has('z')).toBe(false);
+        expect(qkm.quickKeyFunction).toBe(returnTrue);
         expect(typeof document.quickKeyManager).toBe("object");
         expect(document.quickKeyManager.quickKeys instanceof Map).toBe(true);
     });

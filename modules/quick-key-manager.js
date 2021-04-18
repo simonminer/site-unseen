@@ -9,8 +9,9 @@ import { QuickKey } from "./quick-key.js";
 export class QuickKeyManager {
 
     quickKeys = new Map();
+    quickKeyFunction;
 
-    static eventHandler = function (event) {
+    static eventHandlerFunction = function (event) {
         // If the lowercase quick key is pressed...
         // use the next matching node.
         var qkm = document.quickKeyManager;
@@ -25,7 +26,7 @@ export class QuickKeyManager {
             node = qkm.quickKeys.get(event.key.toLowerCase()).previousNode();
         }
         if (node) {
-            func(node, event);
+            qkm.quickKeyFunction(node, event);
         }
     };
 
@@ -68,29 +69,15 @@ export class QuickKeyManager {
      * @param {func} - The function to call on the node returned by pressing the quick key.
      */
     bindQuickKeysToFunction(func) {
+        // Store the function name so it can be invoked later in the event handler.
+        this.quickKeyFunction = func;
+
         // Store this object in a place where it can be referenced later.
         document.quickKeyManager = this;
         
-        document.addEventListener( 'keydown', QuickKeyManager.eventHandler);
-        /*
-        document.addEventListener( 'keydown', function (event) {           
-                // If the lowercase quick key is pressed...
-            // use the next matching node.
-            var qkm = document.quickKeyManager;
-            var node = null;
-            if (qkm.quickKeys.has(event.key)) {
-                node = qkm.quickKeys.get(event.key).nextNode();
-            }
-            // If the uppercase quick key is pressed, 
-            // use the previous matching node.
-            else if (event.key === event.key.toUpperCase() && qkm.quickKeys.has(event.key.toLowerCase)) {
-                node = qkm.quickKeys.get(event.key.toLowerCase()).previousNode();
-            }
-            if (node) {
-                func(node, event);
-            }
-        });
-        */
+        // Set up the quick key event listener.
+        document.addEventListener( 'keydown', QuickKeyManager.eventHandlerFunction);
+
         return true;
     }
 }
