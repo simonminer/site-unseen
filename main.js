@@ -18,28 +18,7 @@ let keyData = {
     'l': 'ul, ol, dl, [role="list"]'
 };
 
-let qkm = new QuickKeyManager(keyData, document.body);
-
-// Check if the pressed key is a quick key.
-// TODO Figure out how to define this event listener
-// within QuickKeyManager.bindQuickKeysToFunction. Not
-// sure how to access object's quick keys from there.
-// "this" doesn't work. 
-document.addEventListener( 'keydown', function (e) {
-    // If the pressed key is the lowercase version of a quick key,
-    // target the next matching node.
-    var node = null;
-    if (qkm.quickKeys.has(e.key)) {
-        node = qkm.quickKeys.get(e.key).nextNode();
-    }
-    // If the pressed key is the uppercase version of a quick key,
-    // target the next matching node.
-    else if (e.key === e.key.toUpperCase() && qkm.quickKeys.has(e.key.toLowerCase())) {
-        node = qkm.quickKeys.get(e.key.toLowerCase()).previousNode();
-    }
-    // Move keyboard focus to the matching node (if any).
-    if (node) {
-        // alert( e.key + " ==> " + node.nodeName + ": " + node.textContent );
-        node.focus();
-    }
-});
+function focusNode(node, event) {
+    node.focus();
+}
+let qkm = new QuickKeyManager(keyData, document.body, focusNode);
