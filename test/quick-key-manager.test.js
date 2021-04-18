@@ -18,11 +18,22 @@ beforeAll(() => {
 `;
 });
 
+afterEach(() => {
+    document.quickKeyManager = undefined;
+    document.removeEventListener("keydown", QuickKeyManager.eventHandler);
+});
+
 const keyData = {
     'h': 'h1, h2, h3',
     'l': 'a',
     'z': 'foo'
 };
+
+// Test function for quick keys.
+function returnTrue() {
+    return true;
+}
+
 describe("QuickKeyManager class tests", function () {
     test('constructor sets up quick keys map', () => {
         var qkm = new QuickKeyManager(keyData, document.getElementById('content'));
@@ -34,13 +45,22 @@ describe("QuickKeyManager class tests", function () {
         expect(qkm.quickKeys.has('z')).toBe(false);
     });
     test('bindQuickKeysToFunction sets up event listener', () => {
-        function returnTrue() {
-            return true;
-        }
         var qkm = new QuickKeyManager(keyData, document.getElementById('content'));
         expect(qkm.bindQuickKeysToFunction(returnTrue)).toBe(true);
         expect(typeof document.quickKeyManager).toBe("object");
         expect(document.quickKeyManager.quickKeys instanceof Map).toBe(true);
     });
+    test('constructor sets up quick keys map and event listener', () => {
+        var qkm = new QuickKeyManager(keyData, document.getElementById('content'), returnTrue);
+        expect(qkm instanceof QuickKeyManager).toBe(true);
+        expect(qkm.quickKeys.size).toBe(Object.keys(keyData).length - 1);
+        qkm.quickKeys.forEach( (value, key) => {
+            expect(value.selector).toBe(keyData[key]);
+        });
+        expect(qkm.quickKeys.has('z')).toBe(false);
+        expect(typeof document.quickKeyManager).toBe("object");
+        expect(document.quickKeyManager.quickKeys instanceof Map).toBe(true);
+    });
+
 
 });
