@@ -11,6 +11,7 @@ export class QuickKeyManager {
     quickKeys = new Map();
     quickKeyFunction;
 
+    // Event handler to bind to "keydown" events to handle quick key presses.
     static eventHandlerFunction = function (event) {
         // If the lowercase quick key is pressed...
         // use the next matching node.
@@ -22,7 +23,7 @@ export class QuickKeyManager {
 
         // If the uppercase quick key is pressed, 
         // use the previous matching node.
-        else if (event.key === event.key.toUpperCase() && qkm.quickKeys.has(event.key.toLowerCase)) {
+        else if (event.key === event.key.toUpperCase() && qkm.quickKeys.has(event.key.toLowerCase())) {
             node = qkm.quickKeys.get(event.key.toLowerCase()).previousNode();
         }
         if (node) {
