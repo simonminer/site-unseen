@@ -9,7 +9,7 @@
  export class QuickKey {
 
     // Key to press to advance to the next node.
-    key = null;
+    key = undefined;
 
     // CSS selector for DOM nodes matched by this quick key.
     selector = '';
@@ -19,6 +19,11 @@
 
     // Index of current node in list of nodes.
     currentNodeIndex = -1;
+
+    // Type of wrap-around when a quick key is pressed on its
+    // first or last instance of its list of nodes:
+    // values include "start" or "end".
+    wrapAroundType = undefined;
 
     /**
      * @constructor
@@ -70,6 +75,9 @@
      * if we are at the end of the list), or undefined if there are no matching nodes.
      */
     nextNode() {
+        // Clear wrap-around.
+        this.wrapAroundType = undefined;
+
         // Make sure there are matching nodes for this quick key.
         if (!this.nodes.length) {
             return;
@@ -86,6 +94,7 @@
         // Or loop around to to the start of the list if we are at the end.
         else {
            this.currentNodeIndex = 0;
+           this.wrapAroundType = "end";
         }
 
         return this.nodes[this.currentNodeIndex];   
@@ -98,6 +107,9 @@
      * if we are at the start of the list), or null if there are no matching nodes.
      */
     previousNode() {
+        // Clear wrap-around.
+        this.wrapAroundType = undefined;
+
         // Make sure there are matching nodes for this quick key.
         if (!this.nodes.length) {
             return;
@@ -114,6 +126,7 @@
         // Or loop around to to the start of the list if we are at the end.
         else {
            this.currentNodeIndex = this.nodes.length - 1;
+           this.wrapAroundType = "start";       
         }
         return this.nodes[this.currentNodeIndex];   
     }
