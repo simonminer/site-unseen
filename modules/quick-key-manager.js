@@ -14,7 +14,11 @@ export class QuickKeyManager {
     // Event handler to bind to "keydown" events to handle quick key presses.
     static eventHandlerFunction = function (event) {
         // Don't do anything if the user is on a form field.
-        if (["input","select","textarea","button"].indexOf(document.activeElement.tagName.toLowerCase()) !== -1) {
+        var active = document.activeElement;
+        var tagName = active.tagName.toLowerCase();
+        if (tagName == "select"
+            || tagName == "textarea"
+            || (tagName == "input" && active.getAttribute("type") == "text")) {
             return;
         }
         
