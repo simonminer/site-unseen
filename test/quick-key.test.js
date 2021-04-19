@@ -18,12 +18,17 @@ beforeAll(() => {
 `;
 });
 
+beforeEach(() => {
+    quickKey = new QuickKey(key, selector, document.body);
+});
+
 describe("QuickKey class tests", function () {
     test('constructor sets properties', () => {
         expect(quickKey instanceof QuickKey).toBe(true);
         expect(quickKey.key).toBe(key);
         expect(quickKey.selector).toBe(selector);
-        expect(quickKey.nodes.length).toEqual(0);
+        expect(quickKey.nodes.length).toBeGreaterThan(0);
+        expect(quickKey.wrapAroundType).toBe(undefined);
     });
     test('findNodes populates nodes list', () => {
         var nodes = quickKey.findNodes(document.body);
@@ -62,16 +67,19 @@ describe("QuickKey class tests", function () {
     test('nextNode returns first match if current node index < 0', () => {
         quickKey.currentNodeIndex = -1;
         expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
+        expect(quickKey.wrapAroundType).toBe(undefined);
     });
     test('nextNode returns next match for each node in the list before the last one', () => {
         for (let index = 0; index < quickKey.nodes.length - 2; index++) {
             quickKey.currentNodeIndex = index;
             expect(quickKey.nextNode()).toBe(quickKey.nodes[index + 1]);
+            expect(quickKey.wrapAroundType).toBe(undefined);
         }
     });
     test('nextNode returns first match for last node in list', () => {
         quickKey.currentNodeIndex = quickKey.nodes.length - 1;
         expect(quickKey.nextNode()).toBe(quickKey.nodes[0]);
+        expect(quickKey.wrapAroundType).toBe("end");
     });
     test('nextNode returns the only match in the list', () => {
         quickKey = new QuickKey( 'div', 'div', document.body);
