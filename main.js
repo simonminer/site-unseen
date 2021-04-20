@@ -20,5 +20,8 @@ let keyData = {
 
 function focusNode(node, event) {
     node.focus();
+    if (document.quickKeyManager.wrappedTo !== undefined) {
+        alert( `Wrapped to ${document.quickKeyManager.wrappedTo} of node list.`);
+    }
 }
 let qkm = new QuickKeyManager(keyData, document.body, focusNode);

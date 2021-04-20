@@ -8,8 +8,16 @@ import { QuickKey } from "./quick-key.js";
 
 export class QuickKeyManager {
 
+    // Quick key map whose keys are keys to press with QuickKey object values.
     quickKeys = new Map();
-    quickKeyFunction;
+
+    // Function to call on the node returned when a quick key is pressed.
+    quickKeyFunction = undefined;
+
+    // Type of wrap-around when a quick key is pressed on its
+    // first or last instance of its list of nodes:
+    // values include "start" or "end".
+    wrappedTo = undefined;
 
     // Event handler to bind to "keydown" events to handle quick key presses.
     static eventHandlerFunction = function (event) {
@@ -22,18 +30,24 @@ export class QuickKeyManager {
             return;
         }
         
+        var qkm = document.quickKeyManager;
+        qkm.wrappedTo = undefined;
+
         // If the lowercase quick key is pressed...
         // use the next matching node.
-        var qkm = document.quickKeyManager;
         var node = null;
         if (qkm.quickKeys.has(event.key)) {
-            node = qkm.quickKeys.get(event.key).nextNode();
+            var quickKey = qkm.quickKeys.get(event.key);
+            node = quickKey.nextNode();
+            qkm.wrappedTo = quickKey.wrappedTo;
         }
 
         // If the uppercase quick key is pressed, 
         // use the previous matching node.
         else if (event.key === event.key.toUpperCase() && qkm.quickKeys.has(event.key.toLowerCase())) {
-            node = qkm.quickKeys.get(event.key.toLowerCase()).previousNode();
+            var quickKey = qkm.quickKeys.get(event.key.toLowerCase());
+            node = quickKey.previousNode();
+            qkm.wrappedTo = quickKey.wrappedTo;
         }
         if (node) {
             qkm.quickKeyFunction(node, event);

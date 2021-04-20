@@ -23,7 +23,7 @@
     // Type of wrap-around when a quick key is pressed on its
     // first or last instance of its list of nodes:
     // values include "start" or "end".
-    wrapAroundType = undefined;
+    wrappedTo = undefined;
 
     /**
      * @constructor
@@ -76,7 +76,7 @@
      */
     nextNode() {
         // Clear wrap-around.
-        this.wrapAroundType = undefined;
+        this.wrappedTo = undefined;
 
         // Make sure there are matching nodes for this quick key.
         if (!this.nodes.length) {
@@ -94,7 +94,7 @@
         // Or loop around to to the start of the list if we are at the end.
         else {
            this.currentNodeIndex = 0;
-           this.wrapAroundType = "end";
+           this.wrappedTo = "start";
         }
 
         return this.nodes[this.currentNodeIndex];   
@@ -108,7 +108,7 @@
      */
     previousNode() {
         // Clear wrap-around.
-        this.wrapAroundType = undefined;
+        this.wrappedTo = undefined;
 
         // Make sure there are matching nodes for this quick key.
         if (!this.nodes.length) {
@@ -126,7 +126,7 @@
         // Or loop around to to the start of the list if we are at the end.
         else {
            this.currentNodeIndex = this.nodes.length - 1;
-           this.wrapAroundType = "start";       
+           this.wrappedTo = "end";       
         }
         return this.nodes[this.currentNodeIndex];   
     }
