@@ -5,6 +5,9 @@
  */
 "use strict";
 
+// Set up axe-core.
+import axe from "axe-core";
+
 export class Caption {
 
     // Caption CSS selector values.
@@ -14,7 +17,10 @@ export class Caption {
     borderColor = "#ffffff";
     borderWidth = "3 px";
 
-    static _properties = ["id", "textColor", "backgroundColor", "borderColor", "borderWidth"];
+    // Separator between elements of the accessible description.
+    separator = ": ";
+
+    static _properties = ["id", "textColor", "backgroundColor", "borderColor", "borderWidth", "separator"];
 
     /**
      * @constructor
@@ -33,10 +39,22 @@ export class Caption {
     /**
      * @method
      * @param {Node} node - Node to describe in the caption.
+     * @returns {String}
      * Generates and returns an accessible description of the
      * role, state/property, and/or value of the specified node.
      */
     generate(node) {
+        axe._tree = axe.utils.getFlattenedTree(node);
+        var role = axe.commons.aria.getRole(node, axe._tree),
+            accessibleText = axe.commons.text.accessibleText(node, axe._tree),
+            data = [];
 
+        if (role) {
+            data.push(role);
+        }
+        if (accessibleText) {
+            data.push(accessibleText);
+        }
+        return data.join(": ");
     }
 }
