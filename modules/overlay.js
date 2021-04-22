@@ -8,21 +8,25 @@
 export class Overlay {
 
     // Overlay CSS selector values.
+    id = "overlay";
     color = '#000000';
     opacity = 1;
     zIndex = 1;
 
+    static _properties = ["id", "color", "opacity", "zIndex"];
+
     /**
      * @constructor
-     * @param {String} color - Color of overlay.
-     * @param {float} opacity - Opacity of overlay: must be between 0 and 1.   
-     * @param int zIndex - z-index for overlay: must be an integer.
+     * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
      */
-    constructor(color, opacity, zIndex) {
-        // TODO Add input validation.
-        this.color = color;
-        this.opacity = opacity;
-        this.zIndex = zIndex;
+    constructor(properties) {
+        if (properties !== undefined) {
+            Overlay._properties.forEach(property => {
+                if (properties.hasOwnProperty(property)) {
+                    this[property] = properties[property];
+                }
+            });
+        }
     }
 
     /**
