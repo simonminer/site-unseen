@@ -7,13 +7,20 @@
 
 export class Overlay {
 
-    // Overlay CSS selector values.
     id = "overlay";
-    color = '#000000';
-    opacity = 1;
-    zIndex = 1;
 
-    static _properties = ["id", "color", "opacity", "zIndex"];
+    // Overlay CSS selector values.
+    css = {
+        "color": "#000000",
+        "opacity": "1",
+        "z-index": "1",
+        "top": "0",
+        "left": "0",
+        "width": "100%",
+        "height": "100%"
+    };
+
+    static _properties = ["id", "css"];
 
     /**
      * @constructor
@@ -33,7 +40,21 @@ export class Overlay {
      * @method
      * Generates and returns the HTML for the screen reader overlay.
      */
-    generate() {
-
+    html() {
+        var cssProperties = [];
+        for (const property in this.css) {
+            if (Object.hasOwnProperty.call(this.css, property)) {
+                cssProperties.push(property + ": " + this.css[property]);
+            }
+        }
+        var html = `
+<style>
+#{this.id} {
+    ${cssProperties.join(";\n    ")};
+}
+</style>
+<div id="${this.id}"></div>
+ `;     
+        return html
     }
 }
