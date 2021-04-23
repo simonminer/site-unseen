@@ -10,17 +10,27 @@ import axe from "axe-core";
 
 export class Caption {
 
-    // Caption CSS selector values.
     id = "caption";
-    textColor = '#ffffff';
-    backgroundColor = "#000000";
-    borderColor = "#ffffff";
-    borderWidth = "3 px";
+    // Caption CSS selector values.
+    css = {
+        "text-color": '#ffffff',
+        "background-color": "#000000",
+       "border-color": "#ffffff",
+        "border-width": "3px",
+        "font-weight": "bold",
+        "padding": "10px",
+        "width": "20%",
+        "height": "12%",
+        "position": "fixed",
+        "bottom": "10px",
+        "right": "10px",
+        "text-align": "left"
+    };
 
     // Separator between elements of the accessible description.
     separator = ": ";
 
-    static _properties = ["id", "textColor", "backgroundColor", "borderColor", "borderWidth", "separator"];
+    static _properties = ["id", "css", "separator"];
 
     /**
      * @constructor
@@ -56,5 +66,28 @@ export class Caption {
             data.push(accessibleText);
         }
         return data.join(": ");
+    }
+
+    /**
+     * @method
+     * @returns {String}
+     * Generates the HTML for the screen reader capture element.
+     */
+    html() {
+        var cssProperties = [];
+        for (const property in this.css) {
+            if (Object.hasOwnProperty.call(this.css, property)) {
+                cssProperties.push(property + ": " + this.css[property]);
+            }
+        }
+        var html = `
+<style>
+#{this.id} {
+    ${cssProperties.join(";\n    ")};
+}
+</style>
+<div id="${this.id}"></div>
+ `;
+        return html;
     }
 }
