@@ -70,24 +70,30 @@ export class Caption {
 
     /**
      * @method
-     * @returns {String}
-     * Generates the HTML for the screen reader capture element.
+     * @returns {Element}
+     * Generates the <style> HTML element for the caption CSS styles
      */
-    html() {
+    getCSS() {
         var cssProperties = [];
         for (const property in this.css) {
             if (Object.hasOwnProperty.call(this.css, property)) {
                 cssProperties.push(property + ": " + this.css[property]);
             }
         }
-        var html = `
-<style>
-#{this.id} {
-    ${cssProperties.join(";\n    ")};
-}
-</style>
-<div id="${this.id}"></div>
- `;
-        return html;
+        var css = `#${this.id} { ${cssProperties.join("; ")}}; }`;
+        var node = document.createElement('style');
+        node.appendChild(document.createTextNode(css));
+        return node;
+      }
+
+    /**
+     * @method
+     * @returns {Element}
+     * Generates the HTML element the screen reader caption
+     */
+    getHTML() {
+        var node = document.createElement('div');
+        node.setAttribute("id", this.id);
+        return node;
     }
 }

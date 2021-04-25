@@ -34,4 +34,18 @@ describe("Caption class tests", function () {
         expect(caption.generate(document.querySelector("img"))).toBe(`img${sep}Image Description`);
         expect(caption.generate(document.querySelector("p"))).toBe(`This is a paragraph.`);
     });
+
+    test('getCSS() creates <style> element', () => {
+        var style = caption.getCSS();
+        expect(style instanceof Element).toBe(true);
+        expect(style.tagName.toLowerCase()).toBe("style");
+    });
+
+    test('getHTML() creates <div> element', () => {
+        var div = caption.getHTML();
+        expect(div instanceof Element).toBe(true);
+        expect(div.tagName.toLowerCase()).toBe("div");
+        expect(div.getAttribute("id")).toBe(caption.id);
+    });
+
 });
