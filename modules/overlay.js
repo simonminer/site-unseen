@@ -38,23 +38,30 @@ export class Overlay {
 
     /**
      * @method
-     * Generates and returns the HTML for the screen reader overlay.
+     * @returns {Element}
+     * Generates a <style> element with the CSS properties for the overlay.
      */
-    html() {
+    getCSS() {
         var cssProperties = [];
         for (const property in this.css) {
             if (Object.hasOwnProperty.call(this.css, property)) {
                 cssProperties.push(property + ": " + this.css[property]);
             }
         }
-        var html = `
-<style>
-#{this.id} {
-    ${cssProperties.join(";\n    ")};
-}
-</style>
-<div id="${this.id}"></div>
- `;     
-        return html
+        var css = `#${this.id} { ${cssProperties.join("; ")}}; }`;
+        var node = document.createElement('style');
+        node.appendChild(document.createTextNode(css));
+        return node;
+    }
+
+    /**
+     * @method
+     * @returns {Element}
+     * Generates the HTML element for the overlay.
+     */
+    getHTML() {
+        var node = document.createElement('div');
+        node.setAttribute("id", this.id);
+        return node;
     }
 }
