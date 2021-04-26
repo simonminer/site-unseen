@@ -13,7 +13,7 @@ export class Caption {
     id = "caption";
     // Caption CSS selector values.
     css = {
-        "text-color": '#ffffff',
+        "color": '#ffffff',
         "background-color": "#000000",
        "border-color": "#ffffff",
         "border-width": "3px",

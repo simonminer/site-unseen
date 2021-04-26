@@ -11,9 +11,10 @@ export class Overlay {
 
     // Overlay CSS selector values.
     css = {
-        "color": "#000000",
-        "opacity": "1",
+        "background-color": "#000000",
+        "opacity": "0.75",
         "z-index": "1",
+        "position": "absolute",
         "top": "0",
         "left": "0",
         "width": "100%",
