@@ -1,5 +1,6 @@
 "use strict";
 
+import { ScreenReader } from './modules/screen-reader.js';
 import { QuickKeyManager } from './modules/quick-key-manager.js';
 
 // Keys/values for quick keys and the CSS selectors they match.
@@ -25,3 +26,5 @@ function focusNode(node, event) {
     }
 }
 let qkm = new QuickKeyManager(keyData, document.body, focusNode);
+let sr = new ScreenReader(qkm);
+sr.initialize();
