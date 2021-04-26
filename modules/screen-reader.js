@@ -4,17 +4,20 @@
  */
 "use strict";
 
+import { Overlay } from "./overlay.js";
+import { Caption } from "./caption.js";
+
 export class ScreenReader {
 
-    overlay;
+    overlay = new Overlay();
+    caption = new Caption();
     quickKeyManager;
+
     /**
      * @constructor
-     * @param {Overlay} overlay - Overlay object.
      * @param {QuickKeyManager} qkm - Object to manage quick key interactions
      */
-    constructor(overlay, qkm) {
-        this.overlay = overlay;
+    constructor(qkm) {
         this.quickKeyManager = qkm;
     }
 
@@ -32,6 +35,13 @@ export class ScreenReader {
      * Generate and add the overlay to the DOM.
      */
     appendOverlay() {
+        document.body.appendChild(this.overlay.getCSS());
+        document.body.appendChild(this.overlay.getHTML());
+
+        // Put the caption inside the overlay.
+        var overlayElement = document.getElementById(this.overlay.id);
+        overlayElement.appendChild(this.caption.getCSS());
+        overlayElement.appendChild(this.caption.getHTML());
     }
 
     /**
@@ -46,6 +56,7 @@ export class ScreenReader {
      * Set up the screen reader and its components.
      */
     initialize() {
+        this.appendOverlay();
     }
 
 // Find the next element in an in-order traversal of a tree of nodes.
