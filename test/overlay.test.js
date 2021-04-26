@@ -8,7 +8,6 @@ beforeAll(() => {
     overlay = new Overlay();
 });
 
-
 describe("Overlay class tests", function () {
     test('constructor creates overlay', () => {
         expect(overlay instanceof Overlay).toBe(true);

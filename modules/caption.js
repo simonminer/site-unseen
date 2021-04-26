@@ -80,7 +80,7 @@ export class Caption {
                 cssProperties.push(property + ": " + this.css[property]);
             }
         }
-        var css = `#${this.id} { ${cssProperties.join("; ")}}; }`;
+        var css = `#${this.id} { ${cssProperties.join("; ")}; }`;
         var node = document.createElement('style');
         node.appendChild(document.createTextNode(css));
         return node;
