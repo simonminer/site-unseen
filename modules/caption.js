@@ -6,7 +6,10 @@
 "use strict";
 
 // Set up axe-core.
-import axe from "axe-core";
+// import axe from "axe-core";
+if (window.axe == undefined) {
+    window.axe = require("axe-core");
+}
 
 export class Caption {
 
