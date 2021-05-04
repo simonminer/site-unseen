@@ -65,21 +65,31 @@ export class WayMaker {
 
     /**
      * @method
-     * @param {Node} node - The HTML element being tested for navigability.
-     * @returns {boolean}
-     * Tests whether or not the given HTML node can be navigated
-     * by the screen reader and returns the corresponding boolean value.
-     */
-    isNavigable(node) {
-    }
+    * @param {Node} node - The HTML element being for considered for a tabindex attribute.
+    * @returns {boolean}
+    * Tests whether or not the given HTML node needs a tabindex="-1"
+    * attribute so that it can receive keyboard focus 
+    */
+    isTabIndexNeeded(node) {
+        var tagName = node.tagName.toLowerCase();
+        var isNeeded = false;
 
-    /**
-     * @method
-     * @param {Node} node - The HTML element being tested for tab index.
-     * Tests whether or not the given HTML node needs a tabindex="-1"
-     * attribute so that it can receive keyboard focus 
-     */
-    isTabIndexNeede(node) {
+        // Is the node non-interactive?
+        if (this.nonInteractiveTags.includes(tagName)) {
+            isNeeded = true;
+        }
+        // Does the node have at least one child that contains text?
+        else if (this.potentiallyNavigableTags.includes(tagName)) {
+            var children = node.childNodes;
+            for (let i = 0; i < children.length; i++) {
+                if (children[i].nodeType === 3 && children[i].nodeValue.trim() !== "") {
+                    isNeeded = true;
+                    break;
+                }
+            }
+        }
+
+        return isNeeded;
     }
     
     /**
