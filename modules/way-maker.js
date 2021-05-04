@@ -99,6 +99,19 @@ export class WayMaker {
      * if it can be navigated by a screen reader.
      */
     processNode(node) {
+        // If the screen reader should be able to navigate
+        // this node, make sure it has a tabindex attribute.
+        var isTabIndexNeeded = this.isTabIndexNeeded(node);
+        if (isTabIndexNeeded) {
+            node.setAttribute("tabindex", "-1");      
+        }
+
+        // Assign a special class to the node if can be navigated
+        // by the screen reader.
+        var tagName = node.tagName.toLowerCase();
+        if (isTabIndexNeeded || this.interactiveTags.includes(tagName)) {
+            node.classList.add(this.className);
+        }
     }
 
     /**
