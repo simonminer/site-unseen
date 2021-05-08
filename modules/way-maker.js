@@ -56,19 +56,12 @@ export class WayMaker {
 
     /**
      * @member
-     * Number of nodes that have been flagged
-     * as navigable by this object.
-     */
-    navigableNodeCount = 0;
-
-    /**
-     * @member
      * List of nodes that can be navigated
      * by the screen reader
      */
     nodes = [];
 
-    static _properties = ["className", "tabIndexNodeCount", "navigableNodeCount", "node"];
+    static _properties = ["className", "tabIndexNodeCount", "node"];
 
     /**
      * @constructor
@@ -134,7 +127,6 @@ export class WayMaker {
         if (isTabIndexNeeded || this.interactiveTags.includes(tagName)) {
             node.classList.add(this.className);
             this.nodes.push(node);
-            this.navigableNodeCount += 1;
         }
     }
 
