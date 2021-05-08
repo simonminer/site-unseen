@@ -136,4 +136,81 @@ describe("WayMaker class tests", function () {
         expect(document.querySelectorAll(`[class="${wayMaker.className}"]`).length).toBe(4);
         expect(wayMaker.nodes.length).toBe(4);
     });
+
+    test('currentNode returns undefined in current node index < 0', () => {
+        wayMaker.currentNodeIndex = -1;
+        expect(wayMaker.currentNode()).toBe(undefined);
+    });
+    test('currentNode returns current match for each node in the list', () => {
+        for (let index = 0; index < wayMaker.nodes.length - 1; index++) {
+            wayMaker.nextNode();
+            expect(wayMaker.currentNode()).toBe(wayMaker.nodes[index]);
+        }
+    });
+    test('currentNode returns undefined for empty node list', () => {
+        wayMaker = new wayMaker( 'test', 'test', document.body);
+        expect(wayMaker.nodes.length).toEqual(0);
+        expect(wayMaker.currentNode()).toBe(undefined);
+    });
+
+    test('nextNode returns first match if current node index < 0', () => {
+        wayMaker.currentNodeIndex = -1;
+        expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
+        expect(wayMaker.wrappedTo).toBe(undefined);
+    });
+    test('nextNode returns next match for each node in the list before the last one', () => {
+        for (let index = 0; index < wayMaker.nodes.length - 2; index++) {
+            wayMaker.currentNodeIndex = index;
+            expect(wayMaker.nextNode()).toBe(wayMaker.nodes[index + 1]);
+            expect(wayMaker.wrappedTo).toBe(undefined);
+        }
+    });
+    test('nextNode returns first match for last node in list', () => {
+        wayMaker.currentNodeIndex = wayMaker.nodes.length - 1;
+        expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
+        expect(wayMaker.wrappedTo).toBe("start");
+    });
+    test('nextNode returns the only match in the list', () => {
+        wayMaker = new wayMaker( 'div', 'div', document.body);
+        expect(wayMaker.nodes.length).toEqual(1);
+        expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
+        expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
+    });
+    test('nextNode returns undefined for empty node list', () => {
+        wayMaker = new wayMaker( 'test', 'test', document.body);
+        expect(wayMaker.nodes.length).toEqual(0);
+        expect(wayMaker.nextNode()).toBe(undefined);
+        expect(wayMaker.wrappedTo).toBe(undefined);
+    });
+
+    test('previousNode returns last match if current node index < 0', () => {
+        wayMaker.currentNodeIndex = -1;
+        expect(wayMaker.previousNode()).toBe(wayMaker.nodes[wayMaker.nodes.length - 1]);
+        expect(wayMaker.wrappedTo).toBe("end");
+    });
+    test('previousNode returns previous match for each node in the list after the first one', () => {
+        for (let index = wayMaker.nodes.length - 1; index > 0; index--) {
+            wayMaker.currentNodeIndex = index;
+            expect(wayMaker.previousNode()).toBe(wayMaker.nodes[index - 1]);
+            expect(wayMaker.wrappedTo).toBe(undefined);
+        }
+    });
+    test('previousNode returns last match for first node in list', () => {
+        wayMaker.currentNodeIndex = 0
+        expect(wayMaker.previousNode()).toBe(wayMaker.nodes[wayMaker.nodes.length - 1]);
+        expect(wayMaker.wrappedTo).toBe("end");
+    });
+    test('previousNode returns the only match in the list', () => {
+        wayMaker = new wayMaker( 'div', 'div', document.body);
+        expect(wayMaker.nodes.length).toEqual(1);
+        expect(wayMaker.previousNode()).toBe(wayMaker.nodes[0]);
+        expect(wayMaker.previousNode()).toBe(wayMaker.nodes[0]);
+        expect(wayMaker.wrappedTo).toBe(undefined);
+    });
+    test('previousNode returns undefined for empty node list', () => {
+        wayMaker = new wayMaker( 'test', 'test', document.body);
+        expect(wayMaker.nodes.length).toEqual(0);
+        expect(wayMaker.previousNode()).toBe(undefined);
+        expect(wayMaker.wrappedTo).toBe(undefined);
+    });
 });
