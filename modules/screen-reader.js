@@ -6,9 +6,11 @@
 
 import { Overlay } from "./overlay.js";
 import { Caption } from "./caption.js";
+import { WayMaker } from './way-maker.js';
 
 export class ScreenReader {
 
+    wayMaker = new WayMaker();
     overlay = new Overlay();
     caption = new Caption();
     quickKeyManager;
@@ -18,7 +20,11 @@ export class ScreenReader {
      * @param {QuickKeyManager} qkm - Object to manage quick key interactions
      */
     constructor(qkm) {
-        this.quickKeyManager = qkm;
+        this.markNavigableNodes();
+        this.appendOverlay();
+        if (qkm) {
+            this.quickKeyManager = qkm;
+        }
     }
 
     /**
@@ -27,7 +33,8 @@ export class ScreenReader {
      * tabindex attributes as needed to make them focusable
      * for screen reader navigation.
      */
-    makeElementsFocusable() {
+    markNavigableNodes() {
+        this.wayMaker.markNavigableNodes(document.body);
     }
 
     /**
@@ -42,21 +49,6 @@ export class ScreenReader {
         var overlayElement = document.getElementById(this.overlay.id);
         overlayElement.appendChild(this.caption.getCSS());
         overlayElement.appendChild(this.caption.getHTML());
-    }
-
-    /**
-     * @method
-     * Set up quick key mappings.
-     */
-    registerQuickKeys() {
-    }
-
-    /**
-     * @method
-     * Set up the screen reader and its components.
-     */
-    initialize() {
-        this.appendOverlay();
     }
 
 // Find the next element in an in-order traversal of a tree of nodes.
