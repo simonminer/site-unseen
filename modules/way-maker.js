@@ -61,7 +61,14 @@ export class WayMaker {
      */
     navigableNodeCount = 0;
 
-    static _properties = ["className", "tabIndexNodeCount", "navigableNodeCount"];
+    /**
+     * @member
+     * List of nodes that can be navigated
+     * by the screen reader
+     */
+    nodes = [];
+
+    static _properties = ["className", "tabIndexNodeCount", "navigableNodeCount", "node"];
 
     /**
      * @constructor
@@ -126,6 +133,7 @@ export class WayMaker {
         var tagName = node.tagName.toLowerCase();
         if (isTabIndexNeeded || this.interactiveTags.includes(tagName)) {
             node.classList.add(this.className);
+            this.nodes.push(node);
             this.navigableNodeCount += 1;
         }
     }

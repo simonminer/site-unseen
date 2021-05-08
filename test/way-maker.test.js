@@ -66,6 +66,7 @@ describe("WayMaker class tests", function () {
         });
         expect(wayMaker.tabIndexNodeCount).toBe(wayMaker.nonInteractiveTags.length);
         expect(wayMaker.navigableNodeCount).toBe(wayMaker.nonInteractiveTags.length);
+        expect(wayMaker.nodes.length).toBe(wayMaker.nonInteractiveTags.length);
     });
     test('processNode assigns class to interactive tags', () => {
         wayMaker.interactiveTags.forEach(tagName => {
@@ -76,6 +77,7 @@ describe("WayMaker class tests", function () {
         });
         expect(wayMaker.tabIndexNodeCount).toBe(0);
         expect(wayMaker.navigableNodeCount).toBe(wayMaker.interactiveTags.length);
+        expect(wayMaker.nodes.length).toBe(wayMaker.interactiveTags.length);
     });
     test('processNode does nothing to empty <div> and <span> tags', () => {
         wayMaker.potentiallyNavigableTags.forEach(tagName => {
@@ -86,6 +88,7 @@ describe("WayMaker class tests", function () {
         });
         expect(wayMaker.tabIndexNodeCount).toBe(0);
         expect(wayMaker.navigableNodeCount).toBe(0);
+        expect(wayMaker.nodes.length).toBe(0);
     });
     test('processNode assigns tabindex and class to <div> and <span> tags containing only text', () => {
         wayMaker.potentiallyNavigableTags.forEach(tagName => {
@@ -97,6 +100,7 @@ describe("WayMaker class tests", function () {
         });
         expect(wayMaker.tabIndexNodeCount).toBe(wayMaker.potentiallyNavigableTags.length);
         expect(wayMaker.navigableNodeCount).toBe(wayMaker.potentiallyNavigableTags.length);
+        expect(wayMaker.nodes.length).toBe(wayMaker.potentiallyNavigableTags.length);
     });
     test('processNode does nothing to <div> and <span> tags containing only other tags', () => {
         wayMaker.potentiallyNavigableTags.forEach(tagName => {
@@ -108,6 +112,7 @@ describe("WayMaker class tests", function () {
         });
         expect(wayMaker.tabIndexNodeCount).toBe(0);
         expect(wayMaker.navigableNodeCount).toBe(0);
+        expect(wayMaker.nodes.length).toBe(0);
     });
     test('processNode assigns tabindex and class to <div> and <span> tags containing both text and other tags', () => {
         wayMaker.potentiallyNavigableTags.forEach(tagName => {
@@ -120,6 +125,7 @@ describe("WayMaker class tests", function () {
         });
         expect(wayMaker.tabIndexNodeCount).toBe(wayMaker.potentiallyNavigableTags.length);
         expect(wayMaker.navigableNodeCount).toBe(wayMaker.potentiallyNavigableTags.length);
+        expect(wayMaker.nodes.length).toBe(wayMaker.potentiallyNavigableTags.length);
     });
 
     test('markNavigableNodes flags appropriate nodes', () => {
@@ -134,5 +140,6 @@ describe("WayMaker class tests", function () {
         wayMaker.markNavigableNodes(document.body);
         expect(document.querySelectorAll('[tabindex="-1"]').length).toBe(3);
         expect(document.querySelectorAll(`[class="${wayMaker.className}"]`).length).toBe(4);
+        expect(wayMaker.nodes.length).toBe(4)
     });
 });

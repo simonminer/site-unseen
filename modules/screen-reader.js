@@ -62,7 +62,6 @@ export class ScreenReader {
             return null;
         }
 
-
         // The next element is either this one's first child...
         var nextElement = null;
         if (element.firstElementChild) {
