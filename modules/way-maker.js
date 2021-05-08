@@ -137,5 +137,8 @@ export class WayMaker {
      * finding and flagging nodes that are navigable by the screen reader.
      */
     markNavigableNodes(rootNode) {
+        rootNode.querySelectorAll('*').forEach(node => {
+            this.processNode(node);
+        });
     }
 }

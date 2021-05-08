@@ -121,4 +121,18 @@ describe("WayMaker class tests", function () {
         expect(wayMaker.tabIndexNodeCount).toBe(wayMaker.potentiallyNavigableTags.length);
         expect(wayMaker.navigableNodeCount).toBe(wayMaker.potentiallyNavigableTags.length);
     });
+
+    test('markNavigableNodes flags appropriate nodes', () => {
+        document.body.innerHTML = `
+<div id="content">
+    <h1>This is a heading</h1>
+    <p>This is a paragraph.</p>
+    <div><div>This is a nested div.</div></div>
+    <input type="text" />
+</div>
+`;
+        wayMaker.markNavigableNodes(document.body);
+        expect(document.querySelectorAll('[tabindex="-1"]').length).toBe(3);
+        expect(document.querySelectorAll(`[class="${wayMaker.className}"]`).length).toBe(4);
+    });
 });
