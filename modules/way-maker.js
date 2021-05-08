@@ -47,7 +47,21 @@ export class WayMaker {
      */
     potentiallyNavigableTags = ["div","span"];
 
-    static _properties = ["className"];
+    /**
+     * @member
+     * Number of nodes that have been assigned
+     * tabindex attributes by this object.
+     */
+    tabIndexNodeCount = 0;
+
+    /**
+     * @member
+     * Number of nodes that have been flagged
+     * as navigable by this object.
+     */
+    navigableNodeCount = 0;
+
+    static _properties = ["className", "tabIndexNodeCount", "navigableNodeCount"];
 
     /**
      * @constructor
@@ -103,7 +117,8 @@ export class WayMaker {
         // this node, make sure it has a tabindex attribute.
         var isTabIndexNeeded = this.isTabIndexNeeded(node);
         if (isTabIndexNeeded) {
-            node.setAttribute("tabindex", "-1");      
+            node.setAttribute("tabindex", "-1");
+            this.tabIndexNodeCount += 1;
         }
 
         // Assign a special class to the node if can be navigated
@@ -111,6 +126,7 @@ export class WayMaker {
         var tagName = node.tagName.toLowerCase();
         if (isTabIndexNeeded || this.interactiveTags.includes(tagName)) {
             node.classList.add(this.className);
+            this.navigableNodeCount += 1;
         }
     }
 
