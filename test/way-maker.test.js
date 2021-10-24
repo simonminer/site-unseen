@@ -1,5 +1,15 @@
 const WayMaker = require("../modules/way-maker.js").WayMaker;
 
+beforeAll(() => {
+    document.body.innerHTML = `
+    <div id="content">
+        <h1>This is a heading</h1>
+        <p>This is a paragraph.</p>
+        <div><div>This is a nested div.</div></div>
+        <input type="text" />
+    </div>
+    `;
+});
 var wayMaker = undefined;
 beforeEach(() => {
     wayMaker = new WayMaker();
@@ -123,14 +133,6 @@ describe("WayMaker class tests", function () {
     });
 
     test('markNavigableNodes flags appropriate nodes', () => {
-        document.body.innerHTML = `
-<div id="content">
-    <h1>This is a heading</h1>
-    <p>This is a paragraph.</p>
-    <div><div>This is a nested div.</div></div>
-    <input type="text" />
-</div>
-`;
         wayMaker.markNavigableNodes(document.body);
         expect(document.querySelectorAll('[tabindex="-1"]').length).toBe(3);
         expect(document.querySelectorAll(`[class="${wayMaker.className}"]`).length).toBe(4);
@@ -148,17 +150,19 @@ describe("WayMaker class tests", function () {
         }
     });
     test('currentNode returns undefined for empty node list', () => {
-        wayMaker = new wayMaker( 'test', 'test', document.body);
+        wayMaker = new WayMaker( 'test', 'test', document.body);
         expect(wayMaker.nodes.length).toEqual(0);
         expect(wayMaker.currentNode()).toBe(undefined);
     });
 
     test('nextNode returns first match if current node index < 0', () => {
+        wayMaker.markNavigableNodes(document.body);
         wayMaker.currentNodeIndex = -1;
         expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
         expect(wayMaker.wrappedTo).toBe(undefined);
     });
     test('nextNode returns next match for each node in the list before the last one', () => {
+        wayMaker.markNavigableNodes(document.body);
         for (let index = 0; index < wayMaker.nodes.length - 2; index++) {
             wayMaker.currentNodeIndex = index;
             expect(wayMaker.nextNode()).toBe(wayMaker.nodes[index + 1]);
@@ -166,29 +170,20 @@ describe("WayMaker class tests", function () {
         }
     });
     test('nextNode returns first match for last node in list', () => {
+        wayMaker.markNavigableNodes(document.body);
         wayMaker.currentNodeIndex = wayMaker.nodes.length - 1;
         expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
         expect(wayMaker.wrappedTo).toBe("start");
     });
-    test('nextNode returns the only match in the list', () => {
-        wayMaker = new wayMaker( 'div', 'div', document.body);
-        expect(wayMaker.nodes.length).toEqual(1);
-        expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
-        expect(wayMaker.nextNode()).toBe(wayMaker.nodes[0]);
-    });
-    test('nextNode returns undefined for empty node list', () => {
-        wayMaker = new wayMaker( 'test', 'test', document.body);
-        expect(wayMaker.nodes.length).toEqual(0);
-        expect(wayMaker.nextNode()).toBe(undefined);
-        expect(wayMaker.wrappedTo).toBe(undefined);
-    });
 
     test('previousNode returns last match if current node index < 0', () => {
+        wayMaker.markNavigableNodes(document.body);
         wayMaker.currentNodeIndex = -1;
         expect(wayMaker.previousNode()).toBe(wayMaker.nodes[wayMaker.nodes.length - 1]);
         expect(wayMaker.wrappedTo).toBe("end");
     });
     test('previousNode returns previous match for each node in the list after the first one', () => {
+        wayMaker.markNavigableNodes(document.body);
         for (let index = wayMaker.nodes.length - 1; index > 0; index--) {
             wayMaker.currentNodeIndex = index;
             expect(wayMaker.previousNode()).toBe(wayMaker.nodes[index - 1]);
@@ -196,21 +191,9 @@ describe("WayMaker class tests", function () {
         }
     });
     test('previousNode returns last match for first node in list', () => {
+        wayMaker.markNavigableNodes(document.body);
         wayMaker.currentNodeIndex = 0
         expect(wayMaker.previousNode()).toBe(wayMaker.nodes[wayMaker.nodes.length - 1]);
         expect(wayMaker.wrappedTo).toBe("end");
-    });
-    test('previousNode returns the only match in the list', () => {
-        wayMaker = new wayMaker( 'div', 'div', document.body);
-        expect(wayMaker.nodes.length).toEqual(1);
-        expect(wayMaker.previousNode()).toBe(wayMaker.nodes[0]);
-        expect(wayMaker.previousNode()).toBe(wayMaker.nodes[0]);
-        expect(wayMaker.wrappedTo).toBe(undefined);
-    });
-    test('previousNode returns undefined for empty node list', () => {
-        wayMaker = new wayMaker( 'test', 'test', document.body);
-        expect(wayMaker.nodes.length).toEqual(0);
-        expect(wayMaker.previousNode()).toBe(undefined);
-        expect(wayMaker.wrappedTo).toBe(undefined);
     });
 });
