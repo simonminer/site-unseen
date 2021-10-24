@@ -7,7 +7,9 @@
  */
 "use strict";
 
-export class WayMaker {
+import { ElementList } from "./element-list.js";
+
+export class WayMaker extends ElementList {
 
     /**
      * @member
@@ -81,6 +83,7 @@ export class WayMaker {
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
      */
     constructor(properties) {
+        super();
         if (properties !== undefined) {
             WayMaker._properties.forEach(property => {
                 if (properties.hasOwnProperty(property)) {
@@ -166,68 +169,5 @@ export class WayMaker {
             return;
         }
         return this.nodes[this.currentNodeIndex];
-    }
-    
-    /**
-     * @method
-     * @returns {Node} - The next matching node (which could be the first one)
-     * Returns the next node in the DOM navigable by the screen reader.
-     * if we are at the end of the list), or undefined if there are no matching nodes.
-     */
-    nextNode() {
-        // Clear wrap-around.
-        this.wrappedTo = undefined;
-
-        // Make sure there are matching nodes for this quick key.
-        if (!this.nodes.length) {
-            return;
-        }
-
-        // Return this node if it's the only one in the list.
-        if (this.nodes.length == 1) {
-            this.currentNodeIndex = 0;
-        }
-        // Get the next node in the list.
-        else if (this.currentNodeIndex < this.nodes.length - 1) {
-            this.currentNodeIndex += 1;
-        }
-        // Or loop around to to the start of the list if we are at the end.
-        else {
-           this.currentNodeIndex = 0;
-           this.wrappedTo = "start";
-        }
-
-        return this.nodes[this.currentNodeIndex];
-    }
-
-     /**
-      * @method
-      * @returns {Node} - The previous matching node (which could be the last one)
-     * Returns the previous node in the DOM navigable by the screen reader.
-     * if we are at the start of the list), or null if there are no matching nodes.
-     */
-    previousNode() {
-        // Clear wrap-around.
-        this.wrappedTo = undefined;
-
-        // Make sure there are matching nodes for this quick key.
-        if (!this.nodes.length) {
-            return;
-        }
-
-        // Return this node if it's the only one in the list.
-        if (this.nodes.length == 1) {
-            this.currentNodeIndex = 0;
-        }
-        // Get the previous node in the list.
-        else if (this.currentNodeIndex > 0) {
-            this.currentNodeIndex -= 1;
-        }
-        // Or loop around to to the start of the list if we are at the end.
-        else {
-           this.currentNodeIndex = this.nodes.length - 1;
-           this.wrappedTo = "end";
-        }
-        return this.nodes[this.currentNodeIndex];
-    }
+    }    
 }
