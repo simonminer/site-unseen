@@ -49,7 +49,7 @@
      * @param {Node} rootNode - Root node against which selector is run (optional). (defaults to document body).
      * @returns {Array[Node]} - List of nodes matching the object's selector.
      */
-    findNodes(finder, rootNode) {
+    findNodes(finder, rootNode = null) {
         var nodes = [];
         var finderType = "selector";
         var selector = finder;
@@ -60,8 +60,12 @@
             selector = '*';
         }
 
+        if (!rootNode) {
+            rootNode = document.body;
+        }
+
         rootNode.querySelectorAll(selector).forEach( node => {
-            if (finderType == "selector" || (finderType == "function" && finder(node))) {
+            if (finderType === "selector" || (finderType === "function" && finder(node))) {
                 nodes.push(node);
             }
         });

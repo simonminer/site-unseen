@@ -31,7 +31,7 @@ describe("QuickKey class tests", function () {
         expect(quickKey.wrappedTo).toBe(undefined);
     });
     test('findNodes populates nodes list', () => {
-        var nodes = quickKey.findNodes(document.body);
+        var nodes = quickKey.findNodes('a', document.body);
         expect(nodes.length).toBeGreaterThan(0);
         nodes.forEach(node => {
             expect(node.nodeName).toBe(quickKey.selector.toUpperCase());
