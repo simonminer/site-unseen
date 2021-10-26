@@ -16,12 +16,12 @@ With Site Unseen, you can:
 ## Features
 
 * Navigate the contents of a web page using the arrow keys, viewing details about each element as you explore.
-* Use Quick Keys to quickly move access the list of headings, regions, links, and forms on a web page.
+* Use Quick Keys to access lists of headings, regions, links, and forms on a web page and quickly navigate to them.
 * Temporarily lighten the opaque overlay to get a glimipse of the page and find your bearings if you get stuck.
 
 ## Setup and Usage
 
-To see Site Unseen on a sample web page, issue the following commands in a Mac OSX or Unix terminal window.
+To see Site Unseen in action on a sample web page, issue the following commands in a Mac OSX or Unix terminal window.
 
 ```
 git clone https://github.com/simonminer/site-unseen.git
