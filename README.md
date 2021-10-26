@@ -16,8 +16,8 @@ With Site Unseen, you can:
 
 ## Features
 
-* Navigate the contents of a web page using the arrow keys, viewing details about each element as you explore.
-* Use Quick Keys to access lists of headings, regions, links, and forms on a web page and quickly navigate to them.
+* Navigate through the contents of a web page using the arrow keys, viewing informatoin about each element as you explore.
+* Use Quick Keys to access lists of headings, regions, and links on a web page and quickly navigate to them.
 * Temporarily lighten the opaque overlay to get a glimpse of the page and find your bearings if you get stuck.
 
 ## Setup and Usage
