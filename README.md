@@ -32,6 +32,6 @@ npm install
 
 Then point your web browser to [http://localhost:8080/](http://localhost:8080/).
 
-When you are finished, press Control-C on the command line to stop the server.
+When you are finished, press `Ctrl-C` on the command line to stop the server.
 
 
