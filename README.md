@@ -10,6 +10,7 @@ With Site Unseen, you can:
 
 * Experience any web page the same way that people with blindness or visual impairments do.
 * Test for web accessibility issues, and gain first-hand insight about their impact on a website's users.
+* Provide individuals studying web accessibility with a useful and enlightening exercise or assignment.
 * Build empathy in website owners and stakeholders for users with disabilities who visit their sites.
 * Develop business cases for web accessibility projects.
 
