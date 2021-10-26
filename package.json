@@ -4,7 +4,8 @@
   "description": "Screen reader simulator for web browsers",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "server": "./node_modules/http-server/bin/http-server -c-1"
   },
   "repository": {
     "type": "git",

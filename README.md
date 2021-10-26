@@ -28,7 +28,7 @@ To see Site Unseen in action on a sample web page, issue the following commands 
 git clone https://github.com/simonminer/site-unseen.git
 cd site-unseen
 npm install
-./bin/run-server.sh
+npm run server
 ```
 
 Then point your web browser to [http://localhost:8080/](http://localhost:8080/).
