@@ -24,7 +24,7 @@ export class Navigator extends ElementList {
      * already in the tab order, but the also need
      * to be navigable via screen reader controls.
      */
-    interactiveTags = ["button", "datalist", "input", "option", "select", "textarea"];
+    interactiveTags = ["a", "button", "datalist", "input", "option", "select", "textarea"];
 
     /**
      * @member
@@ -92,6 +92,8 @@ export class Navigator extends ElementList {
         else if (event.key === "ArrowLeft") {
             node = navigator.previousNode();
         }
+
+        // Follow Tab key presses through interactive elements.
         else if (event.key === "Tab" || (event.shiftKey && event.key === "Tab")) {
             node = navigator.currentNode(document.activeElement);
         }
@@ -131,7 +133,7 @@ export class Navigator extends ElementList {
      * @method
     * @param {Node} node - The HTML element being for considered for a tabindex attribute.
     * @returns {boolean}
-    * Tests whether or not the given HTML node needs a tabindex="-1"
+    * Tests whether or not the given HTML node needs a tabindex="-1" attribute
     * attribute so that it can receive keyboard focus 
     */
     isTabIndexNeeded(node) {
@@ -174,7 +176,7 @@ export class Navigator extends ElementList {
         // Assign a special class to the node if can be navigated
         // by the screen reader.
         var tagName = node.tagName.toLowerCase();
-        if (isTabIndexNeeded || this.interactiveTags.includes(tagName)) {
+        if (isTabIndexNeeded || (this.interactiveTags.indexOf(tagName) >= 0)) {
             node.classList.add(this.className);
             this.nodes.push(node);
         }
@@ -191,17 +193,4 @@ export class Navigator extends ElementList {
             this.processNode(node);
         });
     }
-
-    /**
-     * @method
-     * @returns {Node} - The current matching node or undefined if there are none
-     * Returns the current node navigable by the screen reader.
-     * or the list of nodes has not been traversed yet.
-     */
-    currentNode() {
-        if (!this.nodes.length || this.currentNodeIndex < 0) {
-            return;
-        }
-        return this.nodes[this.currentNodeIndex];
-    }    
 }
