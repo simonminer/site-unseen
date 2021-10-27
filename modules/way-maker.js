@@ -69,6 +69,37 @@ export class WayMaker extends ElementList {
      */
      currentNodeIndex = -1;
 
+     /**
+     * @member
+     * Event handler to bind to "keydown" events to handle arrow key presses.
+     */
+     static eventHandlerFunction = function (event) {
+        // Don't do anything if the user is on a form field.
+        var activeElement = document.activeElement;
+        var tagName = activeElement.tagName.toLowerCase();
+        if (tagName == "select"
+            || tagName == "textarea"
+            || (tagName == "input" && activeElement.getAttribute("type") == "text")) {
+            return;
+        }
+
+        // Move to the next or previous accessible node when the right or left
+        // arrow is pressed, respectively.
+        var wayMaker = document.screenReader.wayMaker;
+        var node = undefined;
+        if (event.key === "ArrowRight") {
+            node = wayMaker.nextNode();
+        }
+        else if (event.key === "ArrowLeft") {
+            node = wayMaker.previousNode();
+        }
+        else if (event.key === "Tab" || (event.shiftKey && event.key === "Tab")) {
+            node = wayMaker.currentNode(document.activeElement);
+        }
+        if (node !== undefined) {
+            node.focus();
+        }
+    };
     /**
      * @member
      * Type of wrap-around when the screen reader reaches the
@@ -91,6 +122,10 @@ export class WayMaker extends ElementList {
                 }
             });
         }
+
+
+        // Set up the event listeners for arrow keys.
+        document.addEventListener( 'keydown', WayMaker.eventHandlerFunction);
     }
 
     /**
