@@ -1,15 +1,14 @@
 /**
  * @class
- * Class to parse the DOM for navigable elements
- * and mark them as such
- *
- * "Even when I can't see it your working..."
+ * Class to parse the DOM for navigable elements,
+ * mark them as such, and manage keyboard navigation
+ * through them.
  */
 "use strict";
 
 import { ElementList } from "./element-list.js";
 
-export class WayMaker extends ElementList {
+export class Navigator extends ElementList {
 
     /**
      * @member
@@ -85,16 +84,16 @@ export class WayMaker extends ElementList {
 
         // Move to the next or previous accessible node when the right or left
         // arrow is pressed, respectively.
-        var wayMaker = document.screenReader.wayMaker;
+        var navigator = document.screenReader.navigator;
         var node = undefined;
         if (event.key === "ArrowRight") {
-            node = wayMaker.nextNode();
+            node = navigator.nextNode();
         }
         else if (event.key === "ArrowLeft") {
-            node = wayMaker.previousNode();
+            node = navigator.previousNode();
         }
         else if (event.key === "Tab" || (event.shiftKey && event.key === "Tab")) {
-            node = wayMaker.currentNode(document.activeElement);
+            node = navigator.currentNode(document.activeElement);
         }
         if (node !== undefined) {
             node.focus();
@@ -116,7 +115,7 @@ export class WayMaker extends ElementList {
     constructor(properties) {
         super();
         if (properties !== undefined) {
-            WayMaker._properties.forEach(property => {
+            Navigator._properties.forEach(property => {
                 if (properties.hasOwnProperty(property)) {
                     this[property] = properties[property];
                 }
@@ -125,7 +124,7 @@ export class WayMaker extends ElementList {
 
 
         // Set up the event listeners for arrow keys.
-        document.addEventListener( 'keydown', WayMaker.eventHandlerFunction);
+        document.addEventListener( 'keydown', Navigator.eventHandlerFunction);
     }
 
     /**

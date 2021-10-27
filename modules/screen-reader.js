@@ -6,11 +6,11 @@
 
 import { Overlay } from "./overlay.js";
 import { Caption } from "./caption.js";
-import { WayMaker } from './way-maker.js';
+import { Navigator } from './navigator.js';
 
 export class ScreenReader {
 
-    wayMaker = new WayMaker();
+    navigator = new Navigator();
     overlay = new Overlay();
     caption = new Caption();
     quickKeyManager;
@@ -38,7 +38,7 @@ export class ScreenReader {
      * for screen reader navigation.
      */
     markNavigableNodes() {
-        this.wayMaker.markNavigableNodes(document.body);
+        this.navigator.markNavigableNodes(document.body);
     }
 
     /**
