@@ -13,21 +13,19 @@ export class ScreenReader {
     navigator = new Navigator();
     overlay = new Overlay();
     caption = new Caption();
-    quickKeyManager;
-
-     
+    shortcutKeyManager;
 
     /**
      * @constructor
-     * @param {QuickKeyManager} qkm - Object to manage quick key interactions
+     * @param {ShortcutKeyManager} skm - Object to manage shortcut key interactions
      */
-    constructor(qkm) {
+    constructor(skm) {
         this.markNavigableNodes();
         this.appendOverlay();
         document.screenReader = this;
 
-        if (qkm) {
-            this.quickKeyManager = qkm;
+        if (skm) {
+            this.shortcutKeyManager = skm;
         }
     }
 

@@ -1,9 +1,9 @@
 "use strict";
 
 import { ScreenReader } from './modules/screen-reader.js';
-import { QuickKeyManager } from './modules/quick-key-manager.js';
+import { ShortcutKeyManager } from './modules/shortcut-key-manager.js';
 
-// Keys/values for quick keys and the CSS selectors they match.
+// Keys/values for shortcut keys and the CSS selectors they match.
 let keyData = {
     // Press h/H to move forward/backward through headings.
     'h': 'h1, h2, h3, h4, h5, h6',
@@ -21,9 +21,9 @@ let keyData = {
 
 function focusNode(node, event) {
     node.focus();
-    if (document.quickKeyManager.wrappedTo !== undefined) {
-        alert( `Wrapped to ${document.quickKeyManager.wrappedTo} of node list.`);
+    if (document.shortcutKeyManager.wrappedTo !== undefined) {
+        alert( `Wrapped to ${document.shortcutKeyManager.wrappedTo} of node list.`);
     }
 }
-let qkm = new QuickKeyManager(keyData, document.body, focusNode);
-let sr = new ScreenReader(qkm);
+let skm = new ShortcutKeyManager(keyData, document.body, focusNode);
+let sr = new ScreenReader(skm);
