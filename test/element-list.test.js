@@ -22,7 +22,7 @@ beforeEach(() => {
 });
 
 describe("ElementList class tests", function () {
-    /*
+
     test('constructor sets properties', () => {
         nodeList = new ElementList();
         expect(nodeList instanceof ElementList).toBe(true);
@@ -56,11 +56,18 @@ describe("ElementList class tests", function () {
             expect(nodeList.currentNode()).toBe(nodeList.nodes[index]);
         }
     });
-    */
     test('currentNode returns undefined for empty node list', () => {
         nodeList = new ElementList('test', document.body);
         expect(nodeList.nodes.length).toEqual(0);
         expect(nodeList.currentNode()).toBe(undefined);
+    });
+    test('currentNode returns newly assigned current node', () => {
+        for (let index = 0; index < nodeList.nodes.length - 1; index++) {
+            const node = nodeList.nodes[index];
+            expect(nodeList.currentNode(node)).toBe(nodeList.nodes[index]);
+            expect(nodeList.currentNode(node)).toBe(node);
+            expect(nodeList.currentNodeIndex).toBe(index);
+        }
     });
 
     test('nextNode returns first match if current node index < 0', () => {

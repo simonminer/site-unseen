@@ -82,7 +82,7 @@
      */
     currentNode(node) {
         // Make sure there are nodes in this element list.
-        if (!this.nodes.length || this.currentNodeIndex < 0) {
+        if (!this.nodes.length) {
             return;
         }
 
