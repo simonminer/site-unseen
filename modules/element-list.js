@@ -76,13 +76,29 @@
     /**
      * @method
      * Returns the current node matched by this element list.
+     * @param {Node} node - The node being set to the new current node in this list (optional).
      * @returns {Node} - The current matching node or undefined if there are none
      * or the list of nodes has not been traversed yet.
      */
-    currentNode() {
+    currentNode(node) {
+        // Make sure there are nodes in this element list.
         if (!this.nodes.length || this.currentNodeIndex < 0) {
             return;
         }
+
+        // find and assign the new current node.
+        if (node) {
+            const nodeIndex = this.nodes.indexOf(node);
+            if (nodeIndex >= 0) {
+                this.currentNodeIndex = nodeIndex;
+            }
+            else {
+                this.currentNodeIndex = -1;
+                return;
+            }
+        }
+
+        // Update the current Node
         return this.nodes[this.currentNodeIndex];
     }
 

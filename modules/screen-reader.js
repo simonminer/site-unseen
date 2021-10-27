@@ -15,6 +15,35 @@ export class ScreenReader {
     caption = new Caption();
     quickKeyManager;
 
+     // Event handler to bind to "keydown" events to handle arrow key presses.
+     static eventHandlerFunction = function (event) {
+        // Don't do anything if the user is on a form field.
+        var activeElement = document.activeElement;
+        var tagName = activeElement.tagName.toLowerCase();
+        if (tagName == "select"
+            || tagName == "textarea"
+            || (tagName == "input" && activeElement.getAttribute("type") == "text")) {
+            return;
+        }
+
+        // Move to the next or previous accessible node when the right or left
+        // arrow is pressed, respectively.
+        var wayMaker = document.screenReader.wayMaker;
+        var node = undefined;
+        if (event.key === "ArrowRight") {
+            node = wayMaker.nextNode();
+        }
+        else if (event.key === "ArrowLeft") {
+            node = wayMaker.previousNode();
+        }
+        else if (event.key === "Tab" || (event.shiftKey && event.key === "Tab")) {
+            node = wayMaker.currentNode(document.activeElement);
+        }
+        if (node !== undefined) {
+            node.focus();
+        }
+    };
+
     /**
      * @constructor
      * @param {QuickKeyManager} qkm - Object to manage quick key interactions
@@ -22,6 +51,11 @@ export class ScreenReader {
     constructor(qkm) {
         this.markNavigableNodes();
         this.appendOverlay();
+
+        // Set up the event listeners for arrow keys.
+        document.addEventListener( 'keydown', ScreenReader.eventHandlerFunction);
+        document.screenReader = this;
+
         if (qkm) {
             this.quickKeyManager = qkm;
         }
@@ -49,74 +83,5 @@ export class ScreenReader {
         var overlayElement = document.getElementById(this.overlay.id);
         overlayElement.appendChild(this.caption.getCSS());
         overlayElement.appendChild(this.caption.getHTML());
-    }
-
-// Find the next element in an in-order traversal of a tree of nodes.
-
-    /**
-     * @method
-     * Find the next element in an in-order traversal of a tree of nodes.
-     */
-    getNextElement(element) {
-        if (!element) {
-            return null;
-        }
-
-        // The next element is either this one's first child...
-        var nextElement = null;
-        if (element.firstElementChild) {
-            nextElement = element.firstElementChild;
-        }
-
-        // ...or the next sibling...
-        else if (element.nextElementSibling) {
-            nextElement = element.nextElementSibling;
-        }
-
-        // ...or the next sibling for the first ancestor that has one.
-        else {
-            var current = element;
-            while (true) {
-                if (current.parentElement) {
-                    var parentElement = current.parentElement;
-                    if (parentElement.nextElementSibling) {
-                        nextElement = parentElement.nextElementSibling;
-                        break;
-                    }
-                    else {
-                        current = parentElement;
-                    }
-                }
-                else {
-                    break;
-                }
-            }
-        }
-
-       return nextElement;
-    }
-
-    /**
-     * @method
-     * Find the previous element in an in-order traversal of a tree of nodes.
-     */
-    getPreviousElement(element) {
-
-        if (!element) {
-            return null;
-        }
-
-        // The previous element is either this one's previous sibling
-        var previousElement = null;
-        if (element.previousElementSibling) {
-            previousElement = element.previousElementSibling;
-        }
-
-        // ...or its parent
-        else {
-            previousElement = element.parentElement;
-        }
-
-        return previousElement;
     }
 }

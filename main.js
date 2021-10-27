@@ -27,4 +27,3 @@ function focusNode(node, event) {
 }
 let qkm = new QuickKeyManager(keyData, document.body, focusNode);
 let sr = new ScreenReader(qkm);
-sr.initialize();
