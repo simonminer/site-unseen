@@ -2,7 +2,7 @@
 
 ## Overview
 
-Site Unseen is a JavaScript library and soon-to-be web browser extension that allows you to interact with any web page in the same way a person with blindness would experience it. 
+Site Unseen is an up and coming JavaScript library, web application, and  browser extension that allows you to interact with any web page in the same way a person with blindness would experience it. 
 
 Based on [Inclusiville](https://inclusiville.com/), the [award-winning](https://www.deque.com/blog/deque-hosts-first-virtual-axe-hackathon/) empathy-building game for web accessibility, Site Unseen hides all visible elements on a web page and provides you with a simulated screen reader to explore its contents. Use keyboard commands to move through the elements on a page, viewing the name, role, and value of each one as it comes into focus and interacting with it using only your keyboard.
 
@@ -17,7 +17,7 @@ With Site Unseen, you can:
 ## Features
 
 * Navigate through the contents of a web page using the arrow keys, viewing informatoin about each element as you explore.
-* Use Quick Keys to access lists of headings, regions, and links on a web page and quickly navigate to them.
+* Use shortcut Keys to access lists of headings, regions, and links on a web page and quickly navigate to them.
 * Temporarily lighten the opaque overlay to get a glimpse of the page and find your bearings if you get stuck.
 
 ## Setup and Usage
