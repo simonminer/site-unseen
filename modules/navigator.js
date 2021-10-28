@@ -35,7 +35,7 @@ export class Navigator extends ElementList {
         "address", "area", "audio", "blockquote",
         "caption", "dd", "dl", "dt", "figcaption", "figure",
         "h1", "h2", "h3", "h4", "h5", "h6", "img",
-        "label", "legend", "li", "map", "math", "ol",
+        "label", "legend", "map", "math", "ol",
         "p", "pre", "progress", "svg", "table", "td",
         "th", "tr", "track", "ul", "video"
     ];
@@ -73,15 +73,6 @@ export class Navigator extends ElementList {
      * Function to handle right and left arrow key presses.
      */
      static arrowKeyHandlerFunction = function (event) {
-        // Don't do anything if the user is on a form field.
-        var activeElement = document.activeElement;
-        var tagName = activeElement.tagName.toLowerCase();
-        if (tagName == "select"
-            || tagName == "textarea"
-            || (tagName == "input" && activeElement.getAttribute("type") == "text")) {
-            return;
-        }
-
         // Move to the next or previous accessible node when the right or left
         // arrow is pressed, respectively.
         var navigator = document.screenReader.navigator;
@@ -95,6 +86,8 @@ export class Navigator extends ElementList {
 
         if (node !== undefined) {
             node.focus();
+            var caption = document.screenReader.caption;
+            document.getElementById(caption.id).innerHTML = caption.generate(node);
         }
     };
 
@@ -106,7 +99,8 @@ export class Navigator extends ElementList {
          if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
              var navigator = document.screenReader.navigator;
              navigator.currentNode(document.activeElement);
-             alert( 'focused on ' + navigator.currentNode() );
+            var caption = document.screenReader.caption;
+            document.getElementById(caption.id).innerHTML = caption.generate(document.activeElement);
          }
      };
 

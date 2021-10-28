@@ -18,7 +18,7 @@ export class Caption {
     css = {
         "color": '#ffffff',
         "background-color": "#000000",
-       "border-color": "#ffffff",
+        "border-color": "#ffffff",
         "border-width": "3px",
         "font-weight": "bold",
         "padding": "10px",
@@ -51,10 +51,10 @@ export class Caption {
 
     /**
      * @method
-     * @param {Node} node - Node to describe in the caption.
-     * @returns {String}
      * Generates and returns an accessible description of the
      * role, state/property, and/or value of the specified node.
+     * @param {Node} node - Node to describe in the caption.
+     * @returns {String}
      */
     generate(node) {
         axe._tree = axe.utils.getFlattenedTree(node);
@@ -73,8 +73,8 @@ export class Caption {
 
     /**
      * @method
-     * @returns {Element}
      * Generates the <style> HTML element for the caption CSS styles
+     * @returns {Element}
      */
     getCSS() {
         var cssProperties = [];
@@ -91,8 +91,8 @@ export class Caption {
 
     /**
      * @method
-     * @returns {Element}
      * Generates the HTML element the screen reader caption
+     * @returns {Element}
      */
     getHTML() {
         var node = document.createElement('div');
