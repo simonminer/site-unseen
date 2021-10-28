@@ -95,7 +95,7 @@ export class Navigator extends ElementList {
 
         // Follow Tab key presses through interactive elements.
         else if (event.key === "Tab" || (event.shiftKey && event.key === "Tab")) {
-            node = navigator.currentNode(document.activeElement);
+            node = navigator.currentNode(activeElement);
         }
         if (node !== undefined) {
             node.focus();

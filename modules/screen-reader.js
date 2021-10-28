@@ -20,12 +20,30 @@ export class ScreenReader {
      * @param {ShortcutKeyManager} skm - Object to manage shortcut key interactions
      */
     constructor(skm) {
+        this.setApplicationRoleOnChildren(document.body);
         this.markNavigableNodes();
         this.appendOverlay();
         document.screenReader = this;
 
         if (skm) {
             this.shortcutKeyManager = skm;
+        }
+    }
+
+    /**
+     * @method
+     * Adds role="applicatoin" attributes to each
+     * child of the specified node (or document.body
+     * if none is given).
+     */
+    setApplicationRoleOnChildren(node) {
+        if (!node) {
+            node = document.body;
+        }
+
+        var children = node.children;
+        for (var i = 0, l = children.length; i < l; i++) {
+            children[i].setAttribute("role","application");
         }
     }
 
