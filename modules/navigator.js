@@ -70,9 +70,9 @@ export class Navigator extends ElementList {
 
      /**
      * @member
-     * Event handler to bind to "keydown" events to handle arrow key presses.
+     * Function to handle right and left arrow key presses.
      */
-     static eventHandlerFunction = function (event) {
+     static arrowKeyHandlerFunction = function (event) {
         // Don't do anything if the user is on a form field.
         var activeElement = document.activeElement;
         var tagName = activeElement.tagName.toLowerCase();
@@ -93,14 +93,23 @@ export class Navigator extends ElementList {
             node = navigator.previousNode();
         }
 
-        // Follow Tab key presses through interactive elements.
-        else if (event.key === "Tab" || (event.shiftKey && event.key === "Tab")) {
-            node = navigator.currentNode(activeElement);
-        }
         if (node !== undefined) {
             node.focus();
         }
     };
+
+     /**
+      * @member
+     * Function to handle Tab key presses.
+     */
+     static tabHandlerFunction = function (event) {
+         if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
+             var navigator = document.screenReader.navigator;
+             navigator.currentNode(document.activeElement);
+             alert( 'focused on ' + navigator.currentNode() );
+         }
+     };
+
     /**
      * @member
      * Type of wrap-around when the screen reader reaches the
@@ -124,9 +133,9 @@ export class Navigator extends ElementList {
             });
         }
 
-
-        // Set up the event listeners for arrow keys.
-        document.addEventListener( 'keydown', Navigator.eventHandlerFunction);
+        // Set up the event handlers.
+        document.addEventListener( 'keydown', Navigator.arrowKeyHandlerFunction);
+        document.addEventListener( 'keyup', Navigator.tabHandlerFunction);
     }
 
     /**

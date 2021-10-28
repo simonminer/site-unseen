@@ -21,7 +21,7 @@ export class ScreenReader {
      */
     constructor(skm) {
         this.setApplicationRoleOnChildren(document.body);
-        this.markNavigableNodes();
+        this.setupNavigation();
         this.appendOverlay();
         document.screenReader = this;
 
@@ -53,7 +53,7 @@ export class ScreenReader {
      * tabindex attributes as needed to make them focusable
      * for screen reader navigation.
      */
-    markNavigableNodes() {
+    setupNavigation() {
         this.navigator.markNavigableNodes(document.body);
     }
 
