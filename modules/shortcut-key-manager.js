@@ -9,7 +9,7 @@ import { ShortcutKey } from "./shortcut-key.js";
 export class ShortcutKeyManager {
 
     // Shortcut key map whose keys are keys to press with ShortcutKey object values.
-    shortcutKeys = new Map();
+    shortcutKeys = undefined;
 
     // Function to call on the node returned when a shortcut key is pressed, which
     // takes both the node and event called on it as arguments.
@@ -69,17 +69,7 @@ export class ShortcutKeyManager {
      * @returns {ShortcutKeyManager} - A new instance of the ShortcutKeyManager class. 
      */
     constructor(rootNode, shortcutKeyData, func) {
-        // Create a new ShortcutKey object for each key/selector pair
-        // that matches elements beneath the specified rootNode.
-        for (const key in shortcutKeyData) {
-            if (Object.hasOwnProperty.call(shortcutKeyData, key)) {
-                const selector = shortcutKeyData[key];
-                const sk = new ShortcutKey(key, selector, rootNode);
-                if (sk.nodes.length > 0) {
-                    this.shortcutKeys.set(key, new ShortcutKey(key, selector, rootNode));
-                }
-            }
-        }
+        this.shortcutKeys = this.createShortcutKeyMap(shortcutKeyData, rootNode);
 
         // Attach the function to execute when a shortcut key is pressed.
         if (func) {
@@ -87,6 +77,31 @@ export class ShortcutKeyManager {
         }
         this.bindShortcutKeysToFunction(this.shortcutKeyFunction);
     }
+
+    /**
+     * @method
+     * Use the specified set of key/selector pairs to construct
+     * a map to connect keys to ShortcutKey objects.
+     * @param {Object} shortcutKeyData - Set of key/value pairs mapping keyboard characters to CSS selectors.
+     * @param {Node} rootNode - Root node to use for finding elements that match shortcut keys.
+     * @returns {Map} shortcutKeys - Map of keyboard characters to ShortcutKey objects.
+     */
+    createShortcutKeyMap(shortcutKeyData, rootNode) {
+        // Create a new ShortcutKey object for each key/selector pair
+        // that matches elements beneath the specified rootNode.
+        var shortcutKeyMap = new Map();
+        for (const key in shortcutKeyData) {
+            if (Object.hasOwnProperty.call(shortcutKeyData, key)) {
+                const selector = shortcutKeyData[key];
+                const sk = new ShortcutKey(key, selector, rootNode);
+                if (sk.nodes.length > 0) {
+                    shortcutKeyMap.set(key, new ShortcutKey(key, selector, rootNode));
+                }
+            }
+        }
+        return shortcutKeyMap;
+    }
+
 
     /**
      * Binds the specified function to the node returned
