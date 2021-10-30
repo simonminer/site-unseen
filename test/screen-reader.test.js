@@ -21,7 +21,9 @@ describe("ScreenReader class tests", function () {
         expect(document.getElementById(screenReader.overlay.id)).toBeDefined();
         expect(document.getElementById(screenReader.caption.id)).toBeDefined();
     });
-
+    test('constructor stores screen reader in DOM', () => {
+        expect(ScreenReader.get()).toBe(screenReader);
+    });
     test('setApplicationRoleOnChildren adds role="application" attribute to children', () => {
         screenReader.setApplicationRoleOnChildren();
         var children = document.body.children;

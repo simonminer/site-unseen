@@ -11,11 +11,45 @@ import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
 export class ScreenReader {
 
+    /**
+     * @member
+     * {Node} - Root node whose content is to be manipulated by the screen reader.
+     */
     rootNode = undefined;
+
+    /**
+     * @member
+     * {Navigator}
+     */
     navigator = new Navigator();
+
+    /**
+     * @member
+     * {Overlay}
+     */
     overlay = new Overlay();
+
+    /**
+     * @member
+     * {Caption}
+     */
     caption = new Caption();
+
+    /**
+     * @member
+     * {ShortcutKeyManager}
+     */
     shortcutKeyManager;
+
+    /**
+     * @method
+     * @static
+     * Retrieve a copy of the screen reader object or undefined if none is present.
+     * @returns {ScreenReader}
+     */
+    static get() {
+        return document._screenReader;
+    }
 
     /**
      * @constructor
@@ -35,12 +69,12 @@ export class ScreenReader {
         this.skm = skm ? skm : new ShortcutKeyManager(this.rootNode);
 
         // Attach the new screen reader object to the top of the DOM for later use.
-        document.screenReader = this;
+        document._screenReader = this;
     }
 
     /**
      * @method
-     * Adds role="applicatoin" attributes to each
+     * Adds role="application" attributes to each
      * child of the screen reader root node.
      */
     setApplicationRoleOnChildren() {
