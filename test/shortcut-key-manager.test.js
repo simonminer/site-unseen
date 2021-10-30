@@ -4,8 +4,14 @@ const ShortcutKeyManager = require("../modules/shortcut-key-manager.js").Shortcu
 beforeAll(() => {
     document.body.innerHTML = `
 <div id="content">
-    <h1>Page heading</h1>
+    <header>
+        <h1>Page heading</h1>
+    </header>
     <a href="test1">Test 1</a>
+    <ul>
+        <li>First</li>
+        </li>Second</li>
+    </ul>
     <p>This is a paragraph.</p>
     <h2>Subheading</h2>
     <a href="test2">Test 2</a>
@@ -14,6 +20,7 @@ beforeAll(() => {
     <span>Nothing special</span>
     <h2>Subheading</h2>
     <a href="test4">Test 4</a>
+    <input type="text" name ="name" />
 </div>
 `;
 });
@@ -36,6 +43,16 @@ function returnTrue() {
 
 describe("ShortcutKeyManager class tests", function () {
     test('constructor sets up shortcut keys map', () => {
+        var skm = new ShortcutKeyManager(document.getElementById('content'));
+        expect(skm instanceof ShortcutKeyManager).toBe(true);
+        expect(typeof skm.shortcutKeyFunction).toBe("function");
+        expect(skm.shortcutKeys.size).toBe(Object.keys(skm.defaultShortcutKeyData).length - 1);
+        skm.shortcutKeys.forEach( (value, key) => {
+            expect(value.selector).toBe(skm.defaultShortcutKeyData[key]);
+        });
+        expect(skm.shortcutKeys.has('z')).toBe(false);
+    });
+    test('this.createShortcutKeyMap overrides shortcut key map', () => {
         var skm = new ShortcutKeyManager(document.getElementById('content'), keyData);
         expect(skm instanceof ShortcutKeyManager).toBe(true);
         expect(typeof skm.shortcutKeyFunction).toBe("function");
@@ -44,6 +61,12 @@ describe("ShortcutKeyManager class tests", function () {
             expect(value.selector).toBe(keyData[key]);
         });
         expect(skm.shortcutKeys.has('z')).toBe(false);
+        const map = skm.createShortcutKeyMap(keyData, document.getElementById('content'));
+        expect(map.size).toBe(Object.keys(keyData).length - 1);
+        map.forEach( (value, key) => {
+            expect(value.selector).toBe(keyData[key]);
+        });
+        expect(map.has('z')).toBe(false);
     });
     test('bindShortcutKeysToFunction sets up event listener', () => {
         var skm = new ShortcutKeyManager(document.getElementById('content'), keyData);
