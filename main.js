@@ -20,5 +20,5 @@ let keyData = {
 };
 
 
-let skm = new ShortcutKeyManager(keyData, document.body);
+let skm = new ShortcutKeyManager(document.body, keyData);
 let sr = new ScreenReader(skm);

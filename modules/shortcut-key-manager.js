@@ -63,24 +63,25 @@ export class ShortcutKeyManager {
 
     /**
      * @constructor
-     * @param {Object} shortcutKeyData - Set of key/value pairs mapping keyboard characters to CSS selectors.
      * @param {Node} rootNode - Root node to use for finding shortcut key matches.
+     * @param {Object} shortcutKeyData - Set of key/value pairs mapping keyboard characters to CSS selectors.
      * @param {Function} func - Function to be executed on the node selected by a shortcut key (optional). Defaults to moving focus to the node.
      * @returns {ShortcutKeyManager} - A new instance of the ShortcutKeyManager class. 
      */
-    constructor(shortcutKeyData, rootNode, func) {
-        // Create a new ShortcutKey object for each key/selector pair.
+    constructor(rootNode, shortcutKeyData, func) {
+        // Create a new ShortcutKey object for each key/selector pair
+        // that matches elements beneath the specified rootNode.
         for (const key in shortcutKeyData) {
             if (Object.hasOwnProperty.call(shortcutKeyData, key)) {
                 const selector = shortcutKeyData[key];
-                const qk = new ShortcutKey(key, selector, rootNode);
-                if (qk.nodes.length > 0) {
+                const sk = new ShortcutKey(key, selector, rootNode);
+                if (sk.nodes.length > 0) {
                     this.shortcutKeys.set(key, new ShortcutKey(key, selector, rootNode));
                 }
             }
         }
 
-        // Attach the specified function to execute when a shortcut key is pressed.
+        // Attach the function to execute when a shortcut key is pressed.
         if (func) {
             this.shortcutKeyFunction = func;
         }
