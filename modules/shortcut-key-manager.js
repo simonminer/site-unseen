@@ -11,8 +11,15 @@ export class ShortcutKeyManager {
     // Shortcut key map whose keys are keys to press with ShortcutKey object values.
     shortcutKeys = new Map();
 
-    // Function to call on the node returned when a shortcut key is pressed.
-    shortcutKeyFunction = undefined;
+    // Function to call on the node returned when a shortcut key is pressed, which
+    // takes both the node and event called on it as arguments.
+    // Defaults to moving focus to the node.
+    shortcutKeyFunction = function (node, event) {
+        node.focus();
+        if (document.shortcutKeyManager.wrappedTo !== undefined) {
+            alert( `Wrapped to ${document.shortcutKeyManager.wrappedTo} of node list.`);
+        }
+    };
 
     // Type of wrap-around when a shortcut key is pressed on its
     // first or last instance of its list of nodes:
@@ -58,7 +65,7 @@ export class ShortcutKeyManager {
      * @constructor
      * @param {Object} shortcutKeyData - Set of key/value pairs mapping keyboard characters to CSS selectors.
      * @param {Node} rootNode - Root node to use for finding shortcut key matches.
-     * @param {Function} func - Function to be executed on the node selected by a shortcut key.
+     * @param {Function} func - Function to be executed on the node selected by a shortcut key (optional). Defaults to moving focus to the node.
      * @returns {ShortcutKeyManager} - A new instance of the ShortcutKeyManager class. 
      */
     constructor(shortcutKeyData, rootNode, func) {
@@ -75,9 +82,9 @@ export class ShortcutKeyManager {
 
         // Attach the specified function to execute when a shortcut key is pressed.
         if (func) {
-            this.bindShortcutKeysToFunction(func);
+            this.shortcutKeyFunction = func;
         }
-
+        this.bindShortcutKeysToFunction(this.shortcutKeyFunction);
     }
 
     /**

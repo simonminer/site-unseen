@@ -36,30 +36,31 @@ function returnTrue() {
 
 describe("ShortcutKeyManager class tests", function () {
     test('constructor sets up shortcut keys map', () => {
-        var qkm = new ShortcutKeyManager(keyData, document.getElementById('content'));
-        expect(qkm instanceof ShortcutKeyManager).toBe(true);
-        expect(qkm.shortcutKeys.size).toBe(Object.keys(keyData).length - 1);
-        qkm.shortcutKeys.forEach( (value, key) => {
+        var skm = new ShortcutKeyManager(keyData, document.getElementById('content'));
+        expect(skm instanceof ShortcutKeyManager).toBe(true);
+        expect(typeof skm.shortcutKeyFunction).toBe("function");
+        expect(skm.shortcutKeys.size).toBe(Object.keys(keyData).length - 1);
+        skm.shortcutKeys.forEach( (value, key) => {
             expect(value.selector).toBe(keyData[key]);
         });
-        expect(qkm.shortcutKeys.has('z')).toBe(false);
+        expect(skm.shortcutKeys.has('z')).toBe(false);
     });
     test('bindShortcutKeysToFunction sets up event listener', () => {
-        var qkm = new ShortcutKeyManager(keyData, document.getElementById('content'));
-        expect(qkm.bindShortcutKeysToFunction(returnTrue)).toBe(true);
-        expect(qkm.shortcutKeyFunction).toBe(returnTrue);
+        var skm = new ShortcutKeyManager(keyData, document.getElementById('content'));
+        expect(skm.bindShortcutKeysToFunction(returnTrue)).toBe(true);
+        expect(skm.shortcutKeyFunction).toBe(returnTrue);
         expect(typeof document.shortcutKeyManager).toBe("object");
         expect(document.shortcutKeyManager.shortcutKeys instanceof Map).toBe(true);
     });
     test('constructor sets up shortcut keys map and event listener', () => {
-        var qkm = new ShortcutKeyManager(keyData, document.getElementById('content'), returnTrue);
-        expect(qkm instanceof ShortcutKeyManager).toBe(true);
-        expect(qkm.shortcutKeys.size).toBe(Object.keys(keyData).length - 1);
-        qkm.shortcutKeys.forEach( (value, key) => {
+        var skm = new ShortcutKeyManager(keyData, document.getElementById('content'), returnTrue);
+        expect(skm instanceof ShortcutKeyManager).toBe(true);
+        expect(skm.shortcutKeys.size).toBe(Object.keys(keyData).length - 1);
+        skm.shortcutKeys.forEach( (value, key) => {
             expect(value.selector).toBe(keyData[key]);
         });
-        expect(qkm.shortcutKeys.has('z')).toBe(false);
-        expect(qkm.shortcutKeyFunction).toBe(returnTrue);
+        expect(skm.shortcutKeys.has('z')).toBe(false);
+        expect(skm.shortcutKeyFunction).toBe(returnTrue);
         expect(typeof document.shortcutKeyManager).toBe("object");
         expect(document.shortcutKeyManager.shortcutKeys instanceof Map).toBe(true);
     });

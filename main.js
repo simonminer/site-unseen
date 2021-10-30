@@ -19,11 +19,6 @@ let keyData = {
     'l': 'ul, ol, dl, [role="list"]'
 };
 
-function focusNode(node, event) {
-    node.focus();
-    if (document.shortcutKeyManager.wrappedTo !== undefined) {
-        alert( `Wrapped to ${document.shortcutKeyManager.wrappedTo} of node list.`);
-    }
-}
-let skm = new ShortcutKeyManager(keyData, document.body, focusNode);
+
+let skm = new ShortcutKeyManager(keyData, document.body);
 let sr = new ScreenReader(skm);
