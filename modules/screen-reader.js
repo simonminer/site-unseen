@@ -7,9 +7,11 @@
 import { Overlay } from "./overlay.js";
 import { Caption } from "./caption.js";
 import { Navigator } from './navigator.js';
+import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
 export class ScreenReader {
 
+    rootNode = undefined;
     navigator = new Navigator();
     overlay = new Overlay();
     caption = new Caption();
@@ -17,31 +19,32 @@ export class ScreenReader {
 
     /**
      * @constructor
-     * @param {ShortcutKeyManager} skm - Object to manage shortcut key interactions
+     * @param {Node} rootNode - Root node of content manipulated by this screen reader (optional). Defaults to document.body.
+     * @param {ShortcutKeyManager} skm - Object to manage shortcut key interactions (optional). Defaults to ShortcutKeyManager with its default keyboard shortcuts.
+     * @returns {ScreenReader} - screen reader object
      */
-    constructor(skm) {
-        this.setApplicationRoleOnChildren(document.body);
-        this.setupNavigation();
-        this.appendOverlay();
-        document.screenReader = this;
+    constructor(rootNode, skm) {
+        this.rootNode = rootNode ? rootNode : document.body;
 
-        if (skm) {
-            this.shortcutKeyManager = skm;
-        }
+        // Prepare the content for processing by the screen reader.
+        this.setApplicationRoleOnChildren();
+        this.setupNavigation();
+
+        // Set up components of the screen reader.
+        this.appendOverlay();
+        this.skm = skm ? skm : new ShortcutKeyManager(this.rootNode);
+
+        // Attach the new screen reader object to the top of the DOM for later use.
+        document.screenReader = this;
     }
 
     /**
      * @method
      * Adds role="applicatoin" attributes to each
-     * child of the specified node (or document.body
-     * if none is given).
+     * child of the screen reader root node.
      */
-    setApplicationRoleOnChildren(node) {
-        if (!node) {
-            node = document.body;
-        }
-
-        var children = node.children;
+    setApplicationRoleOnChildren() {
+        var children = this.rootNode.children;
         for (var i = 0, l = children.length; i < l; i++) {
             children[i].setAttribute("role","application");
         }
@@ -54,7 +57,7 @@ export class ScreenReader {
      * for screen reader navigation.
      */
     setupNavigation() {
-        this.navigator.markNavigableNodes(document.body);
+        this.navigator.markNavigableNodes(this.rootNode);
     }
 
     /**
@@ -62,8 +65,8 @@ export class ScreenReader {
      * Generate and add the overlay to the DOM.
      */
     appendOverlay() {
-        document.body.appendChild(this.overlay.getCSS());
-        document.body.appendChild(this.overlay.getHTML());
+        this.rootNode.appendChild(this.overlay.getCSS());
+        this.rootNode.appendChild(this.overlay.getHTML());
 
         // Put the caption inside the overlay.
         var overlayElement = document.getElementById(this.overlay.id);

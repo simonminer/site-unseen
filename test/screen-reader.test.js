@@ -19,7 +19,7 @@ describe("ScreenReader class tests", function () {
     });
 
     test('setApplicationRoleOnChildren adds role="application" attribute to children', () => {
-        screenReader.setApplicationRoleOnChildren(document.body);
+        screenReader.setApplicationRoleOnChildren();
         var children = document.body.children;
         for (var i = 0, l = children.length; i < l; i++) {
             expect(children[i].getAttribute('role')).toBe('application');
