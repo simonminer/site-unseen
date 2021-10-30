@@ -16,6 +16,10 @@ beforeEach(() => {
 describe("ScreenReader class tests", function () {
     test('constructor creates screen reader object', () => {
         expect(screenReader instanceof ScreenReader).toBe(true);
+        expect(screenReader.rootNode).toBe(document.body)
+        expect(screenReader.navigator.nodes.length).toBeGreaterThan(0);
+        expect(document.getElementById(screenReader.overlay.id)).toBeDefined();
+        expect(document.getElementById(screenReader.caption.id)).toBeDefined();
     });
 
     test('setApplicationRoleOnChildren adds role="application" attribute to children', () => {
