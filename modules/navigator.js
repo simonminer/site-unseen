@@ -89,7 +89,7 @@ export class Navigator extends ElementList {
         if (node !== undefined) {
             node.focus();
             var caption = screenReader.caption;
-            document.getElementById(caption.id).innerHTML = caption.generate(node);
+            caption.node.innerHTML = caption.generate(node);
         }
     };
 
@@ -103,7 +103,7 @@ export class Navigator extends ElementList {
              var navigator = screenReader.navigator;
              navigator.currentNode(document.activeElement);
              var caption = screenReader.caption;
-             document.getElementById(caption.id).innerHTML = caption.generate(document.activeElement);
+             caption.node.innerHTML = caption.generate(document.activeElement);
          }
      };
 

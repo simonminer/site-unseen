@@ -13,8 +13,21 @@ if (window.axe == undefined) {
 
 export class Caption {
 
+    /**
+     * @member
+     * ID of caption element in DOM.
+     */
     id = "caption";
-    // Caption CSS selector values.
+
+    /**
+     * @member
+     * Caption node in DOM.
+     */
+    node = undefined;
+
+    /**
+     * Caption CSS selector name/value pairs.
+     */
     css = {
         "color": '#ffffff',
         "background-color": "#000000",
@@ -30,7 +43,10 @@ export class Caption {
         "text-align": "left"
     };
 
-    // Separator between elements of the accessible description.
+    /**
+     * @member
+     * Separator between elements of the accessible description.
+     */
     separator = ": ";
 
     static _properties = ["id", "css", "separator"];
@@ -91,12 +107,14 @@ export class Caption {
 
     /**
      * @method
-     * Generates the HTML element the screen reader caption
+     * Generates the HTML element for the screen reader caption
+     * and stores it in this object's node attribute.
      * @returns {Element}
      */
     getHTML() {
         var node = document.createElement('div');
         node.setAttribute("id", this.id);
+        this.node = node;
         return node;
     }
 }

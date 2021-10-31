@@ -3,10 +3,7 @@ const Caption = require("../modules/caption.js").Caption;
 const id = "caption";
 const sep = ": ";
 
-var caption = undefined;
 beforeAll(() => {
-    caption = new Caption();
-        
     document.body.innerHTML = `
 <h1>Page heading</h1>
 <a href="test1">This is a link.</a>
@@ -18,12 +15,17 @@ beforeAll(() => {
 <p>This is a paragraph.</p>
 `;
 });
+var caption = undefined;
+beforeEach(() => {
+    caption = new Caption();
+})
 
 describe("Caption class tests", function () {
     test('constructor creates caption', () => {
         expect(caption instanceof Caption).toBe(true);
         expect(caption.id).toBe(id);
         expect(caption.separator).toBe(sep);
+        expect(caption.node).toBe(undefined);
     });
 
     test('generate returns accessible description of node', () => {
@@ -46,6 +48,7 @@ describe("Caption class tests", function () {
         expect(div instanceof Element).toBe(true);
         expect(div.tagName.toLowerCase()).toBe("div");
         expect(div.getAttribute("id")).toBe(caption.id);
+        expect(caption.node).toBe(div);
     });
 
 });
