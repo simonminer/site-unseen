@@ -34,6 +34,8 @@ export class ShortcutKeyManager {
     // Defaults to moving focus to the node.
     shortcutKeyFunction = function (node, event) {
         node.focus();
+        var caption = ScreenReader.get().caption;
+        caption.node.innerHTML = caption.generate(document.activeElement);
     };
 
     // Type of wrap-around when a shortcut key is pressed on its

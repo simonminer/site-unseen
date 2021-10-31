@@ -74,7 +74,7 @@ export class Navigator extends ElementList {
      * Function to handle right and left arrow key presses.
      */
      static arrowKeyHandlerFunction = function (event) {
-        // Move to the next or previous accessible node when the right or left
+        // Move to the p0revious or next accessible node when the left or right
         // arrow is pressed, respectively.
         var screenReader = ScreenReader.get();
         var navigator = screenReader.navigator;
