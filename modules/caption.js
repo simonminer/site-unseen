@@ -49,6 +49,12 @@ export class Caption {
      */
     separator = ": ";
 
+    /**
+     * @member
+     * List of tags without ARIA roles.
+     */
+    tagsWithoutRoles = ['dd', 'dt', 'li',];
+
     static _properties = ["id", "css", "separator"];
 
     /**
@@ -74,9 +80,19 @@ export class Caption {
      */
     generate(node) {
         axe._tree = axe.utils.getFlattenedTree(node);
-        var role = axe.commons.aria.getRole(node, axe._tree),
-            accessibleText = axe.commons.text.accessibleText(node, axe._tree),
+        var tagName = node.tagName.toLowerCase(),
+            role = this.tagsWithoutRoles.indexOf(tagName) === -1
+                ? axe.commons.aria.getRole(node, axe._tree, {noPresentational: true}) : undefined,
+            accessibleText = "",
             data = [];
+        if (role !== undefined) {
+            accessibleText = axe.commons.text.accessibleText(node, axe._tree);
+        }
+        else {
+            // TODO Turn tagsWithoutRoles into map from tab name to role text.
+            role = "list item";
+            accessibleText = node.innerText;
+        }
 
         if (role) {
             data.push(role);

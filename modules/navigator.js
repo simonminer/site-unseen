@@ -36,7 +36,7 @@ export class Navigator extends ElementList {
         "address", "area", "audio", "blockquote",
         "caption", "dd", "dl", "dt", "figcaption", "figure",
         "h1", "h2", "h3", "h4", "h5", "h6", "img",
-        "label", "legend", "map", "math", "ol",
+        "label", "legend", 'li', "map", "math", "ol",
         "p", "pre", "progress", "svg", "table", "td",
         "th", "tr", "track", "ul", "video"
     ];
