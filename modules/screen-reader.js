@@ -66,7 +66,7 @@ export class ScreenReader {
 
         // Set up components of the screen reader.
         this.appendOverlay();
-        this.skm = skm ? skm : new ShortcutKeyManager(this.rootNode);
+        this.shortcutKeyManager = skm ? skm : new ShortcutKeyManager(this.rootNode);
 
         // Attach the new screen reader object to the top of the DOM for later use.
         document._screenReader = this;
@@ -100,11 +100,11 @@ export class ScreenReader {
      */
     appendOverlay() {
         this.rootNode.appendChild(this.overlay.getCSS());
-        this.rootNode.appendChild(this.overlay.getHTML());
+        var overlayNode = this.overlay.getHTML();
+        this.rootNode.appendChild(overlayNode);
 
         // Put the caption inside the overlay.
-        var overlayElement = document.getElementById(this.overlay.id);
-        overlayElement.appendChild(this.caption.getCSS());
-        overlayElement.appendChild(this.caption.getHTML());
+        overlayNode.appendChild(this.caption.getCSS());
+        overlayNode.appendChild(this.caption.getHTML());
     }
 }

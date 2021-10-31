@@ -7,6 +7,7 @@
 "use strict";
 
 import { ElementList } from "./element-list.js";
+import { ScreenReader } from "./screen-reader.js";
 
 export class Navigator extends ElementList {
 
@@ -75,7 +76,8 @@ export class Navigator extends ElementList {
      static arrowKeyHandlerFunction = function (event) {
         // Move to the next or previous accessible node when the right or left
         // arrow is pressed, respectively.
-        var navigator = document.screenReader.navigator;
+        var screenReader = ScreenReader.get();
+        var navigator = screenReader.navigator;
         var node = undefined;
         if (event.key === "ArrowRight") {
             node = navigator.nextNode();
@@ -86,7 +88,7 @@ export class Navigator extends ElementList {
 
         if (node !== undefined) {
             node.focus();
-            var caption = document.screenReader.caption;
+            var caption = screenReader.caption;
             document.getElementById(caption.id).innerHTML = caption.generate(node);
         }
     };
@@ -97,10 +99,11 @@ export class Navigator extends ElementList {
      */
      static tabHandlerFunction = function (event) {
          if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
-             var navigator = document.screenReader.navigator;
+             var screenReader = ScreenReader.get();
+             var navigator = screenReader.navigator;
              navigator.currentNode(document.activeElement);
-            var caption = document.screenReader.caption;
-            document.getElementById(caption.id).innerHTML = caption.generate(document.activeElement);
+             var caption = screenReader.caption;
+             document.getElementById(caption.id).innerHTML = caption.generate(document.activeElement);
          }
      };
 

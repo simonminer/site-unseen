@@ -5,6 +5,7 @@
 "use strict";
 
 import { ShortcutKey } from "./shortcut-key.js";
+import { ScreenReader } from "./screen-reader.js";
 
 export class ShortcutKeyManager {
 
@@ -33,9 +34,6 @@ export class ShortcutKeyManager {
     // Defaults to moving focus to the node.
     shortcutKeyFunction = function (node, event) {
         node.focus();
-        if (document.shortcutKeyManager.wrappedTo !== undefined) {
-            alert( `Wrapped to ${document.shortcutKeyManager.wrappedTo} of node list.`);
-        }
     };
 
     // Type of wrap-around when a shortcut key is pressed on its
@@ -53,8 +51,8 @@ export class ShortcutKeyManager {
             || (tagName == "input" && activeElement.getAttribute("type") == "text")) {
             return;
         }
-        
-        var skm = document.shortcutKeyManager;
+
+        var skm = ScreenReader.get().shortcutKeyManager;
         skm.wrappedTo = undefined;
 
         // If the lowercase shortcut key is pressed...
@@ -140,9 +138,6 @@ export class ShortcutKeyManager {
         // Store the function name so it can be invoked later in the event handler.
         this.shortcutKeyFunction = func;
 
-        // Store this object in a place where it can be referenced later.
-        document.shortcutKeyManager = this;
-        
         // Set up the shortcut key event listener.
         document.addEventListener( 'keydown', ShortcutKeyManager.eventHandlerFunction);
 

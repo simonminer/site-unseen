@@ -18,6 +18,7 @@ describe("ScreenReader class tests", function () {
         expect(screenReader instanceof ScreenReader).toBe(true);
         expect(screenReader.rootNode).toBe(document.body)
         expect(screenReader.navigator.nodes.length).toBeGreaterThan(0);
+        expect(screenReader.shortcutKeyManager.shortcutKeys instanceof Map).toBe(true);
         expect(document.getElementById(screenReader.overlay.id)).toBeDefined();
         expect(document.getElementById(screenReader.caption.id)).toBeDefined();
     });
