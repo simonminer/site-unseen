@@ -7,9 +7,22 @@
 
 export class Overlay {
 
+    /**
+     * @member
+     * ID of overly element.
+     */
     id = "overlay";
 
-    // Overlay CSS selector values.
+    /**
+     * @member
+     * Overlay node in DOM.
+     */
+    node = undefined;
+
+    /**
+     * @member
+     * Overlay CSS selector values.
+     */
     css = {
         "background-color": "#000000",
         "opacity": "0.75",
@@ -63,6 +76,7 @@ export class Overlay {
     getHTML() {
         var node = document.createElement('div');
         node.setAttribute("id", this.id);
+        this.node = node;
         return node;
     }
 }
