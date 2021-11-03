@@ -30,9 +30,14 @@ export class TagParser {
      * List of tags without ARIA roles.
      */
     tagsWithoutRole = {
+        caption: 'table caption',
         dd: 'list item',
+        dl: 'list',
         dt: 'list item',
-        li: 'list item'
+        li: 'list item',
+        td: 'table cell',
+        th: 'table heading',
+        tr: 'table row'
     };
 
     static _properties = ["separator",'tagsWithoutRole'];
@@ -65,7 +70,7 @@ export class TagParser {
 
         var data = {
             'role': undefined,
-            'name': undefined,
+            'name': node.hasAttribute('name') ? node.getAttribute('name') : undefined,
             'value': undefined
         };
         var tagName = node.tagName.toLowerCase();
@@ -79,7 +84,7 @@ export class TagParser {
         }
         else {
             data['role'] = this.tagsWithoutRole[tagName];
-            data['value'] = node.innerText;
+            data['value'] = node.textContent;
         }
 
         return data;
