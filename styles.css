@@ -37,3 +37,19 @@ th {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
 }
+
+.input-field {
+    padding: 10px 15px;
+}
+legend, .input-field > label {
+    font-weight: bold;
+}
+
+fieldset {
+    border: 0;
+}
+
+dt, dd {
+    display: inline;
+    margin: 0;
+}
