@@ -16,13 +16,13 @@ With Site Unseen, you can:
 
 ## Features
 
-* Navigate through the contents of a web page using the arrow keys, viewing informatoin about each element as you explore.
+* Navigate through the contents of a web page using the arrow keys, viewing information about each element as you explore.
 * Use shortcut Keys to access lists of headings, regions, and links on a web page and quickly navigate to them.
 * Temporarily lighten the opaque overlay to get a glimpse of the page and find your bearings if you get stuck.
 
 ## Setup and Usage
 
-To see Site Unseen in action on a sample web page, issue the following commands in a Mac OSX or Unix terminal window.
+To see Site Unseen in action on a sample web page, issue the following commands in a Mac OS or Unix terminal window.
 
 ```
 git clone https://github.com/simonminer/site-unseen.git
@@ -33,6 +33,22 @@ npm run server
 
 Then point your web browser to [http://localhost:8080/](http://localhost:8080/).
 
-When you are finished, press `Ctrl-C` on the command line to stop the server.
+When you are finished, press `Control+C` on the command line to stop the server.
+
+## Keyboard Commands
+
+Use the following keyboard commands to navigate through the contents of a web page with Site Unseen.
+
+|Command|Description|
+|--- |--- |
+|`Tab` and `Shift+Tab`|Move back and forth between the interactive elements on the page (i.e. links, form fields), just like you normally do in a web browser.|
+|`Enter`|Activate the interactive element you are currently focused on -- i.e. follow a link, press a button, check or uncheck a box, etc.|
+|`←` and `→`|Move back and forth between accessible element. Both interactive and non-interactive elements can be accessible, and most elements containing viewable content should be accessible, but this may or may not be the case for all web pages.|
+|`b` and `B`|Cycle back and forth through the buttons on the page.|
+|`f` and `F`|Cycle back and forth through the form fields on the page.|
+|`h` and `H`|Cycle back and forth through the headings on the page.|
+|`k` and `K`|Cycle back and forth through the links on the page.|
+|`f` and `F`|Cycle back and forth through the form fields on the page.|
+|`r` and `R`|Move back and forth to the regions/landmarks on the page (i.e. heading, main, footer, etc.).|
 
 
