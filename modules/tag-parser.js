@@ -21,12 +21,6 @@ export class TagParser {
 
     /**
      * @member
-     * Separator between elements of the accessible description.
-     */
-    separator = ": ";
-
-    /**
-     * @member
      * List of tags without ARIA roles.
      */
     tagsWithoutRole = {
@@ -40,7 +34,7 @@ export class TagParser {
         tr: 'table row'
     };
 
-    static _properties = ["separator",'tagsWithoutRole'];
+    static _properties = ['tagsWithoutRole'];
 
     /**
      * @constructor

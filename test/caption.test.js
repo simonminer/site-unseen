@@ -1,4 +1,5 @@
 const Caption = require("../modules/caption.js").Caption;
+const TagParser = require("../modules/tag-parser.js").TagParser;
 
 const id = "caption";
 const sep = ": ";
@@ -25,6 +26,7 @@ describe("Caption class tests", function () {
         expect(caption instanceof Caption).toBe(true);
         expect(caption.id).toBe(id);
         expect(caption.separator).toBe(sep);
+        expect(caption.tagParser instanceof TagParser).toBe(true);
         expect(caption.node).toBe(undefined);
     });
 

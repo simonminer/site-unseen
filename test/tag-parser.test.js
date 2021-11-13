@@ -19,7 +19,6 @@ function htmlToElement(html, tag) {
 describe("TagParser class tests", function () {
     test('constructor creates tagParser', () => {
         expect(tagParser instanceof TagParser).toBe(true);
-        expect(tagParser.separator).toBe(': ');
         expect(Object.keys(tagParser.tagsWithoutRole).length).toBeGreaterThan(0);
     });
 
@@ -41,7 +40,7 @@ describe("TagParser class tests", function () {
         }
     });
     test('tagParser parses link tags', () => {
-        var text = "This is a lparagraph";
+        var text = "This is a paragraph";
         var tag = htmlToElement(`<p>${text}</p>`, 'p');
         var data = tagParser.parse(tag);
         expect(data.role).toBe(null);
@@ -134,7 +133,7 @@ describe("TagParser class tests", function () {
     });
     test('tagParser parses textarea tag', () => {
         var name = 'test-textarea';
-        var value = 'Test Textara';
+        var value = 'Test Textarea';
         var tag =  htmlToElement(`<textarea name="${name}" aria-label="${value}">${value} Value</button>`, 'textarea');
         var data = tagParser.parse(tag);
         expect(data.role).toBe('textbox');

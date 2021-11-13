@@ -5,11 +5,7 @@
  */
 "use strict";
 
-// Set up axe-core.
-// import axe from "axe-core";
-if (window.axe == undefined) {
-    window.axe = require("axe-core");
-}
+import { TagParser } from "./tag-parser.js";
 
 export class Caption {
 
@@ -52,11 +48,11 @@ export class Caption {
 
     /**
      * @member
-     * List of tags without ARIA roles.
+     * Instance of the TagParser class used to generate text for this caption.
      */
-    tagsWithoutRoles = ['dd', 'dt', 'li',];
+    tagParser = new TagParser;
 
-    static _properties = ["id", "css", "separator"];
+    static _properties = ["id", "css", "separator", "tagParser"];
 
     /**
      * @constructor
@@ -75,33 +71,20 @@ export class Caption {
     /**
      * @method
      * Generates and returns an accessible description of the
-     * role, state/property, and/or value of the specified node.
+     * role, name,  state/property, and/or value of the specified node.
      * @param {Node} node - Node to describe in the caption.
      * @returns {String}
      */
     generate(node) {
-        axe._tree = axe.utils.getFlattenedTree(node);
-        var tagName = node.tagName.toLowerCase(),
-            role = this.tagsWithoutRoles.indexOf(tagName) === -1
-                ? axe.commons.aria.getRole(node, axe._tree, {noPresentational: true}) : undefined,
-            accessibleText = "",
-            data = [];
-        if (role !== undefined) {
-            accessibleText = axe.commons.text.accessibleText(node, axe._tree);
-        }
-        else {
-            // TODO Turn tagsWithoutRoles into map from tab name to role text.
-            role = "list item";
-            accessibleText = node.innerText;
-        }
-
-        if (role) {
-            data.push(role);
-        }
-        if (accessibleText) {
-            data.push(accessibleText);
-        }
-        return data.join(": ");
+        const data = this.tagParser.parse(node);
+        var values = [];
+        ['role', 'name', 'value'].forEach( (key) => {
+            if (data[key] !== undefined && data[key] !== null) {
+                values.push(data[key]);
+            }
+        });
+        const text = values.join(this.separator);
+        return text;
     }
 
     /**
