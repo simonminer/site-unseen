@@ -34,9 +34,9 @@ export class Navigator extends ElementList {
      */
     nonInteractiveTags = [
         "address", "area", "audio", "blockquote",
-        "caption", "dd", "dl", "dt", "figcaption", "figure",
-        "h1", "h2", "h3", "h4", "h5", "h6", "img",
-        "label", "legend", 'li', "map", "math", "ol",
+        "caption", "dd", "dl", "dt", "figcaption", "figure", "footer",
+        "h1", "h2", "h3", "h4", "h5", "h6", "header", "img",
+        "label", "legend", 'li', "main", "map", "math", "nav", "ol",
         "p", "pre", "progress", "svg", "table", "td",
         "th", "tr", "track", "ul", "video"
     ];
