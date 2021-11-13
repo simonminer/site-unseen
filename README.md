@@ -48,7 +48,7 @@ Use the following keyboard commands to navigate through the contents of a web pa
 |`f` and `F`|Cycle back and forth through the form fields on the page.|
 |`h` and `H`|Cycle back and forth through the headings on the page.|
 |`k` and `K`|Cycle back and forth through the links on the page.|
-|`f` and `F`|Cycle back and forth through the form fields on the page.|
+|`l` and `L`|Cycle back and forth through the ordered, unordered, and definition lists on the page.|
 |`r` and `R`|Move back and forth to the regions/landmarks on the page (i.e. heading, main, footer, etc.).|
 
 
