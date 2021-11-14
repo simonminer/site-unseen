@@ -16,7 +16,7 @@ With Site Unseen, you can:
 * Build empathy in website owners and stakeholders for users with disabilities who visit their sites.
 * Develop business cases for web accessibility projects.
 
-Check out [siteunseen.dev](https://siteunseen.dev) for more information.
+Check out [https://siteunseen.dev/](https://siteunseen.dev) for more information.
 
 ## Features
 
