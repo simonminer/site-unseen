@@ -1,3 +1,5 @@
+<img src="media/site-unseen-logo.png" alt="Site Unseen Logo" style="float:right;width:100px" />
+
 # Site Unseen
 
 ## Overview
