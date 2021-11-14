@@ -52,7 +52,7 @@ describe("ElementList class tests", function () {
     });
     test('currentNode returns current match for each node in the list', () => {
         for (let index = 0; index < nodeList.nodes.length - 1; index++) {
-            nodeList.nextNode();
+            nodeList.currentNodeIndex = index;
             expect(nodeList.currentNode()).toBe(nodeList.nodes[index]);
         }
     });

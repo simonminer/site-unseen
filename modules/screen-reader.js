@@ -107,4 +107,18 @@ export class ScreenReader {
         overlayNode.appendChild(this.caption.getCSS());
         overlayNode.appendChild(this.caption.getHTML());
     }
+
+    /**
+     * @method
+     * Sets the specified node as the current position
+     * in the document, giving it keyboard focus and
+     * displaying its accessible text in the caption.
+     * @param {Node} node - The node being moved to
+     */
+     moveTo(node) {
+         node.focus();
+         var activeElement = document.activeElement;
+         this.navigator.currentNode(activeElement);
+         this.caption.node.innerHTML = this.caption.generate(activeElement);
+     }
 }

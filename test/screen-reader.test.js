@@ -32,5 +32,11 @@ describe("ScreenReader class tests", function () {
             expect(children[i].getAttribute('role')).toBe('application');
         }
     });
-
+    test('moveTo sets currently active node', () => {
+        var node = document.querySelector('h1');
+        screenReader.moveTo(node);
+        expect(document.activeElement).toBe(node);
+        expect(screenReader.navigator.currentNode()).toBe(node);
+        expect(screenReader.caption.node.innerHTML).toBe(screenReader.caption.generate(node));
+    });
 });

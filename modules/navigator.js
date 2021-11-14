@@ -87,9 +87,7 @@ export class Navigator extends ElementList {
         }
 
         if (node !== undefined) {
-            node.focus();
-            var caption = screenReader.caption;
-            caption.node.innerHTML = caption.generate(node);
+            screenReader.moveTo(node);
         }
     };
 
@@ -99,11 +97,7 @@ export class Navigator extends ElementList {
      */
      static tabHandlerFunction = function (event) {
          if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
-             var screenReader = ScreenReader.get();
-             var navigator = screenReader.navigator;
-             navigator.currentNode(document.activeElement);
-             var caption = screenReader.caption;
-             caption.node.innerHTML = caption.generate(document.activeElement);
+             ScreenReader.get().moveTo(document.activeElement);
          }
      };
 

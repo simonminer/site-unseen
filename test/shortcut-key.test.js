@@ -54,7 +54,7 @@ describe("ShortcutKey class tests", function () {
     });
     test('currentNode returns current match for each node in the list', () => {
         for (let index = 0; index < shortcutKey.nodes.length - 1; index++) {
-            shortcutKey.nextNode();
+            shortcutKey.currentNodeIndex = index;
             expect(shortcutKey.currentNode()).toBe(shortcutKey.nodes[index]);
         }
     });

@@ -111,6 +111,7 @@
     nextNode() {
         // Clear wrap-around.
         this.wrappedTo = undefined;
+        var index = this.currentNodeIndex;
 
         // Make sure there are matching nodes for this element list.
         if (!this.nodes.length) {
@@ -119,19 +120,19 @@
 
         // Return this node if it's the only one in the list.
         if (this.nodes.length == 1) {
-            this.currentNodeIndex = 0;
+            index = 0;
         }
         // Get the next node in the list.
         else if (this.currentNodeIndex < this.nodes.length - 1) {
-            this.currentNodeIndex += 1;
+            index += 1;
         }
         // Or loop around to to the start of the list if we are at the end.
         else {
-           this.currentNodeIndex = 0;
+           index = 0;
            this.wrappedTo = "start";
         }
 
-        return this.nodes[this.currentNodeIndex];   
+        return this.nodes[index];   
     }
 
      /**
@@ -143,6 +144,7 @@
     previousNode() {
         // Clear wrap-around.
         this.wrappedTo = undefined;
+        var index = this.currentNodeIndex;
 
         // Make sure there are matching nodes for this element list.
         if (!this.nodes.length) {
@@ -151,17 +153,17 @@
 
         // Return this node if it's the only one in the list.
         if (this.nodes.length == 1) {
-            this.currentNodeIndex = 0;
+            index = 0;
         }        
         // Get the previous node in the list.
         else if (this.currentNodeIndex > 0) {
-            this.currentNodeIndex -= 1;
+            index -= 1;
         }
         // Or loop around to to the start of the list if we are at the end.
         else {
-           this.currentNodeIndex = this.nodes.length - 1;
+           index = this.nodes.length - 1;
            this.wrappedTo = "end";       
         }
-        return this.nodes[this.currentNodeIndex];   
+        return this.nodes[index];   
     }
  }

@@ -33,10 +33,7 @@ export class ShortcutKeyManager {
     // takes both the node and event called on it as arguments.
     // Defaults to moving focus to the node.
     shortcutKeyFunction = function (node, event) {
-        var sr = ScreenReader.get();
-        node.focus();
-        sr.navigator.currentNode(document.activeElement);
-        sr.caption.node.innerHTML = sr.caption.generate(document.activeElement);
+        ScreenReader.get().moveTo(node);
     };
 
     // Type of wrap-around when a shortcut key is pressed on its
@@ -47,8 +44,8 @@ export class ShortcutKeyManager {
     // Event handler to bind to "keydown" events to handle shortcut key presses.
     static eventHandlerFunction = function (event) {
         // Don't do anything if the user is on a form field.
-        var activeElement = document.activeElement;
-        var tagName = activeElement.tagName.toLowerCase();
+        var activeElement = document.activeElement,
+            tagName = activeElement.tagName.toLowerCase();
         if (tagName == "select"
             || tagName == "textarea"
             || (tagName == "input" && activeElement.getAttribute("type") == "text")) {
@@ -60,21 +57,22 @@ export class ShortcutKeyManager {
 
         // If the lowercase shortcut key is pressed...
         // use the next matching node.
-        var node = null;
+        var node = null,
+            shortcutKey = null;
         if (skm.shortcutKeys.has(event.key)) {
-            var shortcutKey = skm.shortcutKeys.get(event.key);
+            shortcutKey = skm.shortcutKeys.get(event.key);
             node = shortcutKey.nextNode();
-            skm.wrappedTo = shortcutKey.wrappedTo;
         }
 
         // If the uppercase shortcut key is pressed, 
         // use the previous matching node.
         else if (event.key === event.key.toUpperCase() && skm.shortcutKeys.has(event.key.toLowerCase())) {
-            var shortcutKey = skm.shortcutKeys.get(event.key.toLowerCase());
+            shortcutKey = skm.shortcutKeys.get(event.key.toLowerCase());
             node = shortcutKey.previousNode();
-            skm.wrappedTo = shortcutKey.wrappedTo;
         }
         if (node) {
+            skm.wrappedTo = shortcutKey.wrappedTo;
+            shortcutKey.currentNode(node);
             skm.shortcutKeyFunction(node, event);
         }
     };
