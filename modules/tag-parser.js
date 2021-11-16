@@ -69,6 +69,9 @@ export class TagParser {
         };
         var tagName = node.tagName.toLowerCase();
 
+        // TODO: Create axe tree from screen reader root when
+        // content is initially loaded and look up the desired
+        // node here.
         axe._tree = axe.utils.getFlattenedTree(node);
         if (this.tagsWithoutRole[tagName] === undefined) {
             data['role'] = axe.commons.aria.getRole(node, axe._tree);
@@ -81,6 +84,35 @@ export class TagParser {
             data['value'] = node.textContent;
         }
 
+        // Add tag-specific data.
+        if (data['role'] === 'heading') {
+            var headingLevel = this.parseHeadingLevel(node);
+            if (headingLevel) {
+                data['role'] += ` level ${headingLevel}`;
+            }
+        }
+
         return data;
     }
+
+    /**
+     * @method
+     * Returns the numeric heading level associated with
+     * the specified node or undefined if none is found.
+     * @param {Element} node - The heading element being parsed.
+     * @returns {String}
+     */
+     parseHeadingLevel(node) {
+         var headingLevel = undefined;
+         if (node.hasAttribute('aria-level')) {
+             headingLevel = node.getAttribute('aria-level')
+         }
+         else {
+             var headingData = node.tagName.toUpperCase().match(/H(\d)/);
+             if (headingData && headingData instanceof Array) {
+                headingLevel = headingData[1];
+             }
+         }
+         return headingLevel;
+     }
 }

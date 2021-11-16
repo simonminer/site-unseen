@@ -27,14 +27,16 @@ describe("TagParser class tests", function () {
         for (var i = 1; i <= 6; i++) {
             var tagName = `h${i}`;
             var tag =  htmlToElement(`<${tagName}>Heading level ${i}</${tagName}>`, tagName);
+            expect(tagParser.parseHeadingLevel(tag)).toBe(i.toString());
             var data = tagParser.parse(tag);
-            expect(data.role).toBe('heading');
+            expect(data.role).toBe(`heading level ${i}`);
             expect(data.name).toBe(undefined);
             expect(data.value).toBe(`Heading level ${i}`);
 
             tag =  htmlToElement(`<div role="heading" aria-level="${i}">Heading level ${i}</div>`, 'div');
+            expect(tagParser.parseHeadingLevel(tag)).toBe(i.toString());
             data = tagParser.parse(tag);
-            expect(data.role).toBe('heading');
+            expect(data.role).toBe(`heading level ${i}`);
             expect(data.name).toBe(undefined);
             expect(data.value).toBe(`Heading level ${i}`);
         }
