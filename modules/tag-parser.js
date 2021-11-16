@@ -17,7 +17,7 @@ export class TagParser {
      * @member
      * Flattened DOM tree produced by the axe-core library.
      */
-    axeTree = axe._Tree;
+    axeTree = undefined;
 
     /**
      * @member
@@ -52,6 +52,19 @@ export class TagParser {
 
     /**
      * @method
+     * Generates and returns a flattened virtual node tree
+     * using the axe-core library. This tree is usded to
+     * extract accessibility information from tags.
+     * @param {Node} rootNode - The root node of the virtual tree
+     * @returns {tree}
+     */
+    generateTree(rootNode) {
+        const tree = axe.utils.getFlattenedTree(rootNode);
+        return tree;
+    }
+
+    /**
+     * @method
      * Extracts or infers the accessible role, name, and value
      * of the specified node, returning them in an associative
      * array with keys of "role", "name", and "value". Values in
@@ -72,12 +85,12 @@ export class TagParser {
         // TODO: Create axe tree from screen reader root when
         // content is initially loaded and look up the desired
         // node here.
-        axe._tree = axe.utils.getFlattenedTree(node);
+        this.axeTree = this.generateTree(node);
         if (this.tagsWithoutRole[tagName] === undefined) {
-            data['role'] = axe.commons.aria.getRole(node, axe._tree);
+            data['role'] = axe.commons.aria.getRole(node, this.axeTree);
         }
         if (data['role'] !== undefined) {
-            data['value'] = axe.commons.text.accessibleText(node, axe._tree);
+            data['value'] = axe.commons.text.accessibleText(node, this.axeTree);
         }
         else {
             data['role'] = this.tagsWithoutRole[tagName];

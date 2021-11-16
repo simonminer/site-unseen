@@ -22,6 +22,15 @@ describe("TagParser class tests", function () {
         expect(Object.keys(tagParser.tagsWithoutRole).length).toBeGreaterThan(0);
     });
 
+    test('generateTree creates a list of nodes', () => {
+        document.body.innerHTML = '<h1>Heading</h1><p>Text<p><ul><li>One</li><li>Two</li></ul>';
+        const tree = tagParser.generateTree(document.body);
+        expect(tree instanceof Array).toBe(true);
+        expect(tree.length).toBe(1);
+        expect(tree[0].actualNode.tagName).toBe("BODY");
+        expect(tree[0].actualNode.children.length).toBeGreaterThanOrEqual(3);
+    });
+
     // Common HTML tags.
     test('tagParser parses heading tags', () => {
         for (var i = 1; i <= 6; i++) {

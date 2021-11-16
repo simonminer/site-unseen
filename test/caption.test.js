@@ -31,7 +31,7 @@ describe("Caption class tests", function () {
     });
 
     test('generate returns accessible description of node', () => {
-        expect(caption.generate(document.querySelector("h1"))).toBe(`heading${sep}Page heading`);
+        expect(caption.generate(document.querySelector("h1"))).toBe(`heading level 1${sep}Page heading`);
         expect(caption.generate(document.querySelector("a"))).toBe(`link${sep}This is a link.`);
         expect(caption.generate(document.querySelector("div"))).toBe(`Image Description`);
         expect(caption.generate(document.querySelector("span"))).toBe(`Image Description`);
