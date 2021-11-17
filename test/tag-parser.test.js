@@ -105,8 +105,10 @@ describe("TagParser class tests", function () {
             tagParser = new TagParser({
                 rootNode: tag
             });
+            var listItemCount = tag.getElementsByTagName('li').length;
+            expect(tagParser.countListItems(tag)).toBe(listItemCount);
             var data = tagParser.parse(tag);
-            expect(data.role).toBe("list");
+            expect(data.role).toBe(`list (${listItemCount} item)`);
             expect(data.name).toBe(undefined);
             expect(data.value).toBe('');
 
@@ -119,6 +121,13 @@ describe("TagParser class tests", function () {
             expect(data.name).toBe(undefined);
             expect(data.value).toBe(listItemText);
         });
+        var tag = htmlToElement('<p>Not a list</p>', 'p');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
+        expect(tagParser.countListItems(tag)).toBe(undefined);
+
+        // TODO Add tests for ARIA list and listitem roles.
     });
     test('tagParser parses definition list tags', () => {
         var html = "<dl><dt>Term</dt><dd>Definition</dd></dl>";

@@ -110,6 +110,14 @@ export class TagParser {
                 data['role'] += ` level ${headingLevel}`;
             }
         }
+        else if (data['role'] === 'list') {
+            var listItemCount = this.countListItems(node);
+            if (listItemCount !== undefined) {
+                var itemText = listItemCount == 1 ? 'item' : 'items';
+                data['role'] += ` (${listItemCount} ${itemText})`;
+            }
+            
+        }
 
         return data;
     }
@@ -118,25 +126,25 @@ export class TagParser {
      * @method
      * Returns the numeric heading level associated with
      * the specified node or undefined if none is found.
-     * @param {Element} node - The heading element being parsed.
+     * @param {Element} headingNode - The heading element being parsed.
      * @returns {String}
      */
-     parseHeadingLevel(node) {
+     parseHeadingLevel(headingNode) {
 
          // Verify this node has a heading role.
-         var virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node);
+         var virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, headingNode);
          if (axe.commons.aria.getRole(virtualNode) !== 'heading') {
              return undefined;
          }
 
          // Tags with ARIA heading roles need an aria-level attribute.
          var headingLevel = undefined;
-         if (node.hasAttribute('aria-level')) {
-             headingLevel = node.getAttribute('aria-level')
+         if (headingNode.hasAttribute('aria-level')) {
+             headingLevel = headingNode.getAttribute('aria-level')
          }
          // Parse the heading level from the tag.
          else {
-             var headingData = node.tagName.toUpperCase().match(/H(\d)/);
+             var headingData = headingNode.tagName.toUpperCase().match(/H(\d)/);
              if (headingData && headingData instanceof Array) {
                 headingLevel = headingData[1];
              }
@@ -144,4 +152,26 @@ export class TagParser {
          return headingLevel;
      }
 
+    /**
+     * @method
+     * Returns the number of list items in the given list node
+     * or undefined if something goes wrong.
+     * @param {Element} listNode - The list element whose list item children are being counted
+     * @returns {integer}
+     */
+    countListItems(listNode) {
+
+         // Verify this node has a role of list.
+         var virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, listNode);
+         if (axe.commons.aria.getRole(virtualNode) !== 'list') {
+             return undefined;
+         }
+
+        // TODO Find children with listitem roles (to account for list ARIA role).
+        var listItemCount = listNode.getElementsByTagName('li').length;
+
+        // TODO Handle definition lists appropriately. (Maybe they shouldn't be lists at all?)
+
+        return listItemCount;
+    }
 }
