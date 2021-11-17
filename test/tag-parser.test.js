@@ -59,8 +59,14 @@ describe("TagParser class tests", function () {
             expect(data.name).toBe(undefined);
             expect(data.value).toBe(`Heading level ${i}`);
         }
+        
+        var tag =  htmlToElement('<p>Not a heading</p>', 'p');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
+        expect(tagParser.parseHeadingLevel(tag)).toBe(undefined);
     });
-    test('tagParser parses link tags', () => {
+    test('tagParser parses paragraph tags', () => {
         var text = "This is a paragraph";
         var tag = htmlToElement(`<p>${text}</p>`, 'p');
         tagParser = new TagParser({

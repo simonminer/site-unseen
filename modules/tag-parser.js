@@ -122,10 +122,19 @@ export class TagParser {
      * @returns {String}
      */
      parseHeadingLevel(node) {
+
+         // Verify this node has a heading role.
+         var virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node);
+         if (axe.commons.aria.getRole(virtualNode) !== 'heading') {
+             return undefined;
+         }
+
+         // Tags with ARIA heading roles need an aria-level attribute.
          var headingLevel = undefined;
          if (node.hasAttribute('aria-level')) {
              headingLevel = node.getAttribute('aria-level')
          }
+         // Parse the heading level from the tag.
          else {
              var headingData = node.tagName.toUpperCase().match(/H(\d)/);
              if (headingData && headingData instanceof Array) {
@@ -134,4 +143,5 @@ export class TagParser {
          }
          return headingLevel;
      }
+
 }
