@@ -7,7 +7,6 @@
 import { AccessibleNode } from './accessible-node.js';
 
 // Set up axe-core.
-import axe from "axe-core";
 var virtualTree = undefined;
 if (window.axe == undefined) {
     window.axe = require("axe-core");
