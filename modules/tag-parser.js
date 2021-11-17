@@ -54,6 +54,7 @@ export class TagParser {
                 }
             });
         }
+        this.virtualTree = this.generateTree(this.rootNode);
     }
 
     /**

@@ -20,6 +20,10 @@ describe("TagParser class tests", function () {
     test('constructor creates tagParser', () => {
         expect(tagParser instanceof TagParser).toBe(true);
         expect(Object.keys(tagParser.tagsWithoutRole).length).toBeGreaterThan(0);
+        expect(tagParser.rootNode).toBe(document.body);
+        expect(tagParser.virtualTree instanceof Array).toBe(true);
+        expect(tagParser.virtualTree.length).toBe(1);
+        expect(tagParser.virtualTree[0].actualNode.tagName).toBe("BODY");
     });
 
     test('generateTree creates a list of nodes', () => {
