@@ -4,8 +4,10 @@
  */
 "use strict";
 
+import { AccessibleNode } from './accessible-node.js';
+
 // Set up axe-core.
-// import axe from "axe-core";
+import axe from "axe-core";
 var virtualTree = undefined;
 if (window.axe == undefined) {
     window.axe = require("axe-core");
@@ -31,10 +33,10 @@ export class NodeParser {
      */
     tagsWithoutRole = {
         caption: 'table caption',
-        dd: 'list item',
+        dd: 'listitem',
         dl: 'list',
-        dt: 'list item',
-        li: 'list item',
+        dt: 'listitem',
+        li: 'listitem',
         td: 'table cell',
         th: 'table heading',
         tr: 'table row'
@@ -72,54 +74,45 @@ export class NodeParser {
 
     /**
      * @method
-     * Extracts or infers the accessible role, name, and value
-     * of the specified node, returning them in an associative
-     * array with keys of "role", "name", and "value". Values in
-     * this array which could not be computed are
-     * set to undefined if they could 
+     * Extracts or infers the accessible role, name, value,
+     * and other metadata of the specified node,
+     * returning an AccessibleNode object containing this data.
      * @param {Element} node - The HTML node/tag to parse for accessible details.
-     * @returns {Object}
+     * @returns {AccessibleNode}
      */
     parse(node) {
 
-        var data = {
-            'role': undefined,
-            'name': node.hasAttribute('name') ? node.getAttribute('name') : undefined,
-            'value': undefined
-        };
-        var tagName = node.tagName.toLowerCase();
+        var aNode = new AccessibleNode(node);
 
-        // TODO: Create axe tree from screen reader root when
-        // content is initially loaded and look up the desired
-        // node here.
-        if (this.tagsWithoutRole[tagName] === undefined) {
-            data['role'] = axe.commons.aria.getRole(node, this.virtualTree);
+        // Compute the node's role and value.
+        if (this.tagsWithoutRole[aNode.tagName] === undefined) {
+            aNode.role = axe.commons.aria.getRole(node, this.virtualTree);
         }
-        if (data['role'] !== undefined) {
-            data['value'] = axe.commons.text.accessibleText(node, this.virtualTree);
+        if (aNode.role !== undefined) {
+            aNode.value = axe.commons.text.accessibleText(node, this.virtualTree);
         }
         else {
-            data['role'] = this.tagsWithoutRole[tagName];
-            data['value'] = node.textContent;
+            aNode.role = this.tagsWithoutRole[aNode.tagName];
+            aNode.value = node.textContent;
         }
 
         // Add node-specific data.
-        if (data['role'] === 'heading') {
+        if (aNode.role === 'heading') {
             var headingLevel = this.parseHeadingLevel(node);
             if (headingLevel) {
-                data['role'] += ` level ${headingLevel}`;
+                aNode.metadata = `level ${headingLevel}`;
             }
         }
-        else if (data['role'] === 'list') {
+        else if (aNode.role === 'list') {
             var listItemCount = this.countListItems(node);
             if (listItemCount !== undefined) {
                 var itemText = listItemCount == 1 ? 'item' : 'items';
-                data['role'] += ` (${listItemCount} ${itemText})`;
+                aNode.metadata = `(${listItemCount} ${itemText})`;
             }
             
         }
 
-        return data;
+        return aNode;
     }
 
     /**

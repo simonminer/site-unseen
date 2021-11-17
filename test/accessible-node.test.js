@@ -8,7 +8,7 @@ describe("AccessibleNode class tests", function () {
         var aNode = new AccessibleNode(node);
         expect(aNode instanceof AccessibleNode).toBe(true);
         expect(aNode.actualNode).toBe(node);
-        expect(aNode.tagName).toBe(node.tagName);
+        expect(aNode.tagName).toBe(node.tagName.toLowerCase());
         expect(aNode.name).toBe(linkName);
         expect(aNode.separator).toBe(': ');
     });

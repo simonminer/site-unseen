@@ -68,7 +68,7 @@
      */
     constructor(actualNode, virtualNode = undefined) {
         this.actualNode = actualNode;
-        this.tagName = actualNode.tagName;
+        this.tagName = actualNode.tagName.toLowerCase();
         this.name = actualNode.hasAttribute('name') ? actualNode.getAttribute('name') : undefined;
         this.virtualNode = virtualNode;
     }
@@ -87,7 +87,7 @@
 
          var values = [];
          [roleText, this.name, this.value].forEach( (data) => {
-            if (data !== undefined && data !== null) {
+            if (data !== undefined && data !== null && data !== '') {
                 values.push(data);
             }
         });

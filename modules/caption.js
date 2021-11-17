@@ -76,14 +76,8 @@ export class Caption {
      * @returns {String}
      */
     generate(node) {
-        const data = this.nodeParser.parse(node);
-        var values = [];
-        ['role', 'name', 'value'].forEach( (key) => {
-            if (data[key] !== undefined && data[key] !== null) {
-                values.push(data[key]);
-            }
-        });
-        const text = values.join(this.separator);
+        const aNode = this.nodeParser.parse(node);
+        const text = aNode.toString();
         return text;
     }
 
