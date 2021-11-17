@@ -82,6 +82,7 @@ export class NodeParser {
     parse(node) {
 
         var aNode = new AccessibleNode(node);
+        aNode.virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node);
 
         // Compute the node's role and value.
         if (this.tagsWithoutRole[aNode.tagName] === undefined) {
@@ -97,13 +98,13 @@ export class NodeParser {
 
         // Add node-specific data.
         if (aNode.role === 'heading') {
-            var headingLevel = this.parseHeadingLevel(node);
+            var headingLevel = this.parseHeadingLevel(aNode);
             if (headingLevel) {
                 aNode.metadata = `level ${headingLevel}`;
             }
         }
         else if (aNode.role === 'list') {
-            var listItemCount = this.countListItems(node);
+            var listItemCount = this.countListItems(aNode);
             if (listItemCount !== undefined) {
                 var itemText = listItemCount == 1 ? 'item' : 'items';
                 aNode.metadata = `(${listItemCount} ${itemText})`;
@@ -118,21 +119,20 @@ export class NodeParser {
      * @method
      * Returns the numeric heading level associated with
      * the specified node or undefined if none is found.
-     * @param {Element} headingNode - The heading element being parsed.
+     * @param {AccessibleNode} headingNode - AccessibleNode for the heading element being parsed.
      * @returns {String}
      */
      parseHeadingLevel(headingNode) {
 
          // Verify this node has a heading role.
-         var virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, headingNode);
-         if (axe.commons.aria.getRole(virtualNode) !== 'heading') {
+         if (headingNode.role !== 'heading') {
              return undefined;
          }
 
          // Tags with ARIA heading roles need an aria-level attribute.
          var headingLevel = undefined;
-         if (headingNode.hasAttribute('aria-level')) {
-             headingLevel = headingNode.getAttribute('aria-level')
+         if (headingNode.virtualNode.hasAttr('aria-level')) {
+             headingLevel = headingNode.virtualNode.attr('aria-level')
          }
          // Parse the heading level from the tag.
          else {
@@ -148,19 +148,18 @@ export class NodeParser {
      * @method
      * Returns the number of list items in the given list node
      * or undefined if something goes wrong.
-     * @param {Element} listNode - The list element whose list item children are being counted
+     * @param {AccessibleNode} listNode - The AccessibleNode for the list element whose list item children are being counted
      * @returns {integer}
      */
     countListItems(listNode) {
 
          // Verify this node has a role of list.
-         var virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, listNode);
-         if (axe.commons.aria.getRole(virtualNode) !== 'list') {
+         if (listNode.role !== 'list') {
              return undefined;
          }
 
         // TODO Find children with listitem roles (to account for list ARIA role).
-        var listItemCount = listNode.getElementsByTagName('li').length;
+        var listItemCount = listNode.actualNode.getElementsByTagName('li').length;
 
         // TODO Handle definition lists appropriately. (Maybe they shouldn't be lists at all?)
 

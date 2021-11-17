@@ -33,20 +33,21 @@ describe("NodeParser class tests", function () {
             nodeParser = new NodeParser({
                 rootNode: node
             });
-            expect(nodeParser.parseHeadingLevel(node)).toBe(i.toString());
             var aNode = nodeParser.parse(node);
+            expect(nodeParser.parseHeadingLevel(aNode)).toBe(i.toString());
             expect(aNode.role).toBe('heading');
             expect(aNode.metadata).toBe(`level ${i}`);
             expect(aNode.name).toBe(undefined);
             expect(aNode.value).toBe(`Heading level ${i}`);
             expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}Heading level ${i}`);
+            expect(aNode.virtualNode.hasAttr('foo')).toBe(false);
 
             node = htmlToElement(`<div role="heading" aria-level="${i}">Heading level ${i}</div>`, 'div');
             nodeParser = new NodeParser({
                 rootNode: node
             });
-            expect(nodeParser.parseHeadingLevel(node)).toBe(i.toString());
             aNode = nodeParser.parse(node);
+            expect(nodeParser.parseHeadingLevel(aNode)).toBe(i.toString());
             expect(aNode.role).toBe('heading');
             expect(aNode.metadata).toBe(`level ${i}`);
             expect(aNode.name).toBe(undefined);
@@ -102,9 +103,9 @@ describe("NodeParser class tests", function () {
             nodeParser = new NodeParser({
                 rootNode: listNode
             });
-            var listItemCount = listNode.getElementsByTagName('li').length;
-            expect(nodeParser.countListItems(listNode)).toBe(listItemCount);
             var aNode = nodeParser.parse(listNode);
+            var listItemCount = listNode.getElementsByTagName('li').length;
+            expect(nodeParser.countListItems(aNode)).toBe(listItemCount);
             expect(aNode.role).toBe('list');
             expect(aNode.metadata).toBe(`(${listItemCount} item)`);
             expect(aNode.name).toBe(undefined);
@@ -136,7 +137,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.role).toBe("list");
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe('TermDefinition');
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(`${aNode.role} (0 items)${aNode.separator}${aNode.value}`);
 
         node = htmlToElement(html, 'dt');
         nodeParser = new NodeParser({
