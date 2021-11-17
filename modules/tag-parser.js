@@ -92,7 +92,6 @@ export class TagParser {
         // TODO: Create axe tree from screen reader root when
         // content is initially loaded and look up the desired
         // node here.
-        this.virtualTree = this.generateTree(node);
         if (this.tagsWithoutRole[tagName] === undefined) {
             data['role'] = axe.commons.aria.getRole(node, this.virtualTree);
         }

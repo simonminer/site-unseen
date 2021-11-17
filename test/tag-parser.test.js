@@ -40,6 +40,9 @@ describe("TagParser class tests", function () {
         for (var i = 1; i <= 6; i++) {
             var tagName = `h${i}`;
             var tag =  htmlToElement(`<${tagName}>Heading level ${i}</${tagName}>`, tagName);
+            tagParser = new TagParser({
+                rootNode: tag
+            });
             expect(tagParser.parseHeadingLevel(tag)).toBe(i.toString());
             var data = tagParser.parse(tag);
             expect(data.role).toBe(`heading level ${i}`);
@@ -47,6 +50,9 @@ describe("TagParser class tests", function () {
             expect(data.value).toBe(`Heading level ${i}`);
 
             tag =  htmlToElement(`<div role="heading" aria-level="${i}">Heading level ${i}</div>`, 'div');
+            tagParser = new TagParser({
+                rootNode: tag
+            });
             expect(tagParser.parseHeadingLevel(tag)).toBe(i.toString());
             data = tagParser.parse(tag);
             expect(data.role).toBe(`heading level ${i}`);
@@ -57,6 +63,9 @@ describe("TagParser class tests", function () {
     test('tagParser parses link tags', () => {
         var text = "This is a paragraph";
         var tag = htmlToElement(`<p>${text}</p>`, 'p');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe(null);
         expect(data.name).toBe(undefined);
@@ -66,12 +75,18 @@ describe("TagParser class tests", function () {
         var linkText = "This is a link";
         var name = "link";
         var tag =  htmlToElement(`<a href="#" name="${name}">${linkText}</a>`, 'a');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe('link');
         expect(data.name).toBe(name);
         expect(data.value).toBe(linkText);
 
         tag =  htmlToElement(`<div role="link" href="#">${linkText}</div>`, 'div');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe('link');
         expect(data.name).toBe(undefined);
@@ -81,12 +96,18 @@ describe("TagParser class tests", function () {
         ['ol', 'ul'].forEach(function(tagName) {
             var listItemText = "Item 1";
             var tag =  htmlToElement(`<${tagName}><li>${listItemText}</li></${tagName}>`, tagName);
+            tagParser = new TagParser({
+                rootNode: tag
+            });
             var data = tagParser.parse(tag);
             expect(data.role).toBe("list");
             expect(data.name).toBe(undefined);
             expect(data.value).toBe('');
 
             tag =  htmlToElement(`<${tagName}><li>${listItemText}</li></${tagName}>`, 'li');
+            tagParser = new TagParser({
+                rootNode: tag
+            });
             data = tagParser.parse(tag);
             expect(data.role).toBe("list item");
             expect(data.name).toBe(undefined);
@@ -96,12 +117,18 @@ describe("TagParser class tests", function () {
     test('tagParser parses definition list tags', () => {
         var html = "<dl><dt>Term</dt><dd>Definition</dd></dl>";
         var tag =  htmlToElement(html, 'dl');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe("list");
         expect(data.name).toBe(undefined);
         expect(data.value).toBe('TermDefinition');
 
         tag =  htmlToElement(html, 'dt');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         data = tagParser.parse(tag);
         expect(data.role).toBe("list item");
         expect(data.name).toBe(undefined);
@@ -117,12 +144,18 @@ describe("TagParser class tests", function () {
         var altText = "Sample image";
         var src = "image.png";
         var tag =  htmlToElement(`<img src="${src}" alt="${altText}" />`, 'img');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe("img");
         expect(data.name).toBe(undefined);
         expect(data.value).toBe(altText);
 
         tag =  htmlToElement(`<div role="img" aria-label="${altText}">Test</div>`, 'div');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         data = tagParser.parse(tag);
         expect(data.role).toBe("img");
         expect(data.name).toBe(undefined);
@@ -140,6 +173,9 @@ describe("TagParser class tests", function () {
             var name = `test-${type}`;
             var value = `Test ${type}`;
             var tag =  htmlToElement(`<input type="${type}" aria-label="${value}" name="${name}" />`, 'input');
+            tagParser = new TagParser({
+                rootNode: tag
+            });
             var data = tagParser.parse(tag);
             expect(data.role).toBe(role);
             expect(data.name).toBe(name);
@@ -150,6 +186,9 @@ describe("TagParser class tests", function () {
         var name = 'test-textarea';
         var value = 'Test Textarea';
         var tag =  htmlToElement(`<textarea name="${name}" aria-label="${value}">${value} Value</button>`, 'textarea');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe('textbox');
         expect(data.name).toBe(name);
@@ -162,12 +201,18 @@ describe("TagParser class tests", function () {
         var optionValue = "Test Option";
         var html = `<select name="${selectName}" aria-label="${selectValue}"><option name="${optionName}">${optionValue}</option></select>`;
         var tag =  htmlToElement(html, 'select');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe('combobox');
         expect(data.name).toBe(selectName);
         expect(data.value).toBe(selectValue);
 
         tag =  htmlToElement(html, 'option');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         data = tagParser.parse(tag);
         expect(data.role).toBe('option');
         expect(data.name).toBe(optionName);
@@ -177,6 +222,9 @@ describe("TagParser class tests", function () {
         var name = 'test-button';
         var value = 'Test Button';
         var tag =  htmlToElement(`<button name="${name}">${value}</button>`, 'button');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe('button');
         expect(data.name).toBe(name);
@@ -190,30 +238,45 @@ describe("TagParser class tests", function () {
         var cellValue = "Table Cell";
         var html = `<table><caption>${captionValue}</caption><tr><th>${headingValue}</th><td>${cellValue}</td></tr></table>`;
         var tag =  htmlToElement(html, 'table');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         var data = tagParser.parse(tag);
         expect(data.role).toBe('table');
         expect(data.name).toBe(undefined);
         expect(data.value).toBe(captionValue);
 
         tag =  htmlToElement(html, 'caption');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         data = tagParser.parse(tag);
         expect(data.role).toBe('table caption');
         expect(data.name).toBe(undefined);
         expect(data.value).toBe(captionValue);
 
         tag =  htmlToElement(html, 'tr');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         data = tagParser.parse(tag);
         expect(data.role).toBe('table row');
         expect(data.name).toBe(undefined);
         expect(data.value).toBe(headingValue + cellValue);
 
         tag =  htmlToElement(html, 'th');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         data = tagParser.parse(tag);
         expect(data.role).toBe('table heading');
         expect(data.name).toBe(undefined);
         expect(data.value).toBe(headingValue);
 
         tag =  htmlToElement(html, 'td');
+        tagParser = new TagParser({
+            rootNode: tag
+        });
         data = tagParser.parse(tag);
         expect(data.role).toBe('table cell');
         expect(data.name).toBe(undefined);
