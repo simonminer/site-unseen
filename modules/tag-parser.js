@@ -6,7 +6,7 @@
 
 // Set up axe-core.
 // import axe from "axe-core";
-var axeTree = undefined;
+var virtualTree = undefined;
 if (window.axe == undefined) {
     window.axe = require("axe-core");
 }
@@ -15,9 +15,15 @@ export class TagParser {
 
     /**
      * @member
-     * Flattened DOM tree produced by the axe-core library.
+     * Root node from which the virtual Dom tree starts.
      */
-    axeTree = undefined;
+    rootNode = document.body;
+
+    /**
+     * @member
+     * Flattened virtual DOM tree produced by the axe-core library.
+     */
+    virtualTree = undefined;
 
     /**
      * @member
@@ -34,7 +40,7 @@ export class TagParser {
         tr: 'table row'
     };
 
-    static _properties = ['tagsWithoutRole'];
+    static _properties = ['tagsWithoutRole', 'rootNode', 'virtualTree'];
 
     /**
      * @constructor
@@ -85,12 +91,12 @@ export class TagParser {
         // TODO: Create axe tree from screen reader root when
         // content is initially loaded and look up the desired
         // node here.
-        this.axeTree = this.generateTree(node);
+        this.virtualTree = this.generateTree(node);
         if (this.tagsWithoutRole[tagName] === undefined) {
-            data['role'] = axe.commons.aria.getRole(node, this.axeTree);
+            data['role'] = axe.commons.aria.getRole(node, this.virtualTree);
         }
         if (data['role'] !== undefined) {
-            data['value'] = axe.commons.text.accessibleText(node, this.axeTree);
+            data['value'] = axe.commons.text.accessibleText(node, this.virtualTree);
         }
         else {
             data['role'] = this.tagsWithoutRole[tagName];
