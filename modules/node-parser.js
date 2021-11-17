@@ -146,6 +146,29 @@ export class NodeParser {
 
     /**
      * @method
+     * Returns an array of AccessibleNode objects corresponding
+     * to the children of the specified AccessibleNode with
+     * the listitem role.
+     * @param {AccessibleNode} listNode - The AccessibleNode for the list element whose list item children are being counted
+     * @return {Array[AccessibleNode]}
+     */
+    getListItemChildren(listNode) {
+        var listItemChildren = [];
+        if (listNode.role === 'list') {
+            const children = listNode.virtualNode.children;
+            for (var i = 0, l = children.length; i < l; i++) {
+                var childRole = axe.commons.aria.getRole(children[i], this.virtualTree);
+                if (childRole === 'listitem') {
+                    var listItemChild = new AccessibleNode(children[i].actualNode, children[i]);
+                    listItemChildren.push(listItemChild);
+                }
+            }
+         }
+        return listItemChildren;
+    }
+
+    /**
+     * @method
      * Returns the number of list items in the given list node
      * or undefined if something goes wrong.
      * @param {AccessibleNode} listNode - The AccessibleNode for the list element whose list item children are being counted
@@ -159,10 +182,7 @@ export class NodeParser {
          }
 
         // TODO Find children with listitem roles (to account for list ARIA role).
-        var listItemCount = listNode.actualNode.getElementsByTagName('li').length;
-
-        // TODO Handle definition lists appropriately. (Maybe they shouldn't be lists at all?)
-
-        return listItemCount;
+        var listItemChildren = this.getListItemChildren(listNode);
+        return listItemChildren.length;
     }
 }

@@ -105,6 +105,8 @@ describe("NodeParser class tests", function () {
             });
             var aNode = nodeParser.parse(listNode);
             var listItemCount = listNode.getElementsByTagName('li').length;
+            var listItems = nodeParser.getListItemChildren(aNode);
+            expect(listItems.length).toBe(listItemCount);
             expect(nodeParser.countListItems(aNode)).toBe(listItemCount);
             expect(aNode.role).toBe('list');
             expect(aNode.metadata).toBe(`(${listItemCount} item)`);
@@ -119,6 +121,29 @@ describe("NodeParser class tests", function () {
             expect(aNode.value).toBe(listItemText);
             expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
         });
+
+        var listNode = htmlToElement(`<section role="list"><div role="listitem">Item 1</div><div role="listitem">Item 2</div></section>`, 'section');
+        nodeParser = new NodeParser({
+            rootNode: listNode
+        });
+        var aNode = nodeParser.parse(listNode);
+        var listItems = nodeParser.getListItemChildren(aNode);
+        expect(nodeParser.countListItems(aNode)).toBe(listItems.length);
+        expect(aNode.role).toBe('list');
+        expect(aNode.metadata).toBe(`(${listItems.length} items)`);
+        expect(aNode.name).toBe(undefined);
+        expect(aNode.value).toBe('');
+        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}`);
+
+        /*
+        var listItemNode = listNode.querySelector('li');
+        aNode = nodeParser.parse(listItemNode);
+        expect(aNode.role).toBe("listitem");
+        expect(aNode.name).toBe(undefined);
+        expect(aNode.value).toBe(listItemText);
+        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        */
+
         var node = htmlToElement('<p>Not a list</p>', 'p');
         nodeParser = new NodeParser({
             rootNode: node
