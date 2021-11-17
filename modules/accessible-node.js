@@ -52,6 +52,13 @@
       */
       metadata = undefined;
 
+     /**
+      * @member
+      * Character string to separate accessible data values
+      * returned by the toString() method.
+      */
+     separator = ': ';
+
     /**
      * @constructor
      *
@@ -60,10 +67,31 @@
      * @returns {AccessibleNode} - A new instance of the AccessibleNode class.
      */
     constructor(actualNode, virtualNode = undefined) {
-        if (actualNode) {
-            this.actualNode = actualNode;
-            this.tagName = actualNode.tagName;
-        }
+        this.actualNode = actualNode;
+        this.tagName = actualNode.tagName;
+        this.name = actualNode.hasAttribute('name') ? actualNode.getAttribute('name') : undefined;
         this.virtualNode = virtualNode;
     }
+
+     /**
+      * @method
+      *
+      * Renders the data in this object as a string
+      * @returns {String}
+      */
+     toString () {
+         var roleText = this.role;
+         if (this.metadata) {
+             roleText += ' ' + this.metadata;
+         }
+
+         var values = [];
+         [roleText, this.name, this.value].forEach( (data) => {
+            if (data !== undefined && data !== null) {
+                values.push(data);
+            }
+        });
+        const text = values.join(this.separator);
+        return text;
+     }
  }
