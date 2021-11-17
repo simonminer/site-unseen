@@ -6,6 +6,7 @@
 
 import { Overlay } from "./overlay.js";
 import { Caption } from "./caption.js";
+import { TagParser } from "./tag-parser.js";
 import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
@@ -21,19 +22,19 @@ export class ScreenReader {
      * @member
      * {Navigator}
      */
-    navigator = new Navigator();
+    navigator = undefined;
 
     /**
      * @member
      * {Overlay}
      */
-    overlay = new Overlay();
+    overlay = undefined;
 
     /**
      * @member
      * {Caption}
      */
-    caption = new Caption();
+    caption = undefined;
 
     /**
      * @member
@@ -91,6 +92,7 @@ export class ScreenReader {
      * for screen reader navigation.
      */
     setupNavigation() {
+        this.navigator = new Navigator();
         this.navigator.markNavigableNodes(this.rootNode);
     }
 
@@ -99,11 +101,18 @@ export class ScreenReader {
      * Generate and add the overlay to the DOM.
      */
     appendOverlay() {
+        this.overlay = new Overlay();
         this.rootNode.appendChild(this.overlay.getCSS());
         var overlayNode = this.overlay.getHTML();
         this.rootNode.appendChild(overlayNode);
 
         // Put the caption inside the overlay.
+        const tagParser = new TagParser({
+            rootNode: this.rootNode
+        });
+        this.caption = new Caption({
+            tagParser: tagParser
+        });
         overlayNode.appendChild(this.caption.getCSS());
         overlayNode.appendChild(this.caption.getHTML());
     }
