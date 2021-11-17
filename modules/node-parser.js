@@ -1,6 +1,6 @@
 /**
  * @class
- * Class to parse HTML tags for accessibility information.
+ * Class to parse HTML nodes for accessibility information.
  */
 "use strict";
 
@@ -11,7 +11,7 @@ if (window.axe == undefined) {
     window.axe = require("axe-core");
 }
 
-export class TagParser {
+export class NodeParser {
 
     /**
      * @member
@@ -48,7 +48,7 @@ export class TagParser {
      */
     constructor(properties) {
         if (properties !== undefined) {
-            TagParser._properties.forEach(property => {
+            NodeParser._properties.forEach(property => {
                 if (properties.hasOwnProperty(property)) {
                     this[property] = properties[property];
                 }
@@ -61,7 +61,7 @@ export class TagParser {
      * @method
      * Generates and returns a flattened virtual node tree
      * using the axe-core library. This tree is usded to
-     * extract accessibility information from tags.
+     * extract accessibility information from nodes.
      * @param {Node} rootNode - The root node of the virtual tree
      * @returns {tree}
      */
@@ -103,7 +103,7 @@ export class TagParser {
             data['value'] = node.textContent;
         }
 
-        // Add tag-specific data.
+        // Add node-specific data.
         if (data['role'] === 'heading') {
             var headingLevel = this.parseHeadingLevel(node);
             if (headingLevel) {

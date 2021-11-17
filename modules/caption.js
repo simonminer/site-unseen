@@ -5,7 +5,7 @@
  */
 "use strict";
 
-import { TagParser } from "./tag-parser.js";
+import { NodeParser } from "./node-parser.js";
 
 export class Caption {
 
@@ -48,11 +48,11 @@ export class Caption {
 
     /**
      * @member
-     * Instance of the TagParser class used to generate text for this caption.
+     * Instance of the NodeParser class used to generate text for this caption.
      */
-    tagParser = new TagParser;
+    nodeParser = new NodeParser;
 
-    static _properties = ["id", "css", "separator", "tagParser"];
+    static _properties = ["id", "css", "separator", "nodeParser"];
 
     /**
      * @constructor
@@ -76,7 +76,7 @@ export class Caption {
      * @returns {String}
      */
     generate(node) {
-        const data = this.tagParser.parse(node);
+        const data = this.nodeParser.parse(node);
         var values = [];
         ['role', 'name', 'value'].forEach( (key) => {
             if (data[key] !== undefined && data[key] !== null) {

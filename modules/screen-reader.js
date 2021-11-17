@@ -6,7 +6,7 @@
 
 import { Overlay } from "./overlay.js";
 import { Caption } from "./caption.js";
-import { TagParser } from "./tag-parser.js";
+import { NodeParser } from "./node-parser.js";
 import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
@@ -107,11 +107,11 @@ export class ScreenReader {
         this.rootNode.appendChild(overlayNode);
 
         // Put the caption inside the overlay.
-        const tagParser = new TagParser({
+        const nodeParser = new NodeParser({
             rootNode: this.rootNode
         });
         this.caption = new Caption({
-            tagParser: tagParser
+            nodeParser: nodeParser
         });
         overlayNode.appendChild(this.caption.getCSS());
         overlayNode.appendChild(this.caption.getHTML());
