@@ -41,7 +41,17 @@ export class NodeParser {
         tr: 'table row'
     };
 
-    static _properties = ['tagsWithoutRole', 'rootNode', 'virtualTree'];
+    /**
+     * @member
+     * List of roles corresponding to page regions/landmarks.
+     */
+    // TODO Should the "region" role be included in this list?
+    landmarkRoles = [
+        'application', 'banner', 'complementary', 'contentinfo',
+        'form', 'main', 'navigation', 'search'
+    ];
+
+    static _properties = ['tagsWithoutRole', 'landmarkRoles', 'rootNode', 'virtualTree'];
 
     /**
      * @constructor
@@ -130,6 +140,11 @@ export class NodeParser {
             if (listItemIndex !== -1 && listItems.length >= 0 ) {
                 aNode.metadata = `(${listItemIndex + 1} of ${listItems.length})`;
             }
+        }
+
+        // Highlight when a role corresponds with a page region/landmark.
+        else if (this.landmarkRoles.includes(aNode.role)) {
+            aNode.metadata = "region";
         }
 
         return aNode;

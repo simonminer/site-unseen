@@ -341,4 +341,33 @@ describe("NodeParser class tests", function () {
 
         // TODO Add tests for table, columnheading, row, and cell roles.
     });
+
+    // Region/landmark elements.
+    test('nodeParser parses landmark elements', () => {
+        ['aside', 'footer', 'header', 'main', 'nav'].forEach(function(tagName) {
+            const node = htmlToElement(`"<${tagName}>Test Content</${tagName}>`, tagName );
+            nodeParser = new NodeParser({
+                rootNode: node
+            });
+            const aNode = nodeParser.parse(node);
+            expect(nodeParser.landmarkRoles.includes(aNode.role)).toBe(true);
+            expect(aNode.metadata).toBe('region');
+            expect(aNode.name).toBe(undefined);
+            expect(aNode.value).toBe('');
+            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}`);
+        });
+
+        nodeParser.landmarkRoles.forEach(function(role) {
+            const node = htmlToElement(`"<div role="${role}">Test Contents</div>`, 'div');
+            nodeParser = new NodeParser({
+                rootNode: node
+            });
+            const aNode = nodeParser.parse(node);
+            expect(aNode.role).toBe(role);
+            expect(aNode.metadata).toBe('region');
+            expect(aNode.name).toBe(undefined);
+            expect(aNode.value).toBe('');
+            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}`);
+        });
+    });
 });

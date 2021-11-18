@@ -5,138 +5,140 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <header>
+            <img src="media/site-unseen-logo.png" alt="Site Unseen Logo" style="float:right;width:100px" />
+            <h1>Site Unseen</h1>
+        </header>
         <main id="contents">
-        <img src="media/site-unseen-logo.png" alt="Site Unseen Logo" style="float:right;width:100px" />
-        <h1>Site Unseen</h1>
-        <h2>Overview</h2>
-        <p>S<strong>ite Unseen</strong> is a JavaScript library, web application, and browser extension that allows you to interact with any web page in the same way a person with blindness would experience it. Based on <a href="https://inclusiville.com/">Inclusiville</a>, the <a href="https://www.deque.com/blog/deque-hosts-first-virtual-axe-hackathon/">award-winning</a> empathy building game for web accessibility, Site Unseen hides all visible elements on a web page and provides you with a simulated screen reader to explore its contents. Use keyboard commands to move through the elements on a page, viewing the name, role, and value of each one as it comes into focus and interacting with it using only your keyboard.</p>
-        <p>With Site Unseen, you can:</p>
-        <ol>
-            <li>Experience any web page the same way that people with blindness or visual impairments do.</li>
-            <li>Test for web accessibility issues, and gain first-hand insight about their impact on a website's users.</li>
-            <li>Provide individuals studying web accessibility with a useful and enlightening exercise or assignment.</li>
-            <li>Build empathy in website owners and stakeholders for users with disabilities who visit their sites.</li>
-            <li>Develop business cases for web accessibility projects.</li>
-        </ol>
-        <p>Check out <a href="https://siteunseen.dev/">https://siteunseen.dev/</a> for more information.</p>
-        <h2>Features</h2>
-        <ul>
-            <li>Navigate through the contents of a web page using the arrow keys, viewing information about each element as you explore.</li>
-            <li>Use shortcut Keys to access lists of headings, regions, and links on a web page and quickly navigate to them.</li>
-            <li>Temporarily lighten the opaque overlay to get a glimpse of the page and find your bearings if you get stuck.</li>
-        </ul>
-        <h2>Setup and Usage</h2>
-        <p>To see Site Unseen in action on a sample web page, issue the following commands in a Mac OSX or Unix terminal window.</p>
-        <pre>
+            <h2>Overview</h2>
+            <p>S<strong>ite Unseen</strong> is a JavaScript library, web application, and browser extension that allows you to interact with any web page in the same way a person with blindness would experience it. Based on <a href="https://inclusiville.com/">Inclusiville</a>, the <a href="https://www.deque.com/blog/deque-hosts-first-virtual-axe-hackathon/">award-winning</a> empathy building game for web accessibility, Site Unseen hides all visible elements on a web page and provides you with a simulated screen reader to explore its contents. Use keyboard commands to move through the elements on a page, viewing the name, role, and value of each one as it comes into focus and interacting with it using only your keyboard.</p>
+            <p>With Site Unseen, you can:</p>
+            <ol>
+                <li>Experience any web page the same way that people with blindness or visual impairments do.</li>
+                <li>Test for web accessibility issues, and gain first-hand insight about their impact on a website's users.</li>
+                <li>Provide individuals studying web accessibility with a useful and enlightening exercise or assignment.</li>
+                <li>Build empathy in website owners and stakeholders for users with disabilities who visit their sites.</li>
+                <li>Develop business cases for web accessibility projects.</li>
+            </ol>
+            <p>Check out <a href="https://siteunseen.dev/">https://siteunseen.dev/</a> for more information.</p>
+            <h2>Features</h2>
+            <ul>
+                <li>Navigate through the contents of a web page using the arrow keys, viewing information about each element as you explore.</li>
+                <li>Use shortcut Keys to access lists of headings, regions, and links on a web page and quickly navigate to them.</li>
+                <li>Temporarily lighten the opaque overlay to get a glimpse of the page and find your bearings if you get stuck.</li>
+            </ul>
+            <h2>Setup and Usage</h2>
+            <p>To see Site Unseen in action on a sample web page, issue the following commands in a Mac OSX or Unix terminal window.</p>
+            <pre>
 git clone https://github.com/simonminer/site-unseen.git
 cd site-unseen
 npm install
 npm run server        
-        </pre>
-        <p>Then point your web browser to <a href="http://localhost:8080" target="_blank">http://localhost:8080/</a>. When you are finished, press <kbd>Control+C</kbd> on the command line to stop the server.</p>
-        <h2>Keyboard Commands</h2>
-        <p>Use the following keyboard commands to navigate through the contents of a web page with Site Unseen.</p>
-        <table>
-            <tbody>
-                <tr>
-                    <th>Command</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>Tab</kbd>&nbsp;and&nbsp;<kbd>Shif+Tab</kbd></td>
-                    <td class="shortcut-Description">Move back and forth between the interactive elements on the page (i.e. links, form fields), just like you normally do in a web browser.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>Enter</kbd></td>
-                    <td class="shortcut-description">Activate the interactive element you are currently focused on -- i.e. follow a link, press a button, check or uncheck a box, etc.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd title="left arrow">&larr;</kbd> and <kbd title="right arrow">&rarr;</kbd></td>
-                    <td class="shortcut-Description">Move back and forth between accessible element. Both interactive and non-interactive elements can be accessible, and most elements containing viewable content <em>should</em> be accessible, but this may or may not be the case for all web pages.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>b</kbd> and <kbd>B</kbd></td>
-                    <td class="shortcut-description">Cycle back and forth through the buttons on the page.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>f</kbd> and <kbd>F</kbd></td>
-                    <td class="shortcut-description">Cycle back and forth through the form fields on the page.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>h</kbd> and <kbd>H</kbd></td>
-                    <td class="shortcut-Description">Cycle back and forth through the headings on the page.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>k</kbd> and <kbd>K</kbd></td>
-                    <td class="shortcut-Description">Cycle back and forth through the links on the page.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>l</kbd> and <kbd>L</kbd></td>
-                    <td class="shortcut-description">Cycle back and forth through the ordered, unordered, and definition lists on the page.</td>
-                </tr>
-                <tr>
-                    <td class="shortcut-keys"><kbd>r</kbd> and <kbd>R</kbd></td>
-                    <td class="shortcut-Description">Move back and forth to the regions/landmarks on the page (i.e. heading, main, footer, etc.).</td>
-                </tr>
+            </pre>
+            <p>Then point your web browser to <a href="http://localhost:8080" target="_blank">http://localhost:8080/</a>. When you are finished, press <kbd>Control+C</kbd> on the command line to stop the server.</p>
+            <h2>Keyboard Commands</h2>
+            <p>Use the following keyboard commands to navigate through the contents of a web page with Site Unseen.</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>Tab</kbd>&nbsp;and&nbsp;<kbd>Shif+Tab</kbd></td>
+                        <td class="shortcut-Description">Move back and forth between the interactive elements on the page (i.e. links, form fields), just like you normally do in a web browser.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>Enter</kbd></td>
+                        <td class="shortcut-description">Activate the interactive element you are currently focused on -- i.e. follow a link, press a button, check or uncheck a box, etc.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd title="left arrow">&larr;</kbd> and <kbd title="right arrow">&rarr;</kbd></td>
+                        <td class="shortcut-Description">Move back and forth between accessible element. Both interactive and non-interactive elements can be accessible, and most elements containing viewable content <em>should</em> be accessible, but this may or may not be the case for all web pages.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>b</kbd> and <kbd>B</kbd></td>
+                        <td class="shortcut-description">Cycle back and forth through the buttons on the page.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>f</kbd> and <kbd>F</kbd></td>
+                        <td class="shortcut-description">Cycle back and forth through the form fields on the page.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>h</kbd> and <kbd>H</kbd></td>
+                        <td class="shortcut-Description">Cycle back and forth through the headings on the page.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>k</kbd> and <kbd>K</kbd></td>
+                        <td class="shortcut-Description">Cycle back and forth through the links on the page.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>l</kbd> and <kbd>L</kbd></td>
+                        <td class="shortcut-description">Cycle back and forth through the ordered, unordered, and definition lists on the page.</td>
+                    </tr>
+                    <tr>
+                        <td class="shortcut-keys"><kbd>r</kbd> and <kbd>R</kbd></td>
+                        <td class="shortcut-Description">Move back and forth to the regions/landmarks on the page (i.e. heading, main, footer, etc.).</td>
+                    </tr>
             </tbody>
-        </table>
-        <h2>Contact Us</h2>
-        <p>Send us your questions and feedback about Site Unseen.
-        <form action="">
-            <div class="input-field">
-                <label for="name">Your Name</label><br />
-                <input type="text" id="name" name="name" />
-            </div>
-            <div class="input-field">
-                <label for="email">Email Address</label><br />
-                <input type="email" id="email" name="email"  />
-            </div>
-            <div>
-                <fieldset>
-                    <legend>Select your level of interest/involvement with web accessibility.</legend>
-                    <select id="involvement" name="a11y-involvement">
-                        <option id="new">Just Getting Started</option>
-                        <option id="designer">Web Designer</option>
-                        <option id="desveloper">Web Developer</option>
-                        <option id="champion">Accessible Champion</option>
-                    </select>
-                </fieldset>
-            </div>
-            <div>
-                <fieldset>
-                    <legend>Are you enjoying Site Unseen?</legend>
-                    <input type="radio" id="enjoyment-yes"name="enjoyment" value="yes" />
-                    <label for="enjoyment-yes">Yes</label>
-                    <input type="radio" id="enjoyment-no"name="enjoyment" value="no" />
-                    <label for="enjoyment-no">No</label>
-                </fieldset>
-            </div>
-            <div>
-                <fieldset>
-                    <legend>Besides Site Unseen, what web accessibility tools have you used? (Check all that apply.)</legend>
-                        <input type="checkbox" id="lighthouse" name="tools" value="lighthouse" />
-                        <label for="lighthouse">Chrome Lighthouse</label>
-                        <input type="checkbox" id="axe" name="tools" value="axe" />
-                        <label for="axe">Axe Core</label>
-                        <input type="checkbox" id="screen-reader" name="tools" value="Screen-Reader" />
-                        <label for="screen-reader">Screen Reader</label>
-                </fieldset>
-            </div>
-            <div class="input-field">
-                <label for="comments">Comments</label><br />
-                <textarea id="comments" name="comments" cols="30" rows="4"></textarea>
-            </div>
-            <div class="input-field">
-                <input type="reset" value="Reset"/>
-                <input type="submit" value="Submit">
-            </div>
-        </form>
-        <script type="module" src="site-unseen.js"></script>
+            </table>
+            <h2>Contact Us</h2>
+            <p>Send us your questions and feedback about Site Unseen.
+            <form action="">
+                <div class="input-field">
+                    <label for="name">Your Name</label><br />
+                    <input type="text" id="name" name="name" />
+                </div>
+                <div class="input-field">
+                    <label for="email">Email Address</label><br />
+                    <input type="email" id="email" name="email"  />
+                </div>
+                <div>
+                    <fieldset>
+                        <legend>Select your level of interest/involvement with web accessibility.</legend>
+                        <select id="involvement" name="a11y-involvement">
+                            <option id="new">Just Getting Started</option>
+                            <option id="designer">Web Designer</option>
+                            <option id="desveloper">Web Developer</option>
+                            <option id="champion">Accessible Champion</option>
+                        </select>
+                    </fieldset>
+                </div>
+                <div>
+                    <fieldset>
+                        <legend>Are you enjoying Site Unseen?</legend>
+                        <input type="radio" id="enjoyment-yes"name="enjoyment" value="yes" />
+                        <label for="enjoyment-yes">Yes</label>
+                        <input type="radio" id="enjoyment-no"name="enjoyment" value="no" />
+                        <label for="enjoyment-no">No</label>
+                    </fieldset>
+                </div>
+                <div>
+                    <fieldset>
+                        <legend>Besides Site Unseen, what web accessibility tools have you used? (Check all that apply.)</legend>
+                            <input type="checkbox" id="lighthouse" name="tools" value="lighthouse" />
+                            <label for="lighthouse">Chrome Lighthouse</label>
+                            <input type="checkbox" id="axe" name="tools" value="axe" />
+                            <label for="axe">Axe Core</label>
+                            <input type="checkbox" id="screen-reader" name="tools" value="Screen-Reader" />
+                            <label for="screen-reader">Screen Reader</label>
+                    </fieldset>
+                </div>
+                <div class="input-field">
+                    <label for="comments">Comments</label><br />
+                    <textarea id="comments" name="comments" cols="30" rows="4"></textarea>
+                </div>
+                <div class="input-field">
+                    <input type="reset" value="Reset"/>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+            <script type="module" src="site-unseen.js"></script>
         </main>
         <footer>
             <dl>
-                <dt>&copy; 2021</dt>
-                <dd>Site Unseen</dd>
+            <dt>&copy; 2021</dt>
+            <dd>Site Unseen</dd>
             </dl>
         </footer>
     </body>
