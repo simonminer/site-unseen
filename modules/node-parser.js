@@ -32,9 +32,9 @@ export class NodeParser {
      */
     tagsWithoutRole = {
         caption: 'table caption',
-        dd: 'listitem',
-        dl: 'list',
-        dt: 'listitem',
+        dd: 'definition',
+        dl: 'definition list',
+        dt: 'term',
         li: 'listitem',
         td: 'table cell',
         th: 'table heading',
@@ -61,7 +61,7 @@ export class NodeParser {
     /**
      * @method
      * Generates and returns a flattened virtual node tree
-     * using the axe-core library. This tree is usded to
+     * using the axe-core library. This tree is used to
      * extract accessibility information from nodes.
      * @param {Node} rootNode - The root node of the virtual tree
      * @returns {tree}
@@ -96,20 +96,40 @@ export class NodeParser {
             aNode.value = node.textContent;
         }
 
-        // Add node-specific data.
+        // Compute node metadata.
+
+        // Determine the heading level.
         if (aNode.role === 'heading') {
             var headingLevel = this.parseHeadingLevel(aNode);
             if (headingLevel) {
                 aNode.metadata = `level ${headingLevel}`;
             }
         }
+
+        // Count the number of items in a list.
         else if (aNode.role === 'list') {
             var listItemCount = this.countListItems(aNode);
             if (listItemCount !== undefined) {
                 var itemText = listItemCount == 1 ? 'item' : 'items';
                 aNode.metadata = `(${listItemCount} ${itemText})`;
             }
-            
+        }
+
+        // Figure out the position of a list item in its list.
+        else if (aNode.role === 'listitem') {
+            var parentNode = this.parse(node.parentNode);
+            parentNode.virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node.parentNode);
+            const listItems = this.getListItemChildren(parentNode);
+            var listItemIndex = -1;
+            for (var i = 0, l = listItems.length; i < l; i++) {
+                if (listItems[i].actualNode === node) {
+                    listItemIndex = i;
+                    break;
+                }
+            }
+            if (listItemIndex !== -1 && listItems.length >= 0 ) {
+                aNode.metadata = `(${listItemIndex + 1} of ${listItems.length})`;
+            }
         }
 
         return aNode;
@@ -159,8 +179,9 @@ export class NodeParser {
             for (var i = 0, l = children.length; i < l; i++) {
                 var childRole = axe.commons.aria.getRole(children[i], this.virtualTree);
                 if (childRole === 'listitem') {
-                    var listItemChild = new AccessibleNode(children[i].actualNode, children[i]);
-                    listItemChildren.push(listItemChild);
+                    var listItem = new AccessibleNode(children[i].actualNode, children[i]);
+                    listItem.role = childRole;
+                    listItemChildren.push(listItem);
                 }
             }
          }
@@ -181,7 +202,7 @@ export class NodeParser {
              return undefined;
          }
 
-        // TODO Find children with listitem roles (to account for list ARIA role).
+        // Find children with listitem roles.
         var listItemChildren = this.getListItemChildren(listNode);
         return listItemChildren.length;
     }

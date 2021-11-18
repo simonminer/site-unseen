@@ -119,7 +119,8 @@ describe("NodeParser class tests", function () {
             expect(aNode.role).toBe("listitem");
             expect(aNode.name).toBe(undefined);
             expect(aNode.value).toBe(listItemText);
-            expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+            expect(aNode.metadata).toBe(`(1 of ${listItems.length})`);
+            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
         });
 
         var listNode = htmlToElement(`<section role="list"><div role="listitem">Item 1</div><div role="listitem">Item 2</div></section>`, 'section');
@@ -135,22 +136,21 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe('');
         expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}`);
 
-        /*
-        var listItemNode = listNode.querySelector('li');
-        aNode = nodeParser.parse(listItemNode);
-        expect(aNode.role).toBe("listitem");
-        expect(aNode.name).toBe(undefined);
-        expect(aNode.value).toBe(listItemText);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
-        */
+        var listItems = nodeParser.getListItemChildren(aNode);
+        for (var i = 0, l = listItems.length; i < l; i++) {
+            aNode = nodeParser.parse(listItems[i].actualNode);
+            expect(aNode.role).toBe("listitem");
+            expect(aNode.name).toBe(undefined);
+            expect(aNode.value).toBe(`Item ${i + 1}`);
+            expect(aNode.metadata).toBe(`(${i + 1} of ${listItems.length})`);
+            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
+        }
 
         var node = htmlToElement('<p>Not a list</p>', 'p');
         nodeParser = new NodeParser({
             rootNode: node
         });
         expect(nodeParser.countListItems(node)).toBe(undefined);
-
-        // TODO Add tests for ARIA list and listitem roles.
     });
     test('nodeParser parses definition list tags', () => {
         var html = "<dl><dt>Term</dt><dd>Definition</dd></dl>";
@@ -159,24 +159,24 @@ describe("NodeParser class tests", function () {
             rootNode: node
         });
         var aNode = nodeParser.parse(node);
-        expect(aNode.role).toBe("list");
+        expect(aNode.role).toBe("definition list");
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe('TermDefinition');
-        expect(aNode.toString()).toBe(`${aNode.role} (0 items)${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
 
         node = htmlToElement(html, 'dt');
         nodeParser = new NodeParser({
             rootNode: node
         });
         aNode = nodeParser.parse(node);
-        expect(aNode.role).toBe("listitem");
+        expect(aNode.role).toBe('term');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe("Term");
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
 
         node = htmlToElement(html, 'dd');
         aNode = nodeParser.parse(node);
-        expect(aNode.role).toBe("listitem");
+        expect(aNode.role).toBe('definition');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe("Definition");
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
@@ -339,6 +339,6 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe(cellValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
 
-        // TODO Add tests for tble, columnheading, row, and cell roles.
+        // TODO Add tests for table, columnheading, row, and cell roles.
     });
 });
