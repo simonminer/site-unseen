@@ -51,6 +51,13 @@ export class NodeParser {
         'form', 'main', 'navigation', 'search'
     ];
 
+    /**
+     * @member
+     * List of roles for form field elements.
+     */
+    formFieldRoles = [
+        'button', 'checkbox', 'combobox', 'option', 'radio', 'textbox'
+    ];
     static _properties = ['tagsWithoutRole', 'landmarkRoles', 'rootNode', 'virtualTree'];
 
     /**
@@ -145,6 +152,12 @@ export class NodeParser {
         // Highlight when a role corresponds with a page region/landmark.
         else if (this.landmarkRoles.includes(aNode.role)) {
             aNode.metadata = "region";
+        }
+
+        // Set form element names and values.
+        else if (this.formFieldRoles.includes(aNode.role)) {
+            aNode.name = aNode.value;
+            aNode.value = node.value;
         }
 
         return aNode;

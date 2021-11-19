@@ -210,49 +210,55 @@ describe("NodeParser class tests", function () {
     // Form fields.
     test('nodeParser parses input tags', () => {
         ['checkbox', 'radio', 'reset', 'submit', 'text'].forEach(function(type) {
-            var role = type === "reset" || type === "submit"
+            const role = type === "reset" || type === "submit"
                 ? "button" : type === "text"
                 ? "textbox" : type;
-            var name = `test-${type}`;
-            var value = `Test ${type}`;
-            var node = htmlToElement(`<input type="${type}" aria-label="${value}" name="${name}" />`, 'input');
+            const nodeName = `test-${type}`;
+            const accessibleName = `Test ${type}`;
+            const nodeValue = `My ${type} ${name} value`;
+            const node = htmlToElement(`<input type="${type}" aria-label="${accessibleName}" name="${nodeName}" value="${nodeValue}"/>`, 'input');
             nodeParser = new NodeParser({
                 rootNode: node
             });
             var aNode = nodeParser.parse(node);
             expect(aNode.role).toBe(role);
-            expect(aNode.name).toBe(name);
-            expect(aNode.value).toBe(value);
+            expect(aNode.name).toBe(accessibleName);
+            expect(aNode.value).toBe(nodeValue);
             expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+
+            // TODO Add tests for inputs with label tags.
         });
     });
     test('nodeParser parses textarea tag', () => {
-        var name = 'test-textarea';
-        var value = 'Test Textarea';
-        var node = htmlToElement(`<textarea name="${name}" aria-label="${value}">${value} Value</button>`, 'textarea');
+        var nodeName = 'test-textarea';
+        var accessibleName = 'Test Textarea';
+        var nodeValue = "textarea content";
+        var node = htmlToElement(`<textarea name="${nodeName}" aria-label="${accessibleName}">${nodeValue}</textarea>`, 'textarea');
         nodeParser = new NodeParser({
             rootNode: node
         });
         var aNode = nodeParser.parse(node);
         expect(aNode.role).toBe('textbox');
-        expect(aNode.name).toBe(name);
-        expect(aNode.value).toBe(value);
+        expect(aNode.name).toBe(accessibleName);
+        expect(aNode.value).toBe(nodeValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+
+        // TODO Add tests for textara with label tag.
     });
     test('nodeParser parses select tags', () => {
-        var selectName = "test-select";
-        var selectValue = "Test Select";
+        var selectNodeName = "test-select";
+        var selectAccessibleName = "Test Select";
         var optionName = "test-option";
         var optionValue = "Test Option";
-        var html = `<select name="${selectName}" aria-label="${selectValue}"><option name="${optionName}">${optionValue}</option></select>`;
+        var html = `<select name="${selectNodeName}" aria-label="${selectAccessibleName}"><option name="${optionName}">${optionValue}</option></select>`;
         var node = htmlToElement(html, 'select');
         nodeParser = new NodeParser({
             rootNode: node
         });
         var aNode = nodeParser.parse(node);
         expect(aNode.role).toBe('combobox');
-        expect(aNode.name).toBe(selectName);
-        expect(aNode.value).toBe(selectValue);
+        expect(aNode.name).toBe(selectAccessibleName);
+        expect(aNode.value).toBe(optionValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
 
         node = htmlToElement(html, 'option');
@@ -261,25 +267,26 @@ describe("NodeParser class tests", function () {
         });
         aNode = nodeParser.parse(node);
         expect(aNode.role).toBe('option');
-        expect(aNode.name).toBe(optionName);
+        expect(aNode.name).toBe(optionValue);
         expect(aNode.value).toBe(optionValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
-
-        // TODO Add tests for listbox control
+        // TODO Add test for select with label tag.
+        // TODO Add tests for listbox control.
     });
     test('nodeParser parses button tag', () => {
-        var name = 'test-button';
-        var value = 'Test Button';
-        var node = htmlToElement(`<button name="${name}">${value}</button>`, 'button');
+        var nodeName = 'test-button';
+        var accessibleName = 'Test Button';
+        var node = htmlToElement(`<button name="${nodeName}">${accessibleName}</button>`, 'button');
         nodeParser = new NodeParser({
             rootNode: node
         });
         var aNode = nodeParser.parse(node);
         expect(aNode.role).toBe('button');
-        expect(aNode.name).toBe(name);
-        expect(aNode.value).toBe(value);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.name).toBe(accessibleName);
+        expect(aNode.value).toBe('');
+        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}`);
 
+        // TODO Add test for button with label tag.
         // TODO Add test for button custom control.
     });
 
