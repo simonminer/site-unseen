@@ -9,8 +9,11 @@ import { ScreenReader } from "./screen-reader.js";
 
 export class ShortcutKeyManager {
 
-    // Default set of keyboard character to CSS selector mapping data
-    // used to set up shortcut keys.
+    /**
+     * @member
+     * Default set of keyboard character to CSS selector mapping data
+     * used to set up shortcut keys.
+     */
     defaultShortcutKeyData = {
         // Press h/H to move forward/backward through headings.
         'h': 'h1, h2, h3, h4, h5, h6',
@@ -26,29 +29,39 @@ export class ShortcutKeyManager {
         'l': 'ul, ol, dl, [role="list"]'
     };
 
-    // Shortcut key map whose keys are keys to press with ShortcutKey object values.
+    /*
+     * @member
+     * Shortcut key map whose keys are keys to press with ShortcutKey object values.
+     */
     shortcutKeys = undefined;
 
-    // Function to call on the node returned when a shortcut key is pressed, which
-    // takes both the node and event called on it as arguments.
-    // Defaults to moving focus to the node.
+    /**
+     * @member
+     * Function to call on the node returned when a shortcut key is pressed, which
+      * takes both the node and event called on it as arguments.
+      * Defaults to moving focus to the node.
+      */
     shortcutKeyFunction = function (node, event) {
         ScreenReader.get().moveTo(node);
     };
 
-    // Type of wrap-around when a shortcut key is pressed on its
-    // first or last instance of its list of nodes:
-    // values include "start" or "end".
+    /**
+     * @member
+     * Type of wrap-around when a shortcut key is pressed on its
+     * first or last instance of its list of nodes:
+     * values include "start" or "end".
+     */
     wrappedTo = undefined;
 
-    // Event handler to bind to "keydown" events to handle shortcut key presses.
+    /**
+     * @member
+     * Event handler to bind to "keydown" events to handle shortcut key presses.
+     */
     static eventHandlerFunction = function (event) {
-        // Don't do anything if the user is on a form field.
-        var activeElement = document.activeElement,
-            tagName = activeElement.tagName.toLowerCase();
-        if (tagName == "select"
-            || tagName == "textarea"
-            || (tagName == "input" && activeElement.getAttribute("type") == "text")) {
+        // Don't do anything if the user is on a form field
+        // that accepts text inupt.
+        const aNode = ScreenReader.get().caption.nodeParser.parse(document.activeElement);
+        if (aNode.role === 'textbox' || aNode.role === 'combobox') {
             return;
         }
 
