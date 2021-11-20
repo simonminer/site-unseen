@@ -243,7 +243,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe(nodeValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
 
-        // TODO Add tests for textara with label tag.
+        // TODO Add tests for textarea with label tag.
     });
     test('nodeParser parses select tags', () => {
         var selectNodeName = "test-select";

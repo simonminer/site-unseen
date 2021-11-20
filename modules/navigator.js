@@ -25,7 +25,7 @@ export class Navigator extends ElementList {
      * already in the tab order, but the also need
      * to be navigable via screen reader controls.
      */
-    interactiveTags = ["a", "button", "datalist", "input", "option", "select", "textarea"];
+    interactiveTags = ["a", "button", "datalist", "input", "select", "textarea"];
 
     /**
      * @member
@@ -74,15 +74,17 @@ export class Navigator extends ElementList {
      * Function to handle right and left arrow key presses.
      */
      static arrowKeyHandlerFunction = function (event) {
-        // Move to the p0revious or next accessible node when the left or right
+        // Move to the p0previous or next accessible node when the left or right
         // arrow is pressed, respectively.
         var screenReader = ScreenReader.get();
         var navigator = screenReader.navigator;
         var node = undefined;
         if (event.key === "ArrowRight") {
+            event.preventDefault();
             node = navigator.nextNode();
         }
         else if (event.key === "ArrowLeft") {
+            event.preventDefault();
             node = navigator.previousNode();
         }
 
