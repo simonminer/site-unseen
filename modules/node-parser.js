@@ -156,8 +156,7 @@ export class NodeParser {
 
         // Set form element names and values.
         else if (this.formFieldRoles.includes(aNode.role)) {
-            aNode.name = aNode.value;
-            aNode.value = node.value;
+            this.assignFormFieldData(aNode);
         }
 
         return aNode;
@@ -233,5 +232,24 @@ export class NodeParser {
         // Find children with listitem roles.
         var listItemChildren = this.getListItemChildren(listNode);
         return listItemChildren.length;
+    }
+
+    /**
+     * @method
+     * Sets form field ata appropriate based on its type and role
+     * @param {AccessibleNode} formFieldNode - The accessibility for the form field element.
+     */
+    assignFormFieldData(formFieldNode) {
+        var node = formFieldNode.actualNode;
+        if (formFieldNode.role === 'button') {
+            if (formFieldNode.value && formFieldNode.value.length > 0) {
+                formFieldNode.name = node.value ? node.value : formFieldNode.value;
+                formFieldNode.value = '';
+            }
+        }
+        else {
+            formFieldNode.name = formFieldNode.value;
+            formFieldNode.value = node.value;
+        }
     }
 }

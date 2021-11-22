@@ -150,6 +150,7 @@ describe("NodeParser class tests", function () {
         nodeParser = new NodeParser({
             rootNode: node
         });
+        expect(nodeParser.getListItemChildren(node).length).toBe(0);
         expect(nodeParser.countListItems(node)).toBe(undefined);
     });
     test('nodeParser parses definition list tags', () => {
@@ -210,23 +211,45 @@ describe("NodeParser class tests", function () {
     // Form fields.
     test('nodeParser parses input tags', () => {
         ['checkbox', 'radio', 'reset', 'submit', 'text'].forEach(function(type) {
+
+            // Tests for inputs with ARIA labels.
             const role = type === "reset" || type === "submit"
                 ? "button" : type === "text"
                 ? "textbox" : type;
             const nodeName = `test-${type}`;
             const accessibleName = `Test ${type}`;
-            const nodeValue = `My ${type} ${name} value`;
-            const node = htmlToElement(`<input type="${type}" aria-label="${accessibleName}" name="${nodeName}" value="${nodeValue}"/>`, 'input');
+            const nodeValue = `My ${type} value`;
+            var node = htmlToElement(`<input type="${type}" aria-label="${accessibleName}" name="${nodeName}" value="${nodeValue}"/>`, 'input');
             nodeParser = new NodeParser({
                 rootNode: node
             });
             var aNode = nodeParser.parse(node);
             expect(aNode.role).toBe(role);
-            expect(aNode.name).toBe(accessibleName);
-            expect(aNode.value).toBe(nodeValue);
-            expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+            var name = accessibleName;
+            var value = nodeValue;
+            var nameValueText = `${aNode.name}${aNode.separator}${aNode.value}`;
+            if (type === 'reset' || type === 'submit') {
+                name = nodeValue;
+                value = '';
+                nameValueText = name;
+            }
+            expect(aNode.name).toBe(name);
+            expect(aNode.value).toBe(value);
+            expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${nameValueText}`);
 
-            // TODO Add tests for inputs with label tags.
+            // Tests for inputs with label tags.
+            const nodeId = `test-${type}-id`;
+            const html = `<body><form><label for="${nodeId}">${accessibleName}</label><input type="${type}" id="${nodeId}" name="${nodeName}" value="${nodeValue}"/></form></body>`;
+            const tree = htmlToElement(html, 'body');
+            node = htmlToElement(html, 'input');
+            nodeParser = new NodeParser({
+                rootNode: tree
+            });
+            aNode = nodeParser.parse(node);
+            expect(aNode.role).toBe(role);
+            expect(aNode.name).toBe(name);
+            expect(aNode.value).toBe(value);
+            expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${nameValueText}`);
         });
     });
     test('nodeParser parses textarea tag', () => {
