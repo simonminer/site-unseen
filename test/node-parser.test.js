@@ -253,6 +253,7 @@ describe("NodeParser class tests", function () {
         });
     });
     test('nodeParser parses textarea tag', () => {
+        // Tests for textarea with ARIA label.
         var nodeName = 'test-textarea';
         var accessibleName = 'Test Textarea';
         var nodeValue = "textarea content";
@@ -266,7 +267,15 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe(nodeValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
 
-        // TODO Add tests for textarea with label tag.
+        // Tests for textarea with label tag.
+        const nodeId = `test-textarea-id`;
+        const html = `<body><form><label for="${nodeId}"><textarea name="${nodeName}" id="${nodeId}">${nodeValue}</textarea></form></body>`;
+        const tree = htmlToElement(html, 'body');
+        node = htmlToElement(html, 'textarea');
+        expect(aNode.role).toBe('textbox');
+        expect(aNode.name).toBe(accessibleName);
+        expect(aNode.value).toBe(nodeValue);
+        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
     });
     test('nodeParser parses select tags', () => {
         var selectNodeName = "test-select";
