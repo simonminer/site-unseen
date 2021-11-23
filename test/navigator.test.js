@@ -44,6 +44,13 @@ describe("Navigator class tests", function () {
             expect(navigator.isTabIndexNeeded(node)).toBe(false);
         });
     });
+    test('isTabIndexNeeded returns true for <div> and <span> tags with roles', () => {
+        navigator.potentiallyNavigableTags.forEach(tagName => {
+            var node = document.createElement(tagName);
+            node.setAttribute('role', 'test');
+            expect(navigator.isTabIndexNeeded(node)).toBe(true);
+        });
+    });
     test('isTabIndexNeeded returns true for <div> and <span> tags containing only text', () => {
         navigator.potentiallyNavigableTags.forEach(tagName => {
             var node = document.createElement(tagName);

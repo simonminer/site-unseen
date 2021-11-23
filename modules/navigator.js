@@ -146,13 +146,19 @@ export class Navigator extends ElementList {
         if (this.nonInteractiveTags.includes(tagName)) {
             isNeeded = true;
         }
-        // Does the node have at least one child that contains text?
         else if (this.potentiallyNavigableTags.includes(tagName)) {
+            // Does the node have a role?
+            if (node.hasAttribute( 'role')) {
+                isNeeded = true;
+            }
+            else {
+            // Does the node have at least one child that contains text?
             var children = node.childNodes;
-            for (let i = 0; i < children.length; i++) {
-                if (children[i].nodeType === 3 && children[i].nodeValue.trim() !== "") {
-                    isNeeded = true;
-                    break;
+                for (let i = 0; i < children.length; i++) {
+                    if (children[i].nodeType === 3 && children[i].nodeValue.trim() !== "") {
+                        isNeeded = true;
+                        break;
+                    }
                 }
             }
         }
