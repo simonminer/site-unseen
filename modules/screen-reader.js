@@ -127,13 +127,25 @@ export class ScreenReader {
      */
     configureEventListeners() {
         // Navigate and update the caption with the arrow and tab keys.
-        this.rootNode.addEventListener('keydown', Navigator.arrowKeyHandlerFunction);
-        this.rootNode.addEventListener('keyup', Navigator.tabHandlerFunction);
+        const rootNode = this.rootNode;
+        rootNode.addEventListener('keydown', Navigator.arrowKeyHandlerFunction);
+        rootNode.addEventListener('keyup', Navigator.tabHandlerFunction);
 
         // Enable short cut keys.
-        this.rootNode.addEventListener( 'keydown', ShortcutKeyManager.eventHandlerFunction);
+        rootNode.addEventListener('keydown', ShortcutKeyManager.eventHandlerFunction);
 
         // Keep the caption current as form field values change.
+        const updateTextFunction = function(event) {
+            const caption = ScreenReader.get().caption;
+            caption.update(event.target);
+        };
+        rootNode.querySelectorAll('input, textarea').forEach(node => {
+            const aNode = this.caption.nodeParser.parse(node);
+            if (aNode.role === 'textbox') {
+                node.addEventListener('keyup', updateTextFunction);
+            }
+        });
+
     }
 
     /**
