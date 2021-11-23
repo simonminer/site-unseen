@@ -151,10 +151,6 @@ export class ShortcutKeyManager {
     bindShortcutKeysToFunction(func) {
         // Store the function name so it can be invoked later in the event handler.
         this.shortcutKeyFunction = func;
-
-        // Set up the shortcut key event listener.
-        document.addEventListener( 'keydown', ShortcutKeyManager.eventHandlerFunction);
-
         return true;
     }
 }

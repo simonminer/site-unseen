@@ -125,10 +125,6 @@ export class Navigator extends ElementList {
                 }
             });
         }
-
-        // Set up the event handlers.
-        document.addEventListener( 'keydown', Navigator.arrowKeyHandlerFunction);
-        document.addEventListener( 'keyup', Navigator.tabHandlerFunction);
     }
 
     /**

@@ -69,6 +69,9 @@ export class ScreenReader {
         this.appendOverlay();
         this.shortcutKeyManager = skm ? skm : new ShortcutKeyManager(this.rootNode);
 
+        // Set up event listeners to facilitate screen reader keyboard controls.
+        this.configureEventListeners();
+
         // Attach the new screen reader object to the top of the DOM for later use.
         document._screenReader = this;
     }
@@ -115,6 +118,20 @@ export class ScreenReader {
         });
         overlayNode.appendChild(this.caption.getCSS());
         overlayNode.appendChild(this.caption.getHTML());
+    }
+
+    /**
+     * @method
+     * Sets up event listeners to facilitator screen
+     * reader keyboard controls.
+     */
+    configureEventListeners() {
+        // Navigate and update the caption with the arrow and tab keys.
+        this.rootNode.addEventListener('keydown', Navigator.arrowKeyHandlerFunction);
+        this.rootNode.addEventListener('keyup', Navigator.tabHandlerFunction);
+
+        // Enable short cut keys.
+        this.rootNode.addEventListener( 'keydown', ShortcutKeyManager.eventHandlerFunction);
     }
 
     /**
