@@ -278,17 +278,20 @@ describe("NodeParser class tests", function () {
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
     });
     test('nodeParser parses select tags', () => {
-        var selectNodeName = "test-select";
-        var selectAccessibleName = "Test Select";
-        var optionName = "test-option";
-        var optionValue = "Test Option";
+
+        // Tests for select element with ARIA label.
+        var role = 'combobox';
+        const selectNodeName = "test-select";
+        const selectAccessibleName = "Test Select";
+        const optionName = "test-option";
+        const optionValue = "Test Option";
         var html = `<select name="${selectNodeName}" aria-label="${selectAccessibleName}"><option name="${optionName}">${optionValue}</option></select>`;
         var node = htmlToElement(html, 'select');
         nodeParser = new NodeParser({
             rootNode: node
         });
         var aNode = nodeParser.parse(node);
-        expect(aNode.role).toBe('combobox');
+        expect(aNode.role).toBe(role);
         expect(aNode.name).toBe(selectAccessibleName);
         expect(aNode.value).toBe(optionValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
@@ -302,8 +305,38 @@ describe("NodeParser class tests", function () {
         expect(aNode.name).toBe(optionValue);
         expect(aNode.value).toBe(optionValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
-        // TODO Add test for select with label tag.
-        // TODO Add tests for listbox control.
+
+        // Tests for select with label tag.
+        const nodeId = 'test-select-id';
+        html = `<body><form><label for="${nodeId}">${selectAccessibleName}</label><select id="${nodeId}" name="${selectNodeName}"><option name="${optionName}">${optionValue}</option></select></form></body>`;
+        var tree = htmlToElement(html, 'body');
+        node = htmlToElement(html, 'select');
+        nodeParser = new NodeParser({
+            rootNode: tree
+        });
+        aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe(role);
+        expect(aNode.name).toBe(selectAccessibleName);
+        expect(aNode.value).toBe(optionValue);
+        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+
+        // Tests for elements with listbox and listitem roles.
+        role = 'listbox';
+        const labelId = 'test-label';
+        html = `<body><div id="${labelId}" role="label">${selectAccessibleName}</div><span role="${role}" id="${nodeId}" name="${selectNodeName}" aria-labelledby="${labelId}"><div role="option" name="${optionName}">${optionValue}</div></span></body>`;
+        tree = htmlToElement(html, 'body');
+        node = htmlToElement(html, 'span');
+        nodeParser = new NodeParser({
+            rootNode: tree
+        });
+        aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe(role);
+        // Not sure these two tests are accurate. May need additional ARIA attributes.
+        // * aNode.name should be set to the label.
+        // * aNode.value shoudl be set to the option value.
+        expect(aNode.name).toBe(selectNodeName);
+        expect(aNode.value).toBe(selectAccessibleName);
+        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
     });
     test('nodeParser parses button tag', () => {
 
