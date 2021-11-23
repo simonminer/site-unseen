@@ -306,6 +306,8 @@ describe("NodeParser class tests", function () {
         // TODO Add tests for listbox control.
     });
     test('nodeParser parses button tag', () => {
+
+        // Tests for button element.
         var nodeName = 'test-button';
         var accessibleName = 'Test Button';
         var node = htmlToElement(`<button name="${nodeName}">${accessibleName}</button>`, 'button');
@@ -318,8 +320,16 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe('');
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}`);
 
-        // TODO Add test for button with label tag.
-        // TODO Add test for button custom control.
+        // Tests for element with button role.
+        node = htmlToElement(`<div role="button" name="${nodeName}">${accessibleName}</div>`, 'div');
+        nodeParser = new NodeParser({
+            rootNode: node
+        });
+        aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe('button');
+        expect(aNode.name).toBe(accessibleName);
+        expect(aNode.value).toBe('');
+        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}`);
     });
 
     // Tables.
