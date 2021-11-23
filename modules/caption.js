@@ -75,10 +75,20 @@ export class Caption {
      * @param {Node} node - Node to describe in the caption.
      * @returns {String}
      */
-    generate(node) {
+    generateText(node) {
         const aNode = this.nodeParser.parse(node);
         const text = aNode.toString();
         return text;
+    }
+
+    /**
+     * @method
+     * Updates the caption with the text generated
+     * fromt he specified node.
+     * @param {NOde} node - Node whose contents should update the caption.
+     */
+    update(node) {
+        this.node.innerHTML = this.generateText(node);
     }
 
     /**

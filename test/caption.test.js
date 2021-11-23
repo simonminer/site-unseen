@@ -30,13 +30,21 @@ describe("Caption class tests", function () {
         expect(caption.node).toBe(undefined);
     });
 
-    test('generate returns accessible description of node', () => {
-        expect(caption.generate(document.querySelector("h1"))).toBe(`heading level 1${sep}Page heading`);
-        expect(caption.generate(document.querySelector("a"))).toBe(`link${sep}This is a link.`);
-        expect(caption.generate(document.querySelector("div"))).toBe(`Image Description`);
-        expect(caption.generate(document.querySelector("span"))).toBe(`Image Description`);
-        expect(caption.generate(document.querySelector("img"))).toBe(`img${sep}Image Description`);
-        expect(caption.generate(document.querySelector("p"))).toBe(`This is a paragraph.`);
+    test('generateText returns accessible description of node', () => {
+        expect(caption.generateText(document.querySelector("h1"))).toBe(`heading level 1${sep}Page heading`);
+        expect(caption.generateText(document.querySelector("a"))).toBe(`link${sep}This is a link.`);
+        expect(caption.generateText(document.querySelector("div"))).toBe(`Image Description`);
+        expect(caption.generateText(document.querySelector("span"))).toBe(`Image Description`);
+        expect(caption.generateText(document.querySelector("img"))).toBe(`img${sep}Image Description`);
+        expect(caption.generateText(document.querySelector("p"))).toBe(`This is a paragraph.`);
+    });
+
+    test('update sets caption node text', () => {
+        caption.node = document.createElement('div');
+        caption.update(document.querySelector("h1"));
+        expect(caption.node.innerHTML).toBe(`heading level 1${sep}Page heading`);
+        caption.update(document.querySelector("a"));
+        expect(caption.node.innerHTML).toBe(`link${sep}This is a link.`);
     });
 
     test('getCSS() creates <style> element', () => {

@@ -132,6 +132,8 @@ export class ScreenReader {
 
         // Enable short cut keys.
         this.rootNode.addEventListener( 'keydown', ShortcutKeyManager.eventHandlerFunction);
+
+        // Keep the caption current as form field values change.
     }
 
     /**
@@ -145,6 +147,6 @@ export class ScreenReader {
          node.focus();
          var activeElement = document.activeElement;
          this.navigator.currentNode(activeElement);
-         this.caption.node.innerHTML = this.caption.generate(activeElement);
+         this.caption.update(activeElement);
      }
 }

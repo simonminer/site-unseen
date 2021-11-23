@@ -38,6 +38,6 @@ describe("ScreenReader class tests", function () {
         screenReader.moveTo(node);
         expect(document.activeElement).toBe(node);
         expect(screenReader.navigator.currentNode()).toBe(node);
-        expect(screenReader.caption.node.innerHTML).toBe(screenReader.caption.generate(node));
+        expect(screenReader.caption.node.innerHTML).toBe(screenReader.caption.generateText(node));
     });
 });
