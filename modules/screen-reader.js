@@ -139,10 +139,10 @@ export class ScreenReader {
             const caption = ScreenReader.get().caption;
             caption.update(event.target);
         };
-        rootNode.querySelectorAll('input, textarea').forEach(node => {
+        rootNode.querySelectorAll('input, select, textarea').forEach(node => {
             const aNode = this.caption.nodeParser.parse(node);
-            if (aNode.role === 'textbox') {
-                node.addEventListener('keyup', updateTextFunction);
+            if (aNode.role === 'textbox' || aNode.role === 'combobox') {
+                node.addEventListener('input', updateTextFunction);
             }
         });
 
