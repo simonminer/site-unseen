@@ -91,6 +91,8 @@ export class ShortcutKeyManager {
             shortcutKey.currentNode(node);
             skm.shortcutKeyFunction(node, event);
         }
+
+        event.preventDefault();
     };
 
     /**
