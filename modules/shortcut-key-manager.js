@@ -54,14 +54,17 @@ export class ShortcutKeyManager {
     wrappedTo = undefined;
 
     /**
+     * static
      * @member
      * Event handler to bind to "keydown" events to handle shortcut key presses.
      */
     static eventHandlerFunction = function (event) {
         // Don't do anything if the user is on a form field
         // that accepts text inupt.
-        const aNode = ScreenReader.get().caption.nodeParser.parse(document.activeElement);
-        if (aNode.role === 'textbox' || aNode.role === 'combobox') {
+        const activeElement = document.activeElement;
+        const aNode = ScreenReader.get().caption.nodeParser.parse(activeElement);
+        if (   aNode.role === 'textbox' || aNode.role === 'combobox'
+            || activeElement.getAttribute('type') === 'password') {
             return;
         }
 

@@ -61,6 +61,7 @@ describe("NodeParser class tests", function () {
         });
         expect(nodeParser.parseHeadingLevel(node)).toBe(undefined);
     });
+
     test('nodeParser parses paragraph tags', () => {
         var text = "This is a paragraph";
         var node =htmlToElement(`<p>${text}</p>`, 'p');
@@ -73,6 +74,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe(text);
         expect(aNode.toString()).toBe(text);
     });
+    
     test('nodeParser parses link tags', () => {
         var linkText = "This is a link";
         var name = "test-link";
@@ -96,6 +98,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe(linkText);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${name}${aNode.separator}${linkText}`);
     });
+    
     test('nodeParser parses list tags', () => {
         ['ol', 'ul'].forEach(function(tagName) {
             var listItemText = "Item 1";
@@ -153,6 +156,7 @@ describe("NodeParser class tests", function () {
         expect(nodeParser.getListItemChildren(node).length).toBe(0);
         expect(nodeParser.countListItems(node)).toBe(undefined);
     });
+    
     test('nodeParser parses definition list tags', () => {
         var html = "<dl><dt>Term</dt><dd>Definition</dd></dl>";
         var node = htmlToElement(html, 'dl');
@@ -182,6 +186,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe("Definition");
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
     });
+    
     test('nodeParser parses image tags', () => {
         var altText = "Sample image";
         var src = "image.png";
@@ -252,6 +257,32 @@ describe("NodeParser class tests", function () {
             expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${nameValueText}`);
         });
     });
+    
+    test('nodeParser parses password input tag', () => {
+        // Tests for password field  with ARIA label.
+        var nodeName = 'test-password';
+        var accessibleName = 'Test Password';
+        var node = htmlToElement(`<input type="password" name="${nodeName}" aria-label="${accessibleName}" />`, 'input');
+        nodeParser = new NodeParser({
+            rootNode: node
+        });
+        var aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe(null);
+        expect(aNode.name).toBe(nodeName);
+        expect(aNode.value).toBe(accessibleName);
+        expect(aNode.toString()).toBe(`${aNode.name}${aNode.separator}${aNode.value}`);
+
+        // Tests for textarea with label tag.
+        const nodeId = `test-password-id`;
+        const html = `<body><form><label for="${nodeId}"><nput type="password" name="${nodeName}" id="${nodeId}" />`;
+        const tree = htmlToElement(html, 'body');
+        node = htmlToElement(html, 'input');
+        expect(aNode.role).toBe(null);
+        expect(aNode.name).toBe(nodeName);
+        expect(aNode.value).toBe(accessibleName);
+        expect(aNode.toString()).toBe(`${aNode.name}${aNode.separator}${aNode.value}`);
+    });
+    
     test('nodeParser parses textarea tag', () => {
         // Tests for textarea with ARIA label.
         var nodeName = 'test-textarea';
@@ -277,6 +308,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe(nodeValue);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
     });
+    
     test('nodeParser parses select tags', () => {
 
         // Tests for select element with ARIA label.
@@ -338,6 +370,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.value).toBe(selectAccessibleName);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
     });
+    
     test('nodeParser parses button tag', () => {
 
         // Tests for button element.
