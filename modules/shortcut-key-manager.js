@@ -90,9 +90,8 @@ export class ShortcutKeyManager {
             skm.wrappedTo = shortcutKey.wrappedTo;
             shortcutKey.currentNode(node);
             skm.shortcutKeyFunction(node, event);
+            event.preventDefault();
         }
-
-        event.preventDefault();
     };
 
     /**
