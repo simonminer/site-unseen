@@ -43,6 +43,17 @@ export class ScreenReader {
     shortcutKeyManager;
 
     /**
+     * @member
+     * Associative array of callback function names and definitions
+     */
+    callbacks = {
+        updateCaptionText: function () {
+            const caption = ScreenReader.get().caption;
+            caption.update(event.target);
+        }
+    };
+
+    /**
      * @method
      * @static
      * Retrieve a copy of the screen reader object or undefined if none is present.
@@ -135,15 +146,18 @@ export class ScreenReader {
         rootNode.addEventListener('keydown', ShortcutKeyManager.eventHandlerFunction);
 
         // Keep the caption current as form field values change.
-        const updateTextFunction = function(event) {
-            const caption = ScreenReader.get().caption;
-            caption.update(event.target);
-        };
         rootNode.querySelectorAll('input, select, textarea').forEach(node => {
             const aNode = this.caption.nodeParser.parse(node);
             if (aNode.role === 'textbox' || aNode.role === 'combobox') {
-                node.addEventListener('input', updateTextFunction);
+                node.addEventListener('input', this.callbacks['updateCaptionText']);
             }
+        });
+        rootNode.querySelectorAll('input[type="radio"]').forEach(node => {
+            node.addEventListener('keyup', function(event) {
+                if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                    ScreenReader.get().callbacks['updateCaptionText'](event);
+                }
+            });
         });
 
     }

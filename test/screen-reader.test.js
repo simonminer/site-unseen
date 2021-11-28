@@ -21,7 +21,8 @@ describe("ScreenReader class tests", function () {
         expect(screenReader.shortcutKeyManager.shortcutKeys instanceof Map).toBe(true);
         expect(document.getElementById(screenReader.overlay.id)).toBeDefined();
         expect(document.getElementById(screenReader.caption.id)).toBeDefined();
-        expect(screenReader.caption.nodeParser.rootNode).toBe(document.body)
+        expect(screenReader.caption.nodeParser.rootNode).toBe(document.body);
+        expect(Object.keys(screenReader.callbacks).length).toBeGreaterThan(0);
     });
     test('constructor stores screen reader in DOM', () => {
         expect(ScreenReader.get()).toBe(screenReader);
