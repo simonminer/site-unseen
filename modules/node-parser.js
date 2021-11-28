@@ -156,7 +156,7 @@ export class NodeParser {
 
         // Set form element names and values.
         else if (this.formFieldRoles.includes(aNode.role)) {
-            this.assignFormFieldData(aNode);
+            this.parseFormField(aNode);
         }
 
         return aNode;
@@ -239,12 +239,35 @@ export class NodeParser {
      * Sets form field ata appropriate based on its type and role
      * @param {AccessibleNode} formFieldNode - The accessibility for the form field element.
      */
-    assignFormFieldData(formFieldNode) {
+    parseFormField(formFieldNode) {
         var node = formFieldNode.actualNode;
         if (formFieldNode.role === 'button') {
             if (formFieldNode.value && formFieldNode.value.length > 0) {
                 formFieldNode.name = node.value ? node.value : formFieldNode.value;
                 formFieldNode.value = '';
+            }
+        }
+        else if (formFieldNode.role === 'radio' && formFieldNode.virtualNode.parent) {
+            formFieldNode.name = formFieldNode.value;
+
+            // Incorporate details about the radio button group into the accessible node data.
+            const parentNode = this.parse(formFieldNode.virtualNode.parent.actualNode);
+            if (parentNode.role === 'group') {
+                formFieldNode.name = parentNode.value;
+                var radioButtons = [];
+                parentNode.virtualNode.children.forEach( child => {
+                    const childRole = axe.commons.aria.getRole(child, this.virtualTree);
+                    if (childRole === 'radio') {
+                        radioButtons.push(child.actualNode);
+                    }
+                });
+                const radioButtonIndex = radioButtons.indexOf(formFieldNode.actualNode) + 1;
+                if (radioButtons.length > 0 && radioButtonIndex > 0) {
+                    formFieldNode.metadata = `(${radioButtonIndex} of ${radioButtons.length})`;
+                }
+            }
+            else {
+                formFieldNode.value = node.value;
             }
         }
         else {

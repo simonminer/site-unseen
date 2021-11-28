@@ -258,6 +258,9 @@ describe("NodeParser class tests", function () {
         });
     });
     
+    test('nodeParser parses radio button group input tags', () => {
+    });
+
     test('nodeParser parses password input tag', () => {
         // Tests for password field  with ARIA label.
         var nodeName = 'test-password';
@@ -371,6 +374,30 @@ describe("NodeParser class tests", function () {
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
     });
     
+    test('nodeParser parses radio button group input tags', () => {
+
+        const groupName = 'Test Group';
+        const nodeId = 'test-radio-id';
+        const nodeName = 'test-radio';
+        const label = 'Test Radio';
+        const nodeValue = 'test-radio-value';
+        const metadata = '(1 of 1)';
+        var html = `<body><form><fieldset><legend>${groupName}</legend><input type="radio" id="${nodeId}" name="${nodeName}" value="${nodeValue}" /><label for="${nodeId}">${label}<label</fieldset></form></body>`;
+        var tree = htmlToElement(html, 'body');
+        var node = htmlToElement(html, 'input');
+        nodeParser = new NodeParser({
+            rootNode: tree
+        });
+        var aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe('radio');
+        expect(aNode.name).toBe(groupName);
+        expect(aNode.value).toBe(label);
+        expect(aNode.metadata).toBe(metadata);
+        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+
+        // TODO Add tests for "group" and "radio" ARIA roles.
+    });
+
     test('nodeParser parses button tag', () => {
 
         // Tests for button element.
