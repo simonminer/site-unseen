@@ -236,8 +236,46 @@ export class NodeParser {
 
     /**
      * @method
+     * Extracts accessible node data for the specified radio button
+     * @param {AccessibleNode} radioButtonNode - The accessible node for the radio button
+     */
+    parseRadioButton(radioButtonNode) {
+        radioButtonNode.name = radioButtonNode.value;
+        const node = radioButtonNode.actualNode;
+
+        // Incorporate details about the radio button group into the accessible node data.
+        const parentNode = this.parse(radioButtonNode.virtualNode.parent.actualNode);
+        const parentRole = parentNode.role;
+        if (parentRole === 'group' || parentRole == 'radiogroup') {
+            radioButtonNode.name = parentNode.value;
+            var radioButtons = [];
+            parentNode.virtualNode.children.forEach( child => {
+                const childRole = axe.commons.aria.getRole(child, this.virtualTree);
+                if (childRole === 'radio') {
+                    radioButtons.push(child.actualNode);
+                }
+            });
+            const radioButtonIndex = radioButtons.indexOf(radioButtonNode.actualNode) + 1;
+            if (radioButtons.length > 0 && radioButtonIndex > 0) {
+                radioButtonNode.metadata = `(${radioButtonIndex} of ${radioButtons.length})`;
+            }
+        }
+
+        // Otherwise preserve the node's value.
+        else {
+            radioButtonNode.value = node.value;
+        }
+
+        // Is this radio button selected?
+        if (node.checked || node.hasAttribute('aria-checked')) {
+            radioButtonNode.metadata += ' - checked';
+        }
+    }
+
+    /**
+     * @method
      * Sets form field ata appropriate based on its type and role
-     * @param {AccessibleNode} formFieldNode - The accessibility for the form field element.
+     * @param {AccessibleNode} formFieldNode - The accessible node for the form field element.
      */
     parseFormField(formFieldNode) {
         var node = formFieldNode.actualNode;
@@ -248,32 +286,7 @@ export class NodeParser {
             }
         }
         else if (formFieldNode.role === 'radio' && formFieldNode.virtualNode.parent) {
-            formFieldNode.name = formFieldNode.value;
-
-            // Incorporate details about the radio button group into the accessible node data.
-            const parentNode = this.parse(formFieldNode.virtualNode.parent.actualNode);
-            if (parentNode.role === 'group') {
-                formFieldNode.name = parentNode.value;
-                var radioButtons = [];
-                parentNode.virtualNode.children.forEach( child => {
-                    const childRole = axe.commons.aria.getRole(child, this.virtualTree);
-                    if (childRole === 'radio') {
-                        radioButtons.push(child.actualNode);
-                    }
-                });
-                const radioButtonIndex = radioButtons.indexOf(formFieldNode.actualNode) + 1;
-                if (radioButtons.length > 0 && radioButtonIndex > 0) {
-                    formFieldNode.metadata = `(${radioButtonIndex} of ${radioButtons.length})`;
-                }
-            }
-            else {
-                formFieldNode.value = node.value;
-            }
-
-            // Is this radio button selected?
-            if (node.checked) {
-                formFieldNode.metadata += ' - checked';
-            }
+            this.parseRadioButton(formFieldNode);
         }
         else {
             formFieldNode.name = formFieldNode.value;

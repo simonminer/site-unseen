@@ -368,7 +368,7 @@ describe("NodeParser class tests", function () {
         expect(aNode.role).toBe(role);
         // Not sure these two tests are accurate. May need additional ARIA attributes.
         // * aNode.name should be set to the label.
-        // * aNode.value shoudl be set to the option value.
+        // * aNode.value should be set to the option value.
         expect(aNode.name).toBe(selectNodeName);
         expect(aNode.value).toBe(selectAccessibleName);
         expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
@@ -376,6 +376,7 @@ describe("NodeParser class tests", function () {
     
     test('nodeParser parses radio button group input tags', () => {
 
+        // Tests for radio button group in fieldset with legend.
         const groupName = 'Test Group';
         const nodeId = 'test-radio-id';
         const nodeName = 'test-radio';
@@ -395,7 +396,19 @@ describe("NodeParser class tests", function () {
         expect(aNode.metadata).toBe(metadata);
         expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
 
-        // TODO Add tests for "group" and "radio" ARIA roles.
+        // Tests for ARIA "radiogroup" and "radio" roles.
+        html = `<body><div role="radiogroup" aria-labelledby="heading"><h3 id=""heading">${groupName}</h3><span role="radio" aria-checked="true">${label}</span></div></body>`;
+        tree = htmlToElement(html, 'body');
+        node = htmlToElement(html, 'span');
+        nodeParser = new NodeParser({
+            rootNode: tree
+        });
+        var aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe('radio');
+        expect(aNode.name).toBe('');
+        expect(aNode.value).toBe(label);
+        expect(aNode.metadata).toBe(metadata);
+        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
     });
 
     test('nodeParser parses button tag', () => {
