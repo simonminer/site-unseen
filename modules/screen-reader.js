@@ -161,6 +161,15 @@ export class ScreenReader {
                 }
             });
         });
+        rootNode.querySelectorAll('input[type="checkbox"]').forEach(node => {
+            node.addEventListener('keyup', function(event) {
+                if (event.key === 'Spacebar' || event.key === ' ') {
+                    node.checked = !node.checked;
+                    ScreenReader.get().callbacks['updateCaptionText'](event);
+                    event.preventDefault();
+                }
+            });
+        });
 
     }
 

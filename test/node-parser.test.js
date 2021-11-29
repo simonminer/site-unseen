@@ -411,6 +411,43 @@ describe("NodeParser class tests", function () {
         expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
     });
 
+    test('nodeParser parses checkbox group input tags', () => {
+
+        // Tests for checkboxgroup in fieldset with legend.
+        const groupName = 'Test Group';
+        const nodeId = 'test-checkbox-id';
+        const nodeName = 'test-checkbox';
+        const label = 'Test Checkbox';
+        const nodeValue = 'test-checkbox-value';
+        const metadata = '(1 of 1) - checked';
+        var html = `<body><form><fieldset><legend>${groupName}</legend><input type="checkbox" id="${nodeId}" name="${nodeName}" value="${nodeValue}" checked="checked"/><label for="${nodeId}">${label}<label</fieldset></form></body>`;
+        var tree = htmlToElement(html, 'body');
+        var node = htmlToElement(html, 'input');
+        nodeParser = new NodeParser({
+            rootNode: tree
+        });
+        var aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe('checkbox');
+        expect(aNode.name).toBe(groupName);
+        expect(aNode.value).toBe(label);
+        expect(aNode.metadata).toBe(metadata);
+        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+
+        // Tests for ARIA "checkbox" roles.
+        html = `<body><div role="group" aria-labelledby="heading"><h3 id=""heading">${groupName}</h3><span role="checkbox" aria-checked="true">${label}</span></div></body>`;
+        tree = htmlToElement(html, 'body');
+        node = htmlToElement(html, 'span');
+        nodeParser = new NodeParser({
+            rootNode: tree
+        });
+        var aNode = nodeParser.parse(node);
+        expect(aNode.role).toBe('checkbox');
+        expect(aNode.name).toBe('');
+        expect(aNode.value).toBe(label);
+        expect(aNode.metadata).toBe(metadata);
+        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
+    });
+
     test('nodeParser parses button tag', () => {
 
         // Tests for button element.

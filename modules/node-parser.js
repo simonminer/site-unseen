@@ -236,10 +236,10 @@ export class NodeParser {
 
     /**
      * @method
-     * Extracts accessible node data for the specified radio button
-     * @param {AccessibleNode} radioButtonNode - The accessible node for the radio button
+     * Extracts accessible node data for the specified radio button field.
+     * @param {AccessibleNode} radioButtonNode - The accessible node for the radio button.
      */
-    parseRadioButton(radioButtonNode) {
+    parseRadioButtonField(radioButtonNode) {
         radioButtonNode.name = radioButtonNode.value;
         const node = radioButtonNode.actualNode;
 
@@ -274,6 +274,44 @@ export class NodeParser {
 
     /**
      * @method
+     * Extracts accessible node data for the specified checkbox field.
+     * @param {AccessibleNode} checkboxNode - The accessible node for the checkbox.
+     */
+    parseCheckboxField(checkboxNode) {
+        checkboxNode.name = checkboxNode.value;
+        const node = checkboxNode.actualNode;
+
+        // Incorporate details about the checkbox group into the accessible node data.
+        const parentNode = this.parse(checkboxNode.virtualNode.parent.actualNode);
+        const parentRole = parentNode.role;
+        if (parentRole === 'group') {
+            checkboxNode.name = parentNode.value;
+            var checkboxes = [];
+            parentNode.virtualNode.children.forEach( child => {
+                const childRole = axe.commons.aria.getRole(child, this.virtualTree);
+                if (childRole === 'checkbox') {
+                    checkboxes.push(child.actualNode);
+                }
+            });
+            const checkboxIndex = checkboxes.indexOf(checkboxNode.actualNode) + 1;
+            if (checkboxes.length > 0 && checkboxIndex > 0) {
+                checkboxNode.metadata = `(${checkboxIndex} of ${checkboxes.length})`;
+            }
+        }
+
+        // Otherwise preserve the node's value.
+        else {
+            checkboxNode.value = node.value;
+        }
+
+        // Is this radio button selected?
+        if (node.checked || node.hasAttribute('aria-checked')) {
+            checkboxNode.metadata += ' - checked';
+        }
+    }
+
+    /**
+     * @method
      * Sets form field ata appropriate based on its type and role
      * @param {AccessibleNode} formFieldNode - The accessible node for the form field element.
      */
@@ -286,7 +324,10 @@ export class NodeParser {
             }
         }
         else if (formFieldNode.role === 'radio' && formFieldNode.virtualNode.parent) {
-            this.parseRadioButton(formFieldNode);
+            this.parseRadioButtonField(formFieldNode);
+        }
+        else if (formFieldNode.role === 'checkbox' && formFieldNode.virtualNode.parent) {
+            this.parseCheckboxField(formFieldNode);
         }
         else {
             formFieldNode.name = formFieldNode.value;
