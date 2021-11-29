@@ -154,7 +154,9 @@ export class ScreenReader {
         });
         rootNode.querySelectorAll('input[type="radio"]').forEach(node => {
             node.addEventListener('keyup', function(event) {
-                if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                if (   event.key === 'ArrowUp' || event.key === 'ArrowDown'
+                    || event.key === 'Spacebar' || event.key === ' ') {
+                    node.checked = true;
                     ScreenReader.get().callbacks['updateCaptionText'](event);
                 }
             });

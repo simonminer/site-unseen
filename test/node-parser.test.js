@@ -381,8 +381,8 @@ describe("NodeParser class tests", function () {
         const nodeName = 'test-radio';
         const label = 'Test Radio';
         const nodeValue = 'test-radio-value';
-        const metadata = '(1 of 1)';
-        var html = `<body><form><fieldset><legend>${groupName}</legend><input type="radio" id="${nodeId}" name="${nodeName}" value="${nodeValue}" /><label for="${nodeId}">${label}<label</fieldset></form></body>`;
+        const metadata = '(1 of 1) - checked';
+        var html = `<body><form><fieldset><legend>${groupName}</legend><input type="radio" id="${nodeId}" name="${nodeName}" value="${nodeValue}" checked="checked"/><label for="${nodeId}">${label}<label</fieldset></form></body>`;
         var tree = htmlToElement(html, 'body');
         var node = htmlToElement(html, 'input');
         nodeParser = new NodeParser({

@@ -269,6 +269,11 @@ export class NodeParser {
             else {
                 formFieldNode.value = node.value;
             }
+
+            // Is this radio button selected?
+            if (node.checked) {
+                formFieldNode.metadata += ' - checked';
+            }
         }
         else {
             formFieldNode.name = formFieldNode.value;
