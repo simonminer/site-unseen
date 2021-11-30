@@ -43,6 +43,22 @@ export class NodeParser {
 
     /**
      * @member
+     * Associative array keyed by HTML tags with
+     * implicit ARIA landmark roles. These are mapped
+     * to their corresopnding roles.
+     */
+    landmarkTagToRoleMap = {
+        aside: 'complementary',
+        footer: 'contentinfo',
+        form: 'form',
+        header: 'banner',
+        main: 'main',
+        nav: 'navigation',
+        section: 'region'
+    };
+
+    /**
+     * @member
      * List of roles corresponding to page regions/landmarks.
      */
     // TODO Should the "region" role be included in this list?
@@ -102,15 +118,34 @@ export class NodeParser {
         aNode.virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node);
 
         // Compute the node's role and value.
-        if (this.tagsWithoutRole[aNode.tagName] === undefined) {
+        if ( this.tagsWithoutRole[aNode.tagName] === undefined &&
+            // The ScreenReader object sets all top-level tags beneat its root
+            // to have role="application", so ignore that here. (It will
+            // be computed properly later if this tag really has that role.)
+            !(node.hasAttribute('role') && node.getAttribute('role') === 'application')) {
             aNode.role = axe.commons.aria.getRole(node, this.virtualTree);
         }
-        if (aNode.role !== undefined) {
-            aNode.value = axe.commons.text.accessibleText(node, this.virtualTree);
+
+        if (aNode.role === undefined) {
+            // Manually check to see if this tag is a landmark as this
+            // is disabled for top-level elements when the ScreenReader object
+            // assigns them role="application".
+            aNode.value = '';
+            if (this.landmarkTagToRoleMap[aNode.tagName] !== undefined) {
+                aNode.role = this.landmarkTagToRoleMap[aNode.tagName];
+            }
+            else if (node.hasAttribute('role')) {
+                aNode.role = node.getAttribute('role');
+            }
+            // Otherwise, xet the appropriate role and value
+            // based on the tag.
+            else {
+                aNode.role = this.tagsWithoutRole[aNode.tagName];
+                aNode.value = node.textContent;
+            }
         }
         else {
-            aNode.role = this.tagsWithoutRole[aNode.tagName];
-            aNode.value = node.textContent;
+            aNode.value = axe.commons.text.accessibleText(node, this.virtualTree);
         }
 
         // Compute node metadata.

@@ -73,7 +73,7 @@ export class ScreenReader {
         this.rootNode = rootNode ? rootNode : document.body;
 
         // Prepare the content for processing by the screen reader.
-        // this.setApplicationRoleOnChildren();
+        this.setApplicationRoleOnChildren();
         this.setupNavigation();
 
         // Set up components of the screen reader.

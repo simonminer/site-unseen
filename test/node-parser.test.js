@@ -14,6 +14,8 @@ describe("NodeParser class tests", function () {
         expect(nodeParser.virtualTree instanceof Array).toBe(true);
         expect(nodeParser.virtualTree.length).toBe(1);
         expect(nodeParser.virtualTree[0].actualNode.tagName).toBe("BODY");
+        expect(nodeParser.landmarkRoles.length).toBeGreaterThan(0);
+        expect(Object.keys(nodeParser.landmarkTagToRoleMap).length).toBeGreaterThan(0);
     });
 
     test('generateTree creates a list of nodes', () => {
@@ -537,12 +539,29 @@ describe("NodeParser class tests", function () {
     // Region/landmark elements.
     test('nodeParser parses landmark elements', () => {
         ['aside', 'footer', 'header', 'main', 'nav'].forEach(function(tagName) {
-            const node = htmlToElement(`"<${tagName}>Test Content</${tagName}>`, tagName );
+
+            // Tests for landmark tags.
+            var html = `<${tagName}>Test Content</${tagName}>`;
+            var node = htmlToElement(html, tagName);
             nodeParser = new NodeParser({
                 rootNode: node
             });
-            const aNode = nodeParser.parse(node);
+            var aNode = nodeParser.parse(node);
             expect(nodeParser.landmarkRoles.includes(aNode.role)).toBe(true);
+            expect(aNode.metadata).toBe('region');
+            expect(aNode.name).toBe(undefined);
+            expect(aNode.value).toBe('');
+            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}`);
+
+            // Tests for landmark tags with application roles.
+            // The ScreenReader objects sets this for top-level tags.
+            node.setAttribute('role', 'application');
+            nodeParser = new NodeParser({
+                rootNode: node
+            });
+            aNode = nodeParser.parse(node);
+            expect(nodeParser.landmarkRoles.includes(aNode.role)).toBe(true);
+            expect(aNode.role).toBe(nodeParser.landmarkTagToRoleMap[tagName]);
             expect(aNode.metadata).toBe('region');
             expect(aNode.name).toBe(undefined);
             expect(aNode.value).toBe('');
