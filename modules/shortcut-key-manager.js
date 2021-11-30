@@ -59,6 +59,14 @@ export class ShortcutKeyManager {
      * Event handler to bind to "keydown" events to handle shortcut key presses.
      */
     static eventHandlerFunction = function (event) {
+
+        // Don't do anything if the Command key (on a Mac is pressed).
+        // This keeps common browser commands working
+        // (i.e. Command + R to refresh page).
+        if (event.metaKey) {
+            return;
+        }
+
         // Don't do anything if the user is on a form field
         // that accepts text inupt.
         const activeElement = document.activeElement;
