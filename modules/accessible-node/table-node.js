@@ -13,13 +13,13 @@ import { AccessibleNode } from "../accessible-node.js";
       * @member
       * Number of rows in this table.
       */
-     rowCount = undefined;
+     rowCount = 0;
 
      /**
       * @member
       * Number of columns in this table.
       */
-      columnCount = undefined;
+      columnCount = 0;
 
      /**
       * @member
@@ -29,4 +29,11 @@ import { AccessibleNode } from "../accessible-node.js";
       * spans multiple rows or columns.
       */
       cells = [];
+
+     /**
+      * @member
+      * Associative array mapping elements in this table (Node objects)
+      * to their corresponding TableCellNode objects.
+      */
+      nodes = {};
  }

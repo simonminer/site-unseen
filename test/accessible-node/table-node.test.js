@@ -12,5 +12,9 @@ describe("TableNode class tests", function () {
         expect(aNode.actualNode).toBe(node);
         expect(aNode.tagName).toBe(node.tagName.toLowerCase());
         expect(aNode.name).toBe(undefined);
+        expect(aNode.rowCount).toBe(0);
+        expect(aNode.columnCount).toBe(0);
+        expect(aNode.cells.length).toBe(0);
+        expect(Object.keys(aNode.nodes).length).toBe(0);
     });
 });
