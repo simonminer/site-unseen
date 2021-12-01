@@ -4,7 +4,6 @@ const { htmlToElement } = require('../test-utils.js');
 
 describe("TableNode class tests", function () {
     test('constructor creates accessible table node', () => {
-        var linkName = 'test-link';
         var node = htmlToElement('<table><tr><td>Test</td></tr></table>', 'table');
         var aNode = new TableNode(node);
         expect(aNode instanceof TableNode).toBe(true);
