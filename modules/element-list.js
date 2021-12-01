@@ -4,8 +4,8 @@
  * matching some condition.
  */
 
- "use strict";
- 
+ 'use strict';
+
  export class ElementList {
 
      /**
@@ -24,7 +24,7 @@
       * @member
       * Type of wrap-around when a node is requested before
       * the first or after the last node in the list.
-      * values include "start" or "end".
+      * values include 'start' or 'end'.
       */
     wrappedTo = undefined;
 
@@ -51,12 +51,12 @@
      */
     findNodes(finder, rootNode = null) {
         var nodes = [];
-        var finderType = "selector";
+        var finderType = 'selector';
         var selector = finder;
         // Test all nodes beneath the root node if a function
         // was passed to build the element list.
-        if (typeof selector != "string") {
-            finderType = "function";
+        if (typeof selector != 'string') {
+            finderType = 'function';
             selector = '*';
         }
 
@@ -64,8 +64,8 @@
             rootNode = document.body;
         }
 
-        rootNode.querySelectorAll(selector).forEach( node => {
-            if (finderType === "selector" || (finderType === "function" && finder(node))) {
+        rootNode.querySelectorAll(selector).forEach(node => {
+            if (finderType === 'selector' || (finderType === 'function' && finder(node))) {
                 nodes.push(node);
             }
         });
@@ -129,16 +129,16 @@
         // Or loop around to to the start of the list if we are at the end.
         else {
            index = 0;
-           this.wrappedTo = "start";
+           this.wrappedTo = 'start';
         }
 
-        return this.nodes[index];   
+        return this.nodes[index];
     }
 
      /**
      * @method
      * Returns the previous node in the DOM matched by this element list.
-     * @returns {Node} - The previous matching node (which could be the last one 
+     * @returns {Node} - The previous matching node (which could be the last one
      * if we are at the start of the list), or null if there are no matching nodes.
      */
     previousNode() {
@@ -154,7 +154,7 @@
         // Return this node if it's the only one in the list.
         if (this.nodes.length == 1) {
             index = 0;
-        }        
+        }
         // Get the previous node in the list.
         else if (this.currentNodeIndex > 0) {
             index -= 1;
@@ -162,8 +162,8 @@
         // Or loop around to to the start of the list if we are at the end.
         else {
            index = this.nodes.length - 1;
-           this.wrappedTo = "end";       
+           this.wrappedTo = 'end';
         }
-        return this.nodes[index];   
+        return this.nodes[index];
     }
  }

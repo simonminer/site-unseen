@@ -2,10 +2,10 @@
  * @class
  * Class to manage shortcut keys in the current application.
  */
-"use strict";
+'use strict';
 
-import { ShortcutKey } from "./shortcut-key.js";
-import { ScreenReader } from "./screen-reader.js";
+import { ShortcutKey } from './shortcut-key.js';
+import { ScreenReader } from './screen-reader.js';
 
 export class ShortcutKeyManager {
 
@@ -49,14 +49,14 @@ export class ShortcutKeyManager {
      * @member
      * Type of wrap-around when a shortcut key is pressed on its
      * first or last instance of its list of nodes:
-     * values include "start" or "end".
+     * values include 'start' or 'end'.
      */
     wrappedTo = undefined;
 
     /**
      * static
      * @member
-     * Event handler to bind to "keydown" events to handle shortcut key presses.
+     * Event handler to bind to 'keydown' events to handle shortcut key presses.
      */
     static eventHandlerFunction = function (event) {
 
@@ -71,7 +71,7 @@ export class ShortcutKeyManager {
         // that accepts text inupt.
         const activeElement = document.activeElement;
         const aNode = ScreenReader.get().caption.nodeParser.parse(activeElement);
-        if (   aNode.role === 'textbox' || aNode.role === 'combobox'
+        if (aNode.role === 'textbox' || aNode.role === 'combobox'
             || activeElement.getAttribute('type') === 'password') {
             return;
         }
@@ -88,7 +88,7 @@ export class ShortcutKeyManager {
             node = shortcutKey.nextNode();
         }
 
-        // If the uppercase shortcut key is pressed, 
+        // If the uppercase shortcut key is pressed,
         // use the previous matching node.
         else if (event.key === event.key.toUpperCase() && skm.shortcutKeys.has(event.key.toLowerCase())) {
             shortcutKey = skm.shortcutKeys.get(event.key.toLowerCase());
@@ -107,7 +107,7 @@ export class ShortcutKeyManager {
      * @param {Node} rootNode - Root node to use for finding shortcut key matches.
      * @param {Object} shortcutKeyData - Set of key/value pairs mapping keyboard characters to CSS selectors (optional). Defaults to data in defaultShortcutKeyData attribute.
      * @param {Function} func - Function to be executed on the node selected by a shortcut key (optional). Defaults to moving focus to the node.
-     * @returns {ShortcutKeyManager} - A new instance of the ShortcutKeyManager class. 
+     * @returns {ShortcutKeyManager} - A new instance of the ShortcutKeyManager class.
      */
     constructor(rootNode, shortcutKeyData, func) {
         // Map shortcut key operations.
@@ -153,10 +153,10 @@ export class ShortcutKeyManager {
      * by the pressed shortcut key. The lowercase shortcut key yields
      * the next matching node, and the uppercase shortcut key yields
      * the previous matching node.
-     * 
+     *
      * The specified function must take two parameters:
      * - The node returned by the shortcut key.
-     * - The event processed by the "keydown" listener.
+     * - The event processed by the 'keydown' listener.
      * @method
      * @param {func} - The function to call on the node returned by pressing the shortcut key.
      */

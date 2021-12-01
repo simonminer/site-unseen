@@ -1,8 +1,8 @@
-const TableCellNode = require("../../modules/accessible-node/table-cell-node.js").TableCellNode;
-const AccessibleNode = require("../../modules/accessible-node.js").AccessibleNode;
+const TableCellNode = require('../../modules/accessible-node/table-cell-node.js').TableCellNode;
+const AccessibleNode = require('../../modules/accessible-node.js').AccessibleNode;
 const { htmlToElement } = require('../test-utils.js');
 
-describe("TableCellNode class tests", function () {
+describe('TableCellNode class tests', function () {
     test('constructor creates accessible table node', () => {
         var node = htmlToElement('<table><tr><td></td></tr></table>', 'td');
         var aNode = new TableCellNode(node);

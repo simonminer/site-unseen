@@ -1,4 +1,4 @@
-const ScreenReader = require("../modules/screen-reader.js").ScreenReader;
+const ScreenReader = require('../modules/screen-reader.js').ScreenReader;
 
 var screenReader = undefined;
 beforeEach(() => {
@@ -13,7 +13,7 @@ beforeEach(() => {
     screenReader = new ScreenReader();
 });
 
-describe("ScreenReader class tests", function () {
+describe('ScreenReader class tests', function () {
     test('constructor creates screen reader object', () => {
         expect(screenReader instanceof ScreenReader).toBe(true);
         expect(screenReader.rootNode).toBe(document.body)

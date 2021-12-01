@@ -4,10 +4,10 @@
  * mark them as such, and manage keyboard navigation
  * through them.
  */
-"use strict";
+'use strict';
 
-import { ElementList } from "./element-list.js";
-import { ScreenReader } from "./screen-reader.js";
+import { ElementList } from './element-list.js';
+import { ScreenReader } from './screen-reader.js';
 
 export class Navigator extends ElementList {
 
@@ -15,17 +15,17 @@ export class Navigator extends ElementList {
      * @member
      * CSS class assigned to elements that are navigable by the screen reader.
      */
-    className = "srn";
+    className = 'srn';
 
     /**
      * HTML tag lists are taken from https://developer.mozilla.org/en-US/docs/Web/HTML/Element.
-     * 
+     *
      * @member
      * List of interactive HTML tags. These are
      * already in the tab order, but the also need
      * to be navigable via screen reader controls.
      */
-    interactiveTags = ["a", "button", "datalist", "input", "select", "textarea"];
+    interactiveTags = ['a', 'button', 'datalist', 'input', 'select', 'textarea'];
 
     /**
      * @member
@@ -33,21 +33,21 @@ export class Navigator extends ElementList {
      * navigable by the screen reader.
      */
     nonInteractiveTags = [
-        "address", "area", "audio", "blockquote",
-        "caption", "dd", "dl", "dt", "figcaption", "figure", "footer",
-        "h1", "h2", "h3", "h4", "h5", "h6", "header", "img",
-        "label", "legend", 'li', "main", "map", "math", "nav", "ol",
-        "p", "pre", "progress", "svg", "table", "td",
-        "th", "tr", "track", "ul", "video"
+        'address', 'area', 'audio', 'blockquote',
+        'caption', 'dd', 'dl', 'dt', 'figcaption', 'figure', 'footer',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'img',
+        'label', 'legend', 'li', 'main', 'map', 'math', 'nav', 'ol',
+        'p', 'pre', 'progress', 'svg', 'table', 'td',
+        'th', 'tr', 'track', 'ul', 'video'
     ];
 
     /**
      * @member
-     * List of HTML tags that could potentially 
+     * List of HTML tags that could potentially
      * be navigable by the screen reader,
      * depending on their contents.
      */
-    potentiallyNavigableTags = ["div","span"];
+    potentiallyNavigableTags = ['div','span'];
 
     /**
      * @member
@@ -79,11 +79,11 @@ export class Navigator extends ElementList {
         var screenReader = ScreenReader.get();
         var navigator = screenReader.navigator;
         var node = undefined;
-        if (event.key === "ArrowRight") {
+        if (event.key === 'ArrowRight') {
             event.preventDefault();
             node = navigator.nextNode();
         }
-        else if (event.key === "ArrowLeft") {
+        else if (event.key === 'ArrowLeft') {
             event.preventDefault();
             node = navigator.previousNode();
         }
@@ -107,10 +107,10 @@ export class Navigator extends ElementList {
      * @member
      * Type of wrap-around when the screen reader reaches the
      * first or last navigable node:
-     * values include "start" or "end".
+     * values include 'start' or 'end'.
      */
     wrappedTo = undefined;
-    static _properties = ["className", "tabIndexNodeCount", "nodes", "wrappedTo"];
+    static _properties = ['className', 'tabIndexNodeCount', 'nodes', 'wrappedTo'];
 
     /**
      * @constructor
@@ -132,7 +132,7 @@ export class Navigator extends ElementList {
     * @param {Node} node - The HTML element being for considered for a tabindex attribute.
     * @returns {boolean}
     * Tests whether or not the given HTML node needs a tabindex="-1" attribute
-    * attribute so that it can receive keyboard focus 
+    * attribute so that it can receive keyboard focus
     */
     isTabIndexNeeded(node) {
         var tagName = node.tagName.toLowerCase();
@@ -144,14 +144,14 @@ export class Navigator extends ElementList {
         }
         else if (this.potentiallyNavigableTags.includes(tagName)) {
             // Does the node have a role?
-            if (node.hasAttribute( 'role')) {
+            if (node.hasAttribute('role')) {
                 isNeeded = true;
             }
             else {
             // Does the node have at least one child that contains text?
             var children = node.childNodes;
                 for (let i = 0; i < children.length; i++) {
-                    if (children[i].nodeType === 3 && children[i].nodeValue.trim() !== "") {
+                    if (children[i].nodeType === 3 && children[i].nodeValue.trim() !== '') {
                         isNeeded = true;
                         break;
                     }
@@ -161,7 +161,7 @@ export class Navigator extends ElementList {
 
         return isNeeded;
     }
-    
+
     /**
      * @method
      * @param {Node} node - The HTML element to be processed.
@@ -173,7 +173,7 @@ export class Navigator extends ElementList {
         // this node, make sure it has a tabindex attribute.
         var isTabIndexNeeded = this.isTabIndexNeeded(node);
         if (isTabIndexNeeded) {
-            node.setAttribute("tabindex", "-1");
+            node.setAttribute('tabindex', '-1');
             this.tabIndexNodeCount += 1;
         }
 

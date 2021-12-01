@@ -1,8 +1,8 @@
-const TableNode = require("../../modules/accessible-node/table-node.js").TableNode;
-const AccessibleNode = require("../../modules/accessible-node.js").AccessibleNode;
+const TableNode = require('../../modules/accessible-node/table-node.js').TableNode;
+const AccessibleNode = require('../../modules/accessible-node.js').AccessibleNode;
 const { htmlToElement } = require('../test-utils.js');
 
-describe("TableNode class tests", function () {
+describe('TableNode class tests', function () {
     test('constructor creates accessible table node', () => {
         var node = htmlToElement('<table><tr><td>Test</td></tr></table>', 'table');
         var aNode = new TableNode(node);

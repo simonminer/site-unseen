@@ -3,9 +3,9 @@
  * Class to represent the screen reader caption which displays
  * the role, state/property, and value of an HTML element.
  */
-"use strict";
+'use strict';
 
-import { NodeParser } from "./node-parser.js";
+import { NodeParser } from './node-parser.js';
 
 export class Caption {
 
@@ -13,7 +13,7 @@ export class Caption {
      * @member
      * ID of caption element in DOM.
      */
-    id = "caption";
+    id = 'caption';
 
     /**
      * @member
@@ -25,26 +25,26 @@ export class Caption {
      * Caption CSS selector name/value pairs.
      */
     css = {
-        "color": '#ffffff',
-        "background-color": "#000000",
-        "border": "3px solid #ffffff",
-        "border-radius": "10px",
-        "font-size": "1.3rem",
-        "font-weight": "bold",
-        "padding": "10px",
-        "width": "40%",
-        "height": "20%",
-        "position": "fixed",
-        "bottom": "10px",
-        "right": "10px",
-        "text-align": "left"
+        'color': '#ffffff',
+        'background-color': '#000000',
+        'border': '3px solid #ffffff',
+        'border-radius': '10px',
+        'font-size': '1.3rem',
+        'font-weight': 'bold',
+        'padding': '10px',
+        'width': '40%',
+        'height': '20%',
+        'position': 'fixed',
+        'bottom': '10px',
+        'right': '10px',
+        'text-align': 'left'
     };
 
     /**
      * @member
      * Separator between elements of the accessible description.
      */
-    separator = ": ";
+    separator = ': ';
 
     /**
      * @member
@@ -52,7 +52,7 @@ export class Caption {
      */
     nodeParser = new NodeParser;
 
-    static _properties = ["id", "css", "separator", "nodeParser"];
+    static _properties = ['id', 'css', 'separator', 'nodeParser'];
 
     /**
      * @constructor
@@ -100,10 +100,10 @@ export class Caption {
         var cssProperties = [];
         for (const property in this.css) {
             if (Object.hasOwnProperty.call(this.css, property)) {
-                cssProperties.push(property + ": " + this.css[property]);
+                cssProperties.push(property + ': ' + this.css[property]);
             }
         }
-        var css = `#${this.id} { ${cssProperties.join("; ")}; }`;
+        var css = `#${this.id} { ${cssProperties.join('; ')}; }`;
         var node = document.createElement('style');
         node.appendChild(document.createTextNode(css));
         return node;
@@ -117,7 +117,7 @@ export class Caption {
      */
     getHTML() {
         var node = document.createElement('div');
-        node.setAttribute("id", this.id);
+        node.setAttribute('id', this.id);
         this.node = node;
         return node;
     }

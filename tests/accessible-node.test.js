@@ -1,7 +1,7 @@
-const AccessibleNode = require("../modules/accessible-node.js").AccessibleNode;
+const AccessibleNode = require('../modules/accessible-node.js').AccessibleNode;
 const { htmlToElement } = require('./test-utils.js');
 
-describe("AccessibleNode class tests", function () {
+describe('AccessibleNode class tests', function () {
     test('constructor creates accessible node', () => {
         var linkName = 'test-link';
         var node = htmlToElement(`<a name="${linkName}">This is a link</a>`, 'a');

@@ -1,4 +1,4 @@
-const ShortcutKey = require("../modules/shortcut-key.js").ShortcutKey;
+const ShortcutKey = require('../modules/shortcut-key.js').ShortcutKey;
 
 // One-time setup.
 const key = 'a';
@@ -22,7 +22,7 @@ beforeEach(() => {
     shortcutKey = new ShortcutKey(key, selector, document.body);
 });
 
-describe("ShortcutKey class tests", function () {
+describe('ShortcutKey class tests', function () {
     test('constructor sets properties', () => {
         expect(shortcutKey instanceof ShortcutKey).toBe(true);
         expect(shortcutKey.key).toBe(key);
@@ -47,7 +47,7 @@ describe("ShortcutKey class tests", function () {
             expect(node.nodeName).toBe(shortcutKey.selector.toUpperCase());
         });
     });
-    
+
     test('currentNode returns undefined in current node index < 0', () => {
         shortcutKey.currentNodeIndex = -1;
         expect(shortcutKey.currentNode()).toBe(undefined);
@@ -59,7 +59,7 @@ describe("ShortcutKey class tests", function () {
         }
     });
     test('currentNode returns undefined for empty node list', () => {
-        shortcutKey = new ShortcutKey( 'test', 'test', document.body);
+        shortcutKey = new ShortcutKey('test', 'test', document.body);
         expect(shortcutKey.nodes.length).toEqual(0);
         expect(shortcutKey.currentNode()).toBe(undefined);
     });
@@ -79,16 +79,16 @@ describe("ShortcutKey class tests", function () {
     test('nextNode returns first match for last node in list', () => {
         shortcutKey.currentNodeIndex = shortcutKey.nodes.length - 1;
         expect(shortcutKey.nextNode()).toBe(shortcutKey.nodes[0]);
-        expect(shortcutKey.wrappedTo).toBe("start");
+        expect(shortcutKey.wrappedTo).toBe('start');
     });
     test('nextNode returns the only match in the list', () => {
-        shortcutKey = new ShortcutKey( 'div', 'div', document.body);
+        shortcutKey = new ShortcutKey('div', 'div', document.body);
         expect(shortcutKey.nodes.length).toEqual(1);
         expect(shortcutKey.nextNode()).toBe(shortcutKey.nodes[0]);
         expect(shortcutKey.nextNode()).toBe(shortcutKey.nodes[0]);
     });
     test('nextNode returns undefined for empty node list', () => {
-        shortcutKey = new ShortcutKey( 'test', 'test', document.body);
+        shortcutKey = new ShortcutKey('test', 'test', document.body);
         expect(shortcutKey.nodes.length).toEqual(0);
         expect(shortcutKey.nextNode()).toBe(undefined);
         expect(shortcutKey.wrappedTo).toBe(undefined);
@@ -97,7 +97,7 @@ describe("ShortcutKey class tests", function () {
     test('previousNode returns last match if current node index < 0', () => {
         shortcutKey.currentNodeIndex = -1;
         expect(shortcutKey.previousNode()).toBe(shortcutKey.nodes[shortcutKey.nodes.length - 1]);
-        expect(shortcutKey.wrappedTo).toBe("end");
+        expect(shortcutKey.wrappedTo).toBe('end');
     });
     test('previousNode returns previous match for each node in the list after the first one', () => {
         for (let index = shortcutKey.nodes.length - 1; index > 0; index--) {
@@ -109,17 +109,17 @@ describe("ShortcutKey class tests", function () {
     test('previousNode returns last match for first node in list', () => {
         shortcutKey.currentNodeIndex = 0
         expect(shortcutKey.previousNode()).toBe(shortcutKey.nodes[shortcutKey.nodes.length - 1]);
-        expect(shortcutKey.wrappedTo).toBe("end");
-    });    
+        expect(shortcutKey.wrappedTo).toBe('end');
+    });
     test('previousNode returns the only match in the list', () => {
-        shortcutKey = new ShortcutKey( 'div', 'div', document.body);
+        shortcutKey = new ShortcutKey('div', 'div', document.body);
         expect(shortcutKey.nodes.length).toEqual(1);
         expect(shortcutKey.previousNode()).toBe(shortcutKey.nodes[0]);
         expect(shortcutKey.previousNode()).toBe(shortcutKey.nodes[0]);
         expect(shortcutKey.wrappedTo).toBe(undefined);
     });
     test('previousNode returns undefined for empty node list', () => {
-        shortcutKey = new ShortcutKey( 'test', 'test', document.body);
+        shortcutKey = new ShortcutKey('test', 'test', document.body);
         expect(shortcutKey.nodes.length).toEqual(0);
         expect(shortcutKey.previousNode()).toBe(undefined);
         expect(shortcutKey.wrappedTo).toBe(undefined);

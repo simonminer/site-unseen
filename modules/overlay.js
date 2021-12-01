@@ -1,9 +1,9 @@
 /**
  * @class
- * Class to represent the overlay to hide the webpage 
+ * Class to represent the overlay to hide the webpage
  * to be navigated by screen reader.
  */
-"use strict";
+'use strict';
 
 export class Overlay {
 
@@ -11,7 +11,7 @@ export class Overlay {
      * @member
      * ID of overly element.
      */
-    id = "overlay";
+    id = 'overlay';
 
     /**
      * @member
@@ -24,18 +24,18 @@ export class Overlay {
      * Overlay CSS selector values.
      */
     css = {
-        "background-color": "#000000",
-        "opacity": "0.75",
-        "z-index": "1",
-        "position": "absolute",
-        "top": "0",
-        "left": "0",
-        "width": "100%",
-        "height": "100%",
-        "position": "fixed"
+        'background-color': '#000000',
+        'opacity': '0.75',
+        'z-index': '1',
+        'position': 'absolute',
+        'top': '0',
+        'left': '0',
+        'width': '100%',
+        'height': '100%',
+        'position': 'fixed'
     };
 
-    static _properties = ["id", "css"];
+    static _properties = ['id', 'css'];
 
     /**
      * @constructor
@@ -60,10 +60,10 @@ export class Overlay {
         var cssProperties = [];
         for (const property in this.css) {
             if (Object.hasOwnProperty.call(this.css, property)) {
-                cssProperties.push(property + ": " + this.css[property]);
+                cssProperties.push(property + ': ' + this.css[property]);
             }
         }
-        var css = `#${this.id} { ${cssProperties.join("; ")}; }`;
+        var css = `#${this.id} { ${cssProperties.join('; ')}; }`;
         var node = document.createElement('style');
         node.appendChild(document.createTextNode(css));
         return node;
@@ -76,7 +76,7 @@ export class Overlay {
      */
     getHTML() {
         var node = document.createElement('div');
-        node.setAttribute("id", this.id);
+        node.setAttribute('id', this.id);
         this.node = node;
         return node;
     }

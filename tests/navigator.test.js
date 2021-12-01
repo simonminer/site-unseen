@@ -1,4 +1,4 @@
-const Navigator = require("../modules/navigator.js").Navigator;
+const Navigator = require('../modules/navigator.js').Navigator;
 
 beforeAll(() => {
     document.body.innerHTML = `
@@ -15,10 +15,10 @@ beforeEach(() => {
     navigator = new Navigator();
 });
 
-describe("Navigator class tests", function () {
+describe('Navigator class tests', function () {
     test('constructor creates Navigator object', () => {
         expect(navigator instanceof Navigator).toBe(true);
-        expect(navigator.className).toBe("srn");
+        expect(navigator.className).toBe('srn');
         expect(navigator.nonInteractiveTags.length).toBeGreaterThan(0);
         expect(navigator.interactiveTags.length).toBeGreaterThan(0);
         expect(navigator.potentiallyNavigableTags.length).toBeGreaterThan(0);
@@ -54,7 +54,7 @@ describe("Navigator class tests", function () {
     test('isTabIndexNeeded returns true for <div> and <span> tags containing only text', () => {
         navigator.potentiallyNavigableTags.forEach(tagName => {
             var node = document.createElement(tagName);
-            node.appendChild(document.createTextNode("test"));
+            node.appendChild(document.createTextNode('test'));
             expect(navigator.isTabIndexNeeded(node)).toBe(true);
         });
     });
@@ -69,16 +69,16 @@ describe("Navigator class tests", function () {
         navigator.potentiallyNavigableTags.forEach(tagName => {
             var node = document.createElement(tagName);
             node.appendChild(document.createElement(tagName));
-            node.appendChild(document.createTextNode("test"));
+            node.appendChild(document.createTextNode('test'));
             expect(navigator.isTabIndexNeeded(node)).toBe(true);
         });
     });
-    
+
     test('processNode assigns tabindex and class to non-interactive tags', () => {
         navigator.nonInteractiveTags.forEach(tagName => {
             var node = document.createElement(tagName);
             navigator.processNode(node);
-            expect(node.getAttribute("tabindex")).toBe("-1");
+            expect(node.getAttribute('tabindex')).toBe('-1');
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
         expect(navigator.tabIndexNodeCount).toBe(navigator.nonInteractiveTags.length);
@@ -88,7 +88,7 @@ describe("Navigator class tests", function () {
         navigator.interactiveTags.forEach(tagName => {
             var node = document.createElement(tagName);
             navigator.processNode(node);
-            expect(node.getAttribute("tabindex")).toBe(null);
+            expect(node.getAttribute('tabindex')).toBe(null);
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
         expect(navigator.tabIndexNodeCount).toBe(0);
@@ -98,7 +98,7 @@ describe("Navigator class tests", function () {
         navigator.potentiallyNavigableTags.forEach(tagName => {
             var node = document.createElement(tagName);
             navigator.processNode(node);
-            expect(node.getAttribute("tabindex")).toBe(null);
+            expect(node.getAttribute('tabindex')).toBe(null);
             expect(node.classList.contains(navigator.className)).toBe(false);
         });
         expect(navigator.tabIndexNodeCount).toBe(0);
@@ -107,9 +107,9 @@ describe("Navigator class tests", function () {
     test('processNode assigns tabindex and class to <div> and <span> tags containing only text', () => {
         navigator.potentiallyNavigableTags.forEach(tagName => {
             var node = document.createElement(tagName);
-            node.appendChild(document.createTextNode("test"));
+            node.appendChild(document.createTextNode('test'));
             navigator.processNode(node);
-            expect(node.getAttribute("tabindex")).toBe("-1");
+            expect(node.getAttribute('tabindex')).toBe('-1');
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
         expect(navigator.tabIndexNodeCount).toBe(navigator.potentiallyNavigableTags.length);
@@ -120,7 +120,7 @@ describe("Navigator class tests", function () {
             var node = document.createElement(tagName);
             node.appendChild(document.createElement(tagName));
             navigator.processNode(node);
-            expect(node.getAttribute("tabindex")).toBe(null);
+            expect(node.getAttribute('tabindex')).toBe(null);
             expect(node.classList.contains(navigator.className)).toBe(false);
         });
         expect(navigator.tabIndexNodeCount).toBe(0);
@@ -129,10 +129,10 @@ describe("Navigator class tests", function () {
     test('processNode assigns tabindex and class to <div> and <span> tags containing both text and other tags', () => {
         navigator.potentiallyNavigableTags.forEach(tagName => {
             var node = document.createElement(tagName);
-            node.appendChild(document.createTextNode("test"));
+            node.appendChild(document.createTextNode('test'));
             node.appendChild(document.createElement(tagName));
             navigator.processNode(node);
-            expect(node.getAttribute("tabindex")).toBe("-1");
+            expect(node.getAttribute('tabindex')).toBe('-1');
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
         expect(navigator.tabIndexNodeCount).toBe(navigator.potentiallyNavigableTags.length);
@@ -157,7 +157,7 @@ describe("Navigator class tests", function () {
         }
     });
     test('currentNode returns undefined for empty node list', () => {
-        navigator = new Navigator( 'test', 'test', document.body);
+        navigator = new Navigator('test', 'test', document.body);
         expect(navigator.nodes.length).toEqual(0);
         expect(navigator.currentNode()).toBe(undefined);
     });
@@ -180,14 +180,14 @@ describe("Navigator class tests", function () {
         navigator.markNavigableNodes(document.body);
         navigator.currentNodeIndex = navigator.nodes.length - 1;
         expect(navigator.nextNode()).toBe(navigator.nodes[0]);
-        expect(navigator.wrappedTo).toBe("start");
+        expect(navigator.wrappedTo).toBe('start');
     });
 
     test('previousNode returns last match if current node index < 0', () => {
         navigator.markNavigableNodes(document.body);
         navigator.currentNodeIndex = -1;
         expect(navigator.previousNode()).toBe(navigator.nodes[navigator.nodes.length - 1]);
-        expect(navigator.wrappedTo).toBe("end");
+        expect(navigator.wrappedTo).toBe('end');
     });
     test('previousNode returns previous match for each node in the list after the first one', () => {
         navigator.markNavigableNodes(document.body);
@@ -201,6 +201,6 @@ describe("Navigator class tests", function () {
         navigator.markNavigableNodes(document.body);
         navigator.currentNodeIndex = 0
         expect(navigator.previousNode()).toBe(navigator.nodes[navigator.nodes.length - 1]);
-        expect(navigator.wrappedTo).toBe("end");
+        expect(navigator.wrappedTo).toBe('end');
     });
 });

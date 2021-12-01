@@ -3,9 +3,9 @@
  * Class to encapsulate accessibility data for an HTML table node/tag.
  */
 
- "use strict";
+ 'use strict';
 
-import { AccessibleNode } from "../accessible-node.js";
+import { AccessibleNode } from '../accessible-node.js';
 
  export class TableNode extends AccessibleNode {
 

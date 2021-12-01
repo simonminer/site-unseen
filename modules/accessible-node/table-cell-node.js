@@ -3,9 +3,9 @@
  * Class to encapsulate accessibility data for an HTML table cell node/tag.
  */
 
- "use strict";
+ 'use strict';
 
-import { AccessibleNode } from "../accessible-node.js";
+import { AccessibleNode } from '../accessible-node.js';
 
  export class TableCellNode extends AccessibleNode {
 
@@ -47,7 +47,7 @@ import { AccessibleNode } from "../accessible-node.js";
 
      /**
       * @member
-      * Type of this table cell -- either "cell" or "heading".
+      * Type of this table cell -- either 'cell' or 'heading'.
       */
      cellType = 'cell';
  }

@@ -1,7 +1,7 @@
-const ElementList = require("../modules/element-list.js").ElementList;
+const ElementList = require('../modules/element-list.js').ElementList;
 
 // One-time setup.
-const selector = "a";
+const selector = 'a';
 var nodeList = new ElementList(selector);
 
 beforeAll(() => {
@@ -21,7 +21,7 @@ beforeEach(() => {
     nodeList = new ElementList(selector, document.body);
 });
 
-describe("ElementList class tests", function () {
+describe('ElementList class tests', function () {
 
     test('constructor sets properties', () => {
         nodeList = new ElementList();
@@ -85,7 +85,7 @@ describe("ElementList class tests", function () {
     test('nextNode returns first match for last node in list', () => {
         nodeList.currentNodeIndex = nodeList.nodes.length - 1;
         expect(nodeList.nextNode()).toBe(nodeList.nodes[0]);
-        expect(nodeList.wrappedTo).toBe("start");
+        expect(nodeList.wrappedTo).toBe('start');
     });
     test('nextNode returns the only match in the list', () => {
         nodeList = new ElementList('div', document.body);
@@ -103,7 +103,7 @@ describe("ElementList class tests", function () {
     test('previousNode returns last match if current node index < 0', () => {
         nodeList.currentNodeIndex = -1;
         expect(nodeList.previousNode()).toBe(nodeList.nodes[nodeList.nodes.length - 1]);
-        expect(nodeList.wrappedTo).toBe("end");
+        expect(nodeList.wrappedTo).toBe('end');
     });
     test('previousNode returns previous match for each node in the list after the first one', () => {
         for (let index = nodeList.nodes.length - 1; index > 0; index--) {
@@ -115,8 +115,8 @@ describe("ElementList class tests", function () {
     test('previousNode returns last match for first node in list', () => {
         nodeList.currentNodeIndex = 0;
         expect(nodeList.previousNode()).toBe(nodeList.nodes[nodeList.nodes.length - 1]);
-        expect(nodeList.wrappedTo).toBe("end");
-    });    
+        expect(nodeList.wrappedTo).toBe('end');
+    });
     test('previousNode returns the only match in the list', () => {
         nodeList = new ElementList('div', document.body);
         expect(nodeList.nodes.length).toEqual(1);

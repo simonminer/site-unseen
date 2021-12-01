@@ -1,5 +1,5 @@
-const ShortcutKeyManager = require("../modules/shortcut-key-manager.js").ShortcutKeyManager;
-const ScreenReader = require("../modules/screen-reader.js").ScreenReader;;
+const ShortcutKeyManager = require('../modules/shortcut-key-manager.js').ShortcutKeyManager;
+const ScreenReader = require('../modules/screen-reader.js').ScreenReader;;
 
 // One-time setup.
 beforeAll(() => {
@@ -28,7 +28,7 @@ beforeAll(() => {
 
 afterEach(() => {
     document.shortcutKeyManager = undefined;
-    document.removeEventListener("keydown", ShortcutKeyManager.eventHandlerFunction);
+    document.removeEventListener('keydown', ShortcutKeyManager.eventHandlerFunction);
 });
 
 const keyData = {
@@ -42,13 +42,13 @@ function returnTrue() {
     return true;
 }
 
-describe("ShortcutKeyManager class tests", function () {
+describe('ShortcutKeyManager class tests', function () {
     test('constructor sets up shortcut keys map', () => {
         var skm = new ShortcutKeyManager(document.getElementById('content'));
         expect(skm instanceof ShortcutKeyManager).toBe(true);
-        expect(typeof skm.shortcutKeyFunction).toBe("function");
+        expect(typeof skm.shortcutKeyFunction).toBe('function');
         expect(skm.shortcutKeys.size).toBe(Object.keys(skm.defaultShortcutKeyData).length - 1);
-        skm.shortcutKeys.forEach( (value, key) => {
+        skm.shortcutKeys.forEach((value, key) => {
             expect(value.selector).toBe(skm.defaultShortcutKeyData[key]);
         });
         expect(skm.shortcutKeys.has('z')).toBe(false);
@@ -56,15 +56,15 @@ describe("ShortcutKeyManager class tests", function () {
     test('this.createShortcutKeyMap overrides shortcut key map', () => {
         var skm = new ShortcutKeyManager(document.getElementById('content'), keyData);
         expect(skm instanceof ShortcutKeyManager).toBe(true);
-        expect(typeof skm.shortcutKeyFunction).toBe("function");
+        expect(typeof skm.shortcutKeyFunction).toBe('function');
         expect(skm.shortcutKeys.size).toBe(Object.keys(keyData).length - 1);
-        skm.shortcutKeys.forEach( (value, key) => {
+        skm.shortcutKeys.forEach((value, key) => {
             expect(value.selector).toBe(keyData[key]);
         });
         expect(skm.shortcutKeys.has('z')).toBe(false);
         const map = skm.createShortcutKeyMap(keyData, document.getElementById('content'));
         expect(map.size).toBe(Object.keys(keyData).length - 1);
-        map.forEach( (value, key) => {
+        map.forEach((value, key) => {
             expect(value.selector).toBe(keyData[key]);
         });
         expect(map.has('z')).toBe(false);
@@ -74,20 +74,20 @@ describe("ShortcutKeyManager class tests", function () {
         expect(skm.bindShortcutKeysToFunction(returnTrue)).toBe(true);
         expect(skm.shortcutKeyFunction).toBe(returnTrue);
         new ScreenReader();
-        expect(typeof ScreenReader.get().shortcutKeyManager).toBe("object");
+        expect(typeof ScreenReader.get().shortcutKeyManager).toBe('object');
         expect(ScreenReader.get().shortcutKeyManager.shortcutKeys instanceof Map).toBe(true);
     });
     test('constructor sets up shortcut keys map and event listener', () => {
         var skm = new ShortcutKeyManager(document.getElementById('content'), keyData, returnTrue);
         expect(skm instanceof ShortcutKeyManager).toBe(true);
         expect(skm.shortcutKeys.size).toBe(Object.keys(keyData).length - 1);
-        skm.shortcutKeys.forEach( (value, key) => {
+        skm.shortcutKeys.forEach((value, key) => {
             expect(value.selector).toBe(keyData[key]);
         });
         expect(skm.shortcutKeys.has('z')).toBe(false);
         expect(skm.shortcutKeyFunction).toBe(returnTrue);
         new ScreenReader();
-        expect(typeof ScreenReader.get().shortcutKeyManager).toBe("object");
+        expect(typeof ScreenReader.get().shortcutKeyManager).toBe('object');
         expect(ScreenReader.get().shortcutKeyManager.shortcutKeys instanceof Map).toBe(true);
     });
 

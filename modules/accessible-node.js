@@ -3,7 +3,7 @@
  * Class to encapsulate accessibility data for an HTML node/tag.
  */
 
- "use strict";
+ 'use strict';
 
  export class AccessibleNode {
 
@@ -86,7 +86,7 @@
          }
 
          var values = [];
-         [roleText, this.name, this.value].forEach( (data) => {
+         [roleText, this.name, this.value].forEach((data) => {
             if (data !== undefined && data !== null && data !== '') {
                 values.push(data);
             }

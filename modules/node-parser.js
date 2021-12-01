@@ -2,14 +2,14 @@
  * @class
  * Class to parse HTML nodes for accessibility information.
  */
-"use strict";
+'use strict';
 
 import { AccessibleNode } from './accessible-node.js';
 
 // Set up axe-core.
 var virtualTree = undefined;
 if (window.axe == undefined) {
-    window.axe = require("axe-core");
+    window.axe = require('axe-core');
 }
 
 export class NodeParser {
@@ -61,7 +61,7 @@ export class NodeParser {
      * @member
      * List of roles corresponding to page regions/landmarks.
      */
-    // TODO Should the "region" role be included in this list?
+    // TODO Should the region role be included in this list?
     landmarkRoles = [
         'application', 'banner', 'complementary', 'contentinfo',
         'form', 'main', 'navigation', 'search'
@@ -118,7 +118,7 @@ export class NodeParser {
         aNode.virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node);
 
         // Compute the node's role and value.
-        if ( this.tagsWithoutRole[aNode.tagName] === undefined &&
+        if (this.tagsWithoutRole[aNode.tagName] === undefined &&
             // The ScreenReader object sets all top-level tags beneat its root
             // to have role="application", so ignore that here. (It will
             // be computed properly later if this tag really has that role.)
@@ -179,14 +179,14 @@ export class NodeParser {
                     break;
                 }
             }
-            if (listItemIndex !== -1 && listItems.length >= 0 ) {
+            if (listItemIndex !== -1 && listItems.length >= 0) {
                 aNode.metadata = `(${listItemIndex + 1} of ${listItems.length})`;
             }
         }
 
         // Highlight when a role corresponds with a page region/landmark.
         else if (this.landmarkRoles.includes(aNode.role)) {
-            aNode.metadata = "region";
+            aNode.metadata = 'region';
         }
 
         // Set form element names and values.
@@ -284,7 +284,7 @@ export class NodeParser {
         if (parentRole === 'group' || parentRole == 'radiogroup') {
             radioButtonNode.name = parentNode.value;
             var radioButtons = [];
-            parentNode.virtualNode.children.forEach( child => {
+            parentNode.virtualNode.children.forEach(child => {
                 const childRole = axe.commons.aria.getRole(child, this.virtualTree);
                 if (childRole === 'radio') {
                     radioButtons.push(child.actualNode);
@@ -322,7 +322,7 @@ export class NodeParser {
         if (parentRole === 'group') {
             checkboxNode.name = parentNode.value;
             var checkboxes = [];
-            parentNode.virtualNode.children.forEach( child => {
+            parentNode.virtualNode.children.forEach(child => {
                 const childRole = axe.commons.aria.getRole(child, this.virtualTree);
                 if (childRole === 'checkbox') {
                     checkboxes.push(child.actualNode);

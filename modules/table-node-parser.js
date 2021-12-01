@@ -3,9 +3,9 @@
  * Class to parse HTML tables into accessible data structures.
  */
 
- "use strict";
+ 'use strict';
 
- import { NodeParser } from "./node-parser.js";
+ import { NodeParser } from './node-parser.js';
 
  export class TableNodeParser extends NodeParser {
 

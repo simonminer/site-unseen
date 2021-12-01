@@ -2,11 +2,11 @@
  * @class
  * Class to represent and manage a browser-based screen reader simulator.
  */
-"use strict";
+'use strict';
 
-import { Overlay } from "./overlay.js";
-import { Caption } from "./caption.js";
-import { NodeParser } from "./node-parser.js";
+import { Overlay } from './overlay.js';
+import { Caption } from './caption.js';
+import { NodeParser } from './node-parser.js';
 import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
@@ -95,7 +95,7 @@ export class ScreenReader {
     setApplicationRoleOnChildren() {
         var children = this.rootNode.children;
         for (var i = 0, l = children.length; i < l; i++) {
-            children[i].setAttribute("role","application");
+            children[i].setAttribute('role','application');
         }
     }
 
@@ -154,7 +154,7 @@ export class ScreenReader {
         });
         rootNode.querySelectorAll('input[type="radio"]').forEach(node => {
             node.addEventListener('keyup', function(event) {
-                if (   event.key === 'ArrowUp' || event.key === 'ArrowDown'
+                if (event.key === 'ArrowUp' || event.key === 'ArrowDown'
                     || event.key === 'Spacebar' || event.key === ' ') {
                     node.checked = true;
                     ScreenReader.get().callbacks['updateCaptionText'](event);

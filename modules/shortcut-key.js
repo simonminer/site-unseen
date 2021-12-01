@@ -4,9 +4,9 @@
  * tags in the DOM when a certain key is pressed.
  */
 
- "use strict";
+ 'use strict';
 
- import { ElementList } from "./element-list.js";
+ import { ElementList } from './element-list.js';
 
  export class ShortcutKey extends ElementList {
 

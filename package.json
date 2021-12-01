@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "server": "./node_modules/http-server/bin/http-server -c-1",
-    "lint": "eslint modules/** test/**"
+    "lint": "eslint modules/** tests/**"
   },
   "repository": {
     "type": "git",
