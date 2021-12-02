@@ -22,7 +22,6 @@ beforeEach(() => {
 });
 
 describe('ElementList class tests', function () {
-
     test('constructor sets properties', () => {
         nodeList = new ElementList();
         expect(nodeList instanceof ElementList).toBe(true);
@@ -34,14 +33,14 @@ describe('ElementList class tests', function () {
         nodeList = new ElementList();
         var nodes = nodeList.findNodes(selector, document.body);
         expect(nodes.length).toBeGreaterThan(0);
-        nodes.forEach(node => {
+        nodes.forEach((node) => {
             expect(node.nodeName).toBe(selector.toUpperCase());
         });
     });
     test('constructor with finder loads node list', () => {
         expect(nodeList instanceof ElementList).toBe(true);
         expect(nodeList.nodes.length).toBeGreaterThan(0);
-        nodeList.nodes.forEach(node => {
+        nodeList.nodes.forEach((node) => {
             expect(node.nodeName).toBe(selector.toUpperCase());
         });
     });
@@ -102,7 +101,9 @@ describe('ElementList class tests', function () {
 
     test('previousNode returns last match if current node index < 0', () => {
         nodeList.currentNodeIndex = -1;
-        expect(nodeList.previousNode()).toBe(nodeList.nodes[nodeList.nodes.length - 1]);
+        expect(nodeList.previousNode()).toBe(
+            nodeList.nodes[nodeList.nodes.length - 1]
+        );
         expect(nodeList.wrappedTo).toBe('end');
     });
     test('previousNode returns previous match for each node in the list after the first one', () => {
@@ -114,7 +115,9 @@ describe('ElementList class tests', function () {
     });
     test('previousNode returns last match for first node in list', () => {
         nodeList.currentNodeIndex = 0;
-        expect(nodeList.previousNode()).toBe(nodeList.nodes[nodeList.nodes.length - 1]);
+        expect(nodeList.previousNode()).toBe(
+            nodeList.nodes[nodeList.nodes.length - 1]
+        );
         expect(nodeList.wrappedTo).toBe('end');
     });
     test('previousNode returns the only match in the list', () => {

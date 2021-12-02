@@ -6,7 +6,6 @@
 'use strict';
 
 export class Overlay {
-
     /**
      * @member
      * ID of overly element.
@@ -25,14 +24,14 @@ export class Overlay {
      */
     css = {
         'background-color': '#000000',
-        'opacity': '0.75',
+        opacity: '0.75',
         'z-index': '1',
-        'position': 'absolute',
-        'top': '0',
-        'left': '0',
-        'width': '100%',
-        'height': '100%',
-        'position': 'fixed'
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        position: 'fixed'
     };
 
     static _properties = ['id', 'css'];
@@ -43,7 +42,7 @@ export class Overlay {
      */
     constructor(properties) {
         if (properties !== undefined) {
-            Overlay._properties.forEach(property => {
+            Overlay._properties.forEach((property) => {
                 if (properties.hasOwnProperty(property)) {
                     this[property] = properties[property];
                 }

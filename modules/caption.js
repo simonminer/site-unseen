@@ -8,7 +8,6 @@
 import { NodeParser } from './node-parser.js';
 
 export class Caption {
-
     /**
      * @member
      * ID of caption element in DOM.
@@ -25,18 +24,18 @@ export class Caption {
      * Caption CSS selector name/value pairs.
      */
     css = {
-        'color': '#ffffff',
+        color: '#ffffff',
         'background-color': '#000000',
-        'border': '3px solid #ffffff',
+        border: '3px solid #ffffff',
         'border-radius': '10px',
         'font-size': '1.3rem',
         'font-weight': 'bold',
-        'padding': '10px',
-        'width': '40%',
-        'height': '20%',
-        'position': 'fixed',
-        'bottom': '10px',
-        'right': '10px',
+        padding: '10px',
+        width: '40%',
+        height: '20%',
+        position: 'fixed',
+        bottom: '10px',
+        right: '10px',
         'text-align': 'left'
     };
 
@@ -50,7 +49,7 @@ export class Caption {
      * @member
      * Instance of the NodeParser class used to generate text for this caption.
      */
-    nodeParser = new NodeParser;
+    nodeParser = new NodeParser();
 
     static _properties = ['id', 'css', 'separator', 'nodeParser'];
 
@@ -60,7 +59,7 @@ export class Caption {
      */
     constructor(properties) {
         if (properties !== undefined) {
-            Caption._properties.forEach(property => {
+            Caption._properties.forEach((property) => {
                 if (properties.hasOwnProperty(property)) {
                     this[property] = properties[property];
                 }
@@ -107,7 +106,7 @@ export class Caption {
         var node = document.createElement('style');
         node.appendChild(document.createTextNode(css));
         return node;
-      }
+    }
 
     /**
      * @method

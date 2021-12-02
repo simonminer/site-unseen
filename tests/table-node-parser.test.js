@@ -1,10 +1,14 @@
-const TableNodeParser = require('../modules/table-node-parser.js').TableNodeParser;
+const TableNodeParser =
+    require('../modules/table-node-parser.js').TableNodeParser;
 const NodeParser = require('../modules/node-parser.js').NodeParser;
 const { htmlToElement } = require('./test-utils.js');
 
 describe('TableNodeParser class tests', function () {
     test('constructor creates TableNodeParser node', () => {
-        const node = htmlToElement('<table><tr><td>Test</td></tr></table>', 'table');
+        const node = htmlToElement(
+            '<table><tr><td>Test</td></tr></table>',
+            'table'
+        );
         var nodeParser = new TableNodeParser({
             rootNode: node
         });

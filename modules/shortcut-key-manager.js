@@ -8,7 +8,6 @@ import { ShortcutKey } from './shortcut-key.js';
 import { ScreenReader } from './screen-reader.js';
 
 export class ShortcutKeyManager {
-
     /**
      * @member
      * Default set of keyboard character to CSS selector mapping data
@@ -16,17 +15,17 @@ export class ShortcutKeyManager {
      */
     defaultShortcutKeyData = {
         // Press h/H to move forward/backward through headings.
-        'h': 'h1, h2, h3, h4, h5, h6',
+        h: 'h1, h2, h3, h4, h5, h6',
         // Press k/K to move forward/backward through links.
-        'k': 'a, [role="link"]',
+        k: 'a, [role="link"]',
         // Press r/R to move forward/backward through page regions and landmarks.
-        'r': ' header, nav, main, footer, [role="region"], [role="banner"], [role="navigation"], [role="main"], [role="contentinfo"], [role="search"]',
+        r: ' header, nav, main, footer, [role="region"], [role="banner"], [role="navigation"], [role="main"], [role="contentinfo"], [role="search"]',
         // Press f/F to move forward/backward through form controls.
-        'f': 'input, textarea, select, button, [role="form"], [role="textbox"], [role="checkbox"], [role="button"]',
+        f: 'input, textarea, select, button, [role="form"], [role="textbox"], [role="checkbox"], [role="button"]',
         // Press b/B to move forward/backward through buttons.
-        'b': 'button, input[type="button"], input[type="submit"], input[type="reset"], [role="button"]',
+        b: 'button, input[type="button"], input[type="submit"], input[type="reset"], [role="button"]',
         // Press l/L to move forward/backward through lists.
-        'l': 'ul, ol, dl, [role="list"]'
+        l: 'ul, ol, dl, [role="list"]'
     };
 
     /*
@@ -38,9 +37,9 @@ export class ShortcutKeyManager {
     /**
      * @member
      * Function to call on the node returned when a shortcut key is pressed, which
-      * takes both the node and event called on it as arguments.
-      * Defaults to moving focus to the node.
-      */
+     * takes both the node and event called on it as arguments.
+     * Defaults to moving focus to the node.
+     */
     shortcutKeyFunction = function (node, event) {
         ScreenReader.get().moveTo(node);
     };
@@ -59,7 +58,6 @@ export class ShortcutKeyManager {
      * Event handler to bind to 'keydown' events to handle shortcut key presses.
      */
     static eventHandlerFunction = function (event) {
-
         // Don't do anything if the Command key (on a Mac is pressed).
         // This keeps common browser commands working
         // (i.e. Command + R to refresh page).
@@ -70,9 +68,13 @@ export class ShortcutKeyManager {
         // Don't do anything if the user is on a form field
         // that accepts text inupt.
         const activeElement = document.activeElement;
-        const aNode = ScreenReader.get().caption.nodeParser.parse(activeElement);
-        if (aNode.role === 'textbox' || aNode.role === 'combobox'
-            || activeElement.getAttribute('type') === 'password') {
+        const aNode =
+            ScreenReader.get().caption.nodeParser.parse(activeElement);
+        if (
+            aNode.role === 'textbox' ||
+            aNode.role === 'combobox' ||
+            activeElement.getAttribute('type') === 'password'
+        ) {
             return;
         }
 
@@ -90,7 +92,10 @@ export class ShortcutKeyManager {
 
         // If the uppercase shortcut key is pressed,
         // use the previous matching node.
-        else if (event.key === event.key.toUpperCase() && skm.shortcutKeys.has(event.key.toLowerCase())) {
+        else if (
+            event.key === event.key.toUpperCase() &&
+            skm.shortcutKeys.has(event.key.toLowerCase())
+        ) {
             shortcutKey = skm.shortcutKeys.get(event.key.toLowerCase());
             node = shortcutKey.previousNode();
         }
@@ -114,7 +119,10 @@ export class ShortcutKeyManager {
         if (!shortcutKeyData) {
             shortcutKeyData = this.defaultShortcutKeyData;
         }
-        this.shortcutKeys = this.createShortcutKeyMap(shortcutKeyData, rootNode);
+        this.shortcutKeys = this.createShortcutKeyMap(
+            shortcutKeyData,
+            rootNode
+        );
 
         // Attach the function to execute when a shortcut key is pressed.
         if (func) {
@@ -140,13 +148,15 @@ export class ShortcutKeyManager {
                 const selector = shortcutKeyData[key];
                 const sk = new ShortcutKey(key, selector, rootNode);
                 if (sk.nodes.length > 0) {
-                    shortcutKeyMap.set(key, new ShortcutKey(key, selector, rootNode));
+                    shortcutKeyMap.set(
+                        key,
+                        new ShortcutKey(key, selector, rootNode)
+                    );
                 }
             }
         }
         return shortcutKeyMap;
     }
-
 
     /**
      * Binds the specified function to the node returned

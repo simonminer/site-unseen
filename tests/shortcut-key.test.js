@@ -33,7 +33,7 @@ describe('ShortcutKey class tests', function () {
     test('findNodes populates nodes list', () => {
         var nodes = shortcutKey.findNodes('a', document.body);
         expect(nodes.length).toBeGreaterThan(0);
-        nodes.forEach(node => {
+        nodes.forEach((node) => {
             expect(node.nodeName).toBe(shortcutKey.selector.toUpperCase());
         });
     });
@@ -43,7 +43,7 @@ describe('ShortcutKey class tests', function () {
         expect(shortcutKey.key).toBe(key);
         expect(shortcutKey.selector).toBe(selector);
         expect(shortcutKey.nodes.length).toBeGreaterThan(0);
-        shortcutKey.nodes.forEach(node => {
+        shortcutKey.nodes.forEach((node) => {
             expect(node.nodeName).toBe(shortcutKey.selector.toUpperCase());
         });
     });
@@ -96,19 +96,25 @@ describe('ShortcutKey class tests', function () {
 
     test('previousNode returns last match if current node index < 0', () => {
         shortcutKey.currentNodeIndex = -1;
-        expect(shortcutKey.previousNode()).toBe(shortcutKey.nodes[shortcutKey.nodes.length - 1]);
+        expect(shortcutKey.previousNode()).toBe(
+            shortcutKey.nodes[shortcutKey.nodes.length - 1]
+        );
         expect(shortcutKey.wrappedTo).toBe('end');
     });
     test('previousNode returns previous match for each node in the list after the first one', () => {
         for (let index = shortcutKey.nodes.length - 1; index > 0; index--) {
             shortcutKey.currentNodeIndex = index;
-            expect(shortcutKey.previousNode()).toBe(shortcutKey.nodes[index - 1]);
+            expect(shortcutKey.previousNode()).toBe(
+                shortcutKey.nodes[index - 1]
+            );
             expect(shortcutKey.wrappedTo).toBe(undefined);
         }
     });
     test('previousNode returns last match for first node in list', () => {
-        shortcutKey.currentNodeIndex = 0
-        expect(shortcutKey.previousNode()).toBe(shortcutKey.nodes[shortcutKey.nodes.length - 1]);
+        shortcutKey.currentNodeIndex = 0;
+        expect(shortcutKey.previousNode()).toBe(
+            shortcutKey.nodes[shortcutKey.nodes.length - 1]
+        );
         expect(shortcutKey.wrappedTo).toBe('end');
     });
     test('previousNode returns the only match in the list', () => {

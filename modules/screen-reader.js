@@ -11,7 +11,6 @@ import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
 export class ScreenReader {
-
     /**
      * @member
      * {Node} - Root node whose content is to be manipulated by the screen reader.
@@ -78,7 +77,9 @@ export class ScreenReader {
 
         // Set up components of the screen reader.
         this.appendOverlay();
-        this.shortcutKeyManager = skm ? skm : new ShortcutKeyManager(this.rootNode);
+        this.shortcutKeyManager = skm
+            ? skm
+            : new ShortcutKeyManager(this.rootNode);
 
         // Set up event listeners to facilitate screen reader keyboard controls.
         this.configureEventListeners();
@@ -95,7 +96,7 @@ export class ScreenReader {
     setApplicationRoleOnChildren() {
         var children = this.rootNode.children;
         for (var i = 0, l = children.length; i < l; i++) {
-            children[i].setAttribute('role','application');
+            children[i].setAttribute('role', 'application');
         }
     }
 
@@ -143,26 +144,36 @@ export class ScreenReader {
         rootNode.addEventListener('keyup', Navigator.tabHandlerFunction);
 
         // Enable short cut keys.
-        rootNode.addEventListener('keydown', ShortcutKeyManager.eventHandlerFunction);
+        rootNode.addEventListener(
+            'keydown',
+            ShortcutKeyManager.eventHandlerFunction
+        );
 
         // Keep the caption current as form field values change.
-        rootNode.querySelectorAll('input, select, textarea').forEach(node => {
+        rootNode.querySelectorAll('input, select, textarea').forEach((node) => {
             const aNode = this.caption.nodeParser.parse(node);
             if (aNode.role === 'textbox' || aNode.role === 'combobox') {
-                node.addEventListener('input', this.callbacks['updateCaptionText']);
+                node.addEventListener(
+                    'input',
+                    this.callbacks['updateCaptionText']
+                );
             }
         });
-        rootNode.querySelectorAll('input[type="radio"]').forEach(node => {
-            node.addEventListener('keyup', function(event) {
-                if (event.key === 'ArrowUp' || event.key === 'ArrowDown'
-                    || event.key === 'Spacebar' || event.key === ' ') {
+        rootNode.querySelectorAll('input[type="radio"]').forEach((node) => {
+            node.addEventListener('keyup', function (event) {
+                if (
+                    event.key === 'ArrowUp' ||
+                    event.key === 'ArrowDown' ||
+                    event.key === 'Spacebar' ||
+                    event.key === ' '
+                ) {
                     node.checked = true;
                     ScreenReader.get().callbacks['updateCaptionText'](event);
                 }
             });
         });
-        rootNode.querySelectorAll('input[type="checkbox"]').forEach(node => {
-            node.addEventListener('keyup', function(event) {
+        rootNode.querySelectorAll('input[type="checkbox"]').forEach((node) => {
+            node.addEventListener('keyup', function (event) {
                 if (event.key === 'Spacebar' || event.key === ' ') {
                     node.checked = !node.checked;
                     ScreenReader.get().callbacks['updateCaptionText'](event);
@@ -170,7 +181,6 @@ export class ScreenReader {
                 }
             });
         });
-
     }
 
     /**
@@ -180,10 +190,10 @@ export class ScreenReader {
      * displaying its accessible text in the caption.
      * @param {Node} node - The node being moved to
      */
-     moveTo(node) {
-         node.focus();
-         var activeElement = document.activeElement;
-         this.navigator.currentNode(activeElement);
-         this.caption.update(activeElement);
-     }
+    moveTo(node) {
+        node.focus();
+        var activeElement = document.activeElement;
+        this.navigator.currentNode(activeElement);
+        this.caption.update(activeElement);
+    }
 }

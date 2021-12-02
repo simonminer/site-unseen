@@ -16,9 +16,11 @@ beforeEach(() => {
 describe('ScreenReader class tests', function () {
     test('constructor creates screen reader object', () => {
         expect(screenReader instanceof ScreenReader).toBe(true);
-        expect(screenReader.rootNode).toBe(document.body)
+        expect(screenReader.rootNode).toBe(document.body);
         expect(screenReader.navigator.nodes.length).toBeGreaterThan(0);
-        expect(screenReader.shortcutKeyManager.shortcutKeys instanceof Map).toBe(true);
+        expect(
+            screenReader.shortcutKeyManager.shortcutKeys instanceof Map
+        ).toBe(true);
         expect(document.getElementById(screenReader.overlay.id)).toBeDefined();
         expect(document.getElementById(screenReader.caption.id)).toBeDefined();
         expect(screenReader.caption.nodeParser.rootNode).toBe(document.body);
@@ -39,6 +41,8 @@ describe('ScreenReader class tests', function () {
         screenReader.moveTo(node);
         expect(document.activeElement).toBe(node);
         expect(screenReader.navigator.currentNode()).toBe(node);
-        expect(screenReader.caption.node.innerHTML).toBe(screenReader.caption.generateText(node));
+        expect(screenReader.caption.node.innerHTML).toBe(
+            screenReader.caption.generateText(node)
+        );
     });
 });

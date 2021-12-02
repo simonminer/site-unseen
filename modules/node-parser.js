@@ -13,7 +13,6 @@ if (window.axe == undefined) {
 }
 
 export class NodeParser {
-
     /**
      * @member
      * Root node from which the virtual Dom tree starts.
@@ -45,7 +44,7 @@ export class NodeParser {
      * @member
      * Associative array keyed by HTML tags with
      * implicit ARIA landmark roles. These are mapped
-     * to their corresopnding roles.
+     * to their corresponding roles.
      */
     landmarkTagToRoleMap = {
         aside: 'complementary',
@@ -63,8 +62,14 @@ export class NodeParser {
      */
     // TODO Should the region role be included in this list?
     landmarkRoles = [
-        'application', 'banner', 'complementary', 'contentinfo',
-        'form', 'main', 'navigation', 'search'
+        'application',
+        'banner',
+        'complementary',
+        'contentinfo',
+        'form',
+        'main',
+        'navigation',
+        'search'
     ];
 
     /**
@@ -72,9 +77,19 @@ export class NodeParser {
      * List of roles for form field elements.
      */
     formFieldRoles = [
-        'button', 'checkbox', 'combobox', 'option', 'radio', 'textbox'
+        'button',
+        'checkbox',
+        'combobox',
+        'option',
+        'radio',
+        'textbox'
     ];
-    static _properties = ['tagsWithoutRole', 'landmarkRoles', 'rootNode', 'virtualTree'];
+    static _properties = [
+        'tagsWithoutRole',
+        'landmarkRoles',
+        'rootNode',
+        'virtualTree'
+    ];
 
     /**
      * @constructor
@@ -82,7 +97,7 @@ export class NodeParser {
      */
     constructor(properties) {
         if (properties !== undefined) {
-            NodeParser._properties.forEach(property => {
+            NodeParser._properties.forEach((property) => {
                 if (properties.hasOwnProperty(property)) {
                     this[property] = properties[property];
                 }
@@ -113,16 +128,23 @@ export class NodeParser {
      * @returns {AccessibleNode}
      */
     parse(node) {
-
         var aNode = new AccessibleNode(node);
-        aNode.virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node);
+        aNode.virtualNode = axe.commons.utils.getNodeFromTree(
+            this.virtualTree,
+            node
+        );
 
         // Compute the node's role and value.
-        if (this.tagsWithoutRole[aNode.tagName] === undefined &&
+        if (
+            this.tagsWithoutRole[aNode.tagName] === undefined &&
             // The ScreenReader object sets all top-level tags beneat its root
             // to have role="application", so ignore that here. (It will
             // be computed properly later if this tag really has that role.)
-            !(node.hasAttribute('role') && node.getAttribute('role') === 'application')) {
+            !(
+                node.hasAttribute('role') &&
+                node.getAttribute('role') === 'application'
+            )
+        ) {
             aNode.role = axe.commons.aria.getRole(node, this.virtualTree);
         }
 
@@ -133,8 +155,7 @@ export class NodeParser {
             aNode.value = '';
             if (this.landmarkTagToRoleMap[aNode.tagName] !== undefined) {
                 aNode.role = this.landmarkTagToRoleMap[aNode.tagName];
-            }
-            else if (node.hasAttribute('role')) {
+            } else if (node.hasAttribute('role')) {
                 aNode.role = node.getAttribute('role');
             }
             // Otherwise, xet the appropriate role and value
@@ -143,9 +164,11 @@ export class NodeParser {
                 aNode.role = this.tagsWithoutRole[aNode.tagName];
                 aNode.value = node.textContent;
             }
-        }
-        else {
-            aNode.value = axe.commons.text.accessibleText(node, this.virtualTree);
+        } else {
+            aNode.value = axe.commons.text.accessibleText(
+                node,
+                this.virtualTree
+            );
         }
 
         // Compute node metadata.
@@ -170,7 +193,10 @@ export class NodeParser {
         // Figure out the position of a list item in its list.
         else if (aNode.role === 'listitem') {
             var parentNode = this.parse(node.parentNode);
-            parentNode.virtualNode = axe.commons.utils.getNodeFromTree(this.virtualTree, node.parentNode);
+            parentNode.virtualNode = axe.commons.utils.getNodeFromTree(
+                this.virtualTree,
+                node.parentNode
+            );
             const listItems = this.getListItemChildren(parentNode);
             var listItemIndex = -1;
             for (var i = 0, l = listItems.length; i < l; i++) {
@@ -180,7 +206,9 @@ export class NodeParser {
                 }
             }
             if (listItemIndex !== -1 && listItems.length >= 0) {
-                aNode.metadata = `(${listItemIndex + 1} of ${listItems.length})`;
+                aNode.metadata = `(${listItemIndex + 1} of ${
+                    listItems.length
+                })`;
             }
         }
 
@@ -204,27 +232,26 @@ export class NodeParser {
      * @param {AccessibleNode} headingNode - AccessibleNode for the heading element being parsed.
      * @returns {String}
      */
-     parseHeadingLevel(headingNode) {
+    parseHeadingLevel(headingNode) {
+        // Verify this node has a heading role.
+        if (headingNode.role !== 'heading') {
+            return undefined;
+        }
 
-         // Verify this node has a heading role.
-         if (headingNode.role !== 'heading') {
-             return undefined;
-         }
-
-         // Tags with ARIA heading roles need an aria-level attribute.
-         var headingLevel = undefined;
-         if (headingNode.virtualNode.hasAttr('aria-level')) {
-             headingLevel = headingNode.virtualNode.attr('aria-level')
-         }
-         // Parse the heading level from the tag.
-         else {
-             var headingData = headingNode.tagName.toUpperCase().match(/H(\d)/);
-             if (headingData && headingData instanceof Array) {
+        // Tags with ARIA heading roles need an aria-level attribute.
+        var headingLevel = undefined;
+        if (headingNode.virtualNode.hasAttr('aria-level')) {
+            headingLevel = headingNode.virtualNode.attr('aria-level');
+        }
+        // Parse the heading level from the tag.
+        else {
+            var headingData = headingNode.tagName.toUpperCase().match(/H(\d)/);
+            if (headingData && headingData instanceof Array) {
                 headingLevel = headingData[1];
-             }
-         }
-         return headingLevel;
-     }
+            }
+        }
+        return headingLevel;
+    }
 
     /**
      * @method
@@ -239,14 +266,20 @@ export class NodeParser {
         if (listNode.role === 'list') {
             const children = listNode.virtualNode.children;
             for (var i = 0, l = children.length; i < l; i++) {
-                var childRole = axe.commons.aria.getRole(children[i], this.virtualTree);
+                var childRole = axe.commons.aria.getRole(
+                    children[i],
+                    this.virtualTree
+                );
                 if (childRole === 'listitem') {
-                    var listItem = new AccessibleNode(children[i].actualNode, children[i]);
+                    var listItem = new AccessibleNode(
+                        children[i].actualNode,
+                        children[i]
+                    );
                     listItem.role = childRole;
                     listItemChildren.push(listItem);
                 }
             }
-         }
+        }
         return listItemChildren;
     }
 
@@ -258,11 +291,10 @@ export class NodeParser {
      * @returns {integer}
      */
     countListItems(listNode) {
-
-         // Verify this node has a role of list.
-         if (listNode.role !== 'list') {
-             return undefined;
-         }
+        // Verify this node has a role of list.
+        if (listNode.role !== 'list') {
+            return undefined;
+        }
 
         // Find children with listitem roles.
         var listItemChildren = this.getListItemChildren(listNode);
@@ -279,18 +311,24 @@ export class NodeParser {
         const node = radioButtonNode.actualNode;
 
         // Incorporate details about the radio button group into the accessible node data.
-        const parentNode = this.parse(radioButtonNode.virtualNode.parent.actualNode);
+        const parentNode = this.parse(
+            radioButtonNode.virtualNode.parent.actualNode
+        );
         const parentRole = parentNode.role;
         if (parentRole === 'group' || parentRole == 'radiogroup') {
             radioButtonNode.name = parentNode.value;
             var radioButtons = [];
-            parentNode.virtualNode.children.forEach(child => {
-                const childRole = axe.commons.aria.getRole(child, this.virtualTree);
+            parentNode.virtualNode.children.forEach((child) => {
+                const childRole = axe.commons.aria.getRole(
+                    child,
+                    this.virtualTree
+                );
                 if (childRole === 'radio') {
                     radioButtons.push(child.actualNode);
                 }
             });
-            const radioButtonIndex = radioButtons.indexOf(radioButtonNode.actualNode) + 1;
+            const radioButtonIndex =
+                radioButtons.indexOf(radioButtonNode.actualNode) + 1;
             if (radioButtons.length > 0 && radioButtonIndex > 0) {
                 radioButtonNode.metadata = `(${radioButtonIndex} of ${radioButtons.length})`;
             }
@@ -317,18 +355,24 @@ export class NodeParser {
         const node = checkboxNode.actualNode;
 
         // Incorporate details about the checkbox group into the accessible node data.
-        const parentNode = this.parse(checkboxNode.virtualNode.parent.actualNode);
+        const parentNode = this.parse(
+            checkboxNode.virtualNode.parent.actualNode
+        );
         const parentRole = parentNode.role;
         if (parentRole === 'group') {
             checkboxNode.name = parentNode.value;
             var checkboxes = [];
-            parentNode.virtualNode.children.forEach(child => {
-                const childRole = axe.commons.aria.getRole(child, this.virtualTree);
+            parentNode.virtualNode.children.forEach((child) => {
+                const childRole = axe.commons.aria.getRole(
+                    child,
+                    this.virtualTree
+                );
                 if (childRole === 'checkbox') {
                     checkboxes.push(child.actualNode);
                 }
             });
-            const checkboxIndex = checkboxes.indexOf(checkboxNode.actualNode) + 1;
+            const checkboxIndex =
+                checkboxes.indexOf(checkboxNode.actualNode) + 1;
             if (checkboxes.length > 0 && checkboxIndex > 0) {
                 checkboxNode.metadata = `(${checkboxIndex} of ${checkboxes.length})`;
             }
@@ -354,17 +398,22 @@ export class NodeParser {
         var node = formFieldNode.actualNode;
         if (formFieldNode.role === 'button') {
             if (formFieldNode.value && formFieldNode.value.length > 0) {
-                formFieldNode.name = node.value ? node.value : formFieldNode.value;
+                formFieldNode.name = node.value
+                    ? node.value
+                    : formFieldNode.value;
                 formFieldNode.value = '';
             }
-        }
-        else if (formFieldNode.role === 'radio' && formFieldNode.virtualNode.parent) {
+        } else if (
+            formFieldNode.role === 'radio' &&
+            formFieldNode.virtualNode.parent
+        ) {
             this.parseRadioButtonField(formFieldNode);
-        }
-        else if (formFieldNode.role === 'checkbox' && formFieldNode.virtualNode.parent) {
+        } else if (
+            formFieldNode.role === 'checkbox' &&
+            formFieldNode.virtualNode.parent
+        ) {
             this.parseCheckboxField(formFieldNode);
-        }
-        else {
+        } else {
             formFieldNode.name = formFieldNode.value;
             formFieldNode.value = node.value;
         }

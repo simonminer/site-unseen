@@ -4,22 +4,27 @@ const { htmlToElement } = require('./test-utils.js');
 var nodeParser = undefined;
 beforeAll(() => {
     nodeParser = new NodeParser();
-})
+});
 
 describe('NodeParser class tests', function () {
     test('constructor creates nodeParser', () => {
         expect(nodeParser instanceof NodeParser).toBe(true);
-        expect(Object.keys(nodeParser.tagsWithoutRole).length).toBeGreaterThan(0);
+        expect(Object.keys(nodeParser.tagsWithoutRole).length).toBeGreaterThan(
+            0
+        );
         expect(nodeParser.rootNode).toBe(document.body);
         expect(nodeParser.virtualTree instanceof Array).toBe(true);
         expect(nodeParser.virtualTree.length).toBe(1);
         expect(nodeParser.virtualTree[0].actualNode.tagName).toBe('BODY');
         expect(nodeParser.landmarkRoles.length).toBeGreaterThan(0);
-        expect(Object.keys(nodeParser.landmarkTagToRoleMap).length).toBeGreaterThan(0);
+        expect(
+            Object.keys(nodeParser.landmarkTagToRoleMap).length
+        ).toBeGreaterThan(0);
     });
 
     test('generateTree creates a list of nodes', () => {
-        document.body.innerHTML = '<h1>Heading</h1><p>Text<p><ul><li>One</li><li>Two</li></ul>';
+        document.body.innerHTML =
+            '<h1>Heading</h1><p>Text<p><ul><li>One</li><li>Two</li></ul>';
         const tree = nodeParser.generateTree(document.body);
         expect(tree instanceof Array).toBe(true);
         expect(tree.length).toBe(1);
@@ -31,7 +36,10 @@ describe('NodeParser class tests', function () {
     test('nodeParser parses heading tags', () => {
         for (var i = 1; i <= 6; i++) {
             var tagName = `h${i}`;
-            var node =htmlToElement(`<${tagName}>Heading level ${i}</${tagName}>`, tagName);
+            var node = htmlToElement(
+                `<${tagName}>Heading level ${i}</${tagName}>`,
+                tagName
+            );
             nodeParser = new NodeParser({
                 rootNode: node
             });
@@ -41,10 +49,15 @@ describe('NodeParser class tests', function () {
             expect(aNode.metadata).toBe(`level ${i}`);
             expect(aNode.name).toBe(undefined);
             expect(aNode.value).toBe(`Heading level ${i}`);
-            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}Heading level ${i}`);
+            expect(aNode.toString()).toBe(
+                `${aNode.role} ${aNode.metadata}${aNode.separator}Heading level ${i}`
+            );
             expect(aNode.virtualNode.hasAttr('foo')).toBe(false);
 
-            node = htmlToElement(`<div role="heading" aria-level="${i}">Heading level ${i}</div>`, 'div');
+            node = htmlToElement(
+                `<div role="heading" aria-level="${i}">Heading level ${i}</div>`,
+                'div'
+            );
             nodeParser = new NodeParser({
                 rootNode: node
             });
@@ -54,7 +67,9 @@ describe('NodeParser class tests', function () {
             expect(aNode.metadata).toBe(`level ${i}`);
             expect(aNode.name).toBe(undefined);
             expect(aNode.value).toBe(`Heading level ${i}`);
-            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}Heading level ${i}`);
+            expect(aNode.toString()).toBe(
+                `${aNode.role} ${aNode.metadata}${aNode.separator}Heading level ${i}`
+            );
         }
 
         var node = htmlToElement('<p>Not a heading</p>', 'p');
@@ -66,7 +81,7 @@ describe('NodeParser class tests', function () {
 
     test('nodeParser parses paragraph tags', () => {
         var text = 'This is a paragraph';
-        var node =htmlToElement(`<p>${text}</p>`, 'p');
+        var node = htmlToElement(`<p>${text}</p>`, 'p');
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -80,7 +95,10 @@ describe('NodeParser class tests', function () {
     test('nodeParser parses link tags', () => {
         var linkText = 'This is a link';
         var name = 'test-link';
-        var node = htmlToElement(`<a href="#" name="${name}">${linkText}</a>`, 'a');
+        var node = htmlToElement(
+            `<a href="#" name="${name}">${linkText}</a>`,
+            'a'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -88,9 +106,14 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('link');
         expect(aNode.name).toBe(name);
         expect(aNode.value).toBe(linkText);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${name}${aNode.separator}${linkText}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${name}${aNode.separator}${linkText}`
+        );
 
-        node = htmlToElement(`<div role="link" name="${name}" href="#">${linkText}</div>`, 'div');
+        node = htmlToElement(
+            `<div role="link" name="${name}" href="#">${linkText}</div>`,
+            'div'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -98,13 +121,18 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('link');
         expect(aNode.name).toBe(name);
         expect(aNode.value).toBe(linkText);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${name}${aNode.separator}${linkText}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${name}${aNode.separator}${linkText}`
+        );
     });
 
     test('nodeParser parses list tags', () => {
-        ['ol', 'ul'].forEach(function(tagName) {
+        ['ol', 'ul'].forEach(function (tagName) {
             var listItemText = 'Item 1';
-            var listNode = htmlToElement(`<${tagName}><li>${listItemText}</li></${tagName}>`, tagName);
+            var listNode = htmlToElement(
+                `<${tagName}><li>${listItemText}</li></${tagName}>`,
+                tagName
+            );
             nodeParser = new NodeParser({
                 rootNode: listNode
             });
@@ -125,10 +153,15 @@ describe('NodeParser class tests', function () {
             expect(aNode.name).toBe(undefined);
             expect(aNode.value).toBe(listItemText);
             expect(aNode.metadata).toBe(`(1 of ${listItems.length})`);
-            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
+            expect(aNode.toString()).toBe(
+                `${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`
+            );
         });
 
-        var listNode = htmlToElement(`<section role="list"><div role="listitem">Item 1</div><div role="listitem">Item 2</div></section>`, 'section');
+        var listNode = htmlToElement(
+            `<section role="list"><div role="listitem">Item 1</div><div role="listitem">Item 2</div></section>`,
+            'section'
+        );
         nodeParser = new NodeParser({
             rootNode: listNode
         });
@@ -148,7 +181,9 @@ describe('NodeParser class tests', function () {
             expect(aNode.name).toBe(undefined);
             expect(aNode.value).toBe(`Item ${i + 1}`);
             expect(aNode.metadata).toBe(`(${i + 1} of ${listItems.length})`);
-            expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
+            expect(aNode.toString()).toBe(
+                `${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`
+            );
         }
 
         var node = htmlToElement('<p>Not a list</p>', 'p');
@@ -169,7 +204,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('definition list');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe('TermDefinition');
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         node = htmlToElement(html, 'dt');
         nodeParser = new NodeParser({
@@ -179,20 +216,27 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('term');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe('Term');
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         node = htmlToElement(html, 'dd');
         aNode = nodeParser.parse(node);
         expect(aNode.role).toBe('definition');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe('Definition');
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
     });
 
     test('nodeParser parses image tags', () => {
         var altText = 'Sample image';
         var src = 'image.png';
-        var node = htmlToElement(`<img src="${src}" alt="${altText}" />`, 'img');
+        var node = htmlToElement(
+            `<img src="${src}" alt="${altText}" />`,
+            'img'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -200,9 +244,14 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('img');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe(altText);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
-        node = htmlToElement(`<div role="img" aria-label="${altText}">Test</div>`, 'div');
+        node = htmlToElement(
+            `<div role="img" aria-label="${altText}">Test</div>`,
+            'div'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -210,23 +259,32 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('img');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe(altText);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         // TODO Test SVG tag.
     });
 
     // Form fields.
     test('nodeParser parses input tags', () => {
-        ['checkbox', 'radio', 'reset', 'submit', 'text'].forEach(function(type) {
-
+        ['checkbox', 'radio', 'reset', 'submit', 'text'].forEach(function (
+            type
+        ) {
             // Tests for inputs with ARIA labels.
-            const role = type === 'reset' || type === 'submit'
-                ? 'button' : type === 'text'
-                ? 'textbox' : type;
+            const role =
+                type === 'reset' || type === 'submit'
+                    ? 'button'
+                    : type === 'text'
+                    ? 'textbox'
+                    : type;
             const nodeName = `test-${type}`;
             const accessibleName = `Test ${type}`;
             const nodeValue = `My ${type} value`;
-            var node = htmlToElement(`<input type="${type}" aria-label="${accessibleName}" name="${nodeName}" value="${nodeValue}"/>`, 'input');
+            var node = htmlToElement(
+                `<input type="${type}" aria-label="${accessibleName}" name="${nodeName}" value="${nodeValue}"/>`,
+                'input'
+            );
             nodeParser = new NodeParser({
                 rootNode: node
             });
@@ -242,7 +300,9 @@ describe('NodeParser class tests', function () {
             }
             expect(aNode.name).toBe(name);
             expect(aNode.value).toBe(value);
-            expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${nameValueText}`);
+            expect(aNode.toString()).toBe(
+                `${aNode.role}${aNode.separator}${nameValueText}`
+            );
 
             // Tests for inputs with label tags.
             const nodeId = `test-${type}-id`;
@@ -256,7 +316,9 @@ describe('NodeParser class tests', function () {
             expect(aNode.role).toBe(role);
             expect(aNode.name).toBe(name);
             expect(aNode.value).toBe(value);
-            expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${nameValueText}`);
+            expect(aNode.toString()).toBe(
+                `${aNode.role}${aNode.separator}${nameValueText}`
+            );
         });
     });
 
@@ -264,7 +326,10 @@ describe('NodeParser class tests', function () {
         // Tests for password field  with ARIA label.
         var nodeName = 'test-password';
         var accessibleName = 'Test Password';
-        var node = htmlToElement(`<input type="password" name="${nodeName}" aria-label="${accessibleName}" />`, 'input');
+        var node = htmlToElement(
+            `<input type="password" name="${nodeName}" aria-label="${accessibleName}" />`,
+            'input'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -272,7 +337,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe(null);
         expect(aNode.name).toBe(nodeName);
         expect(aNode.value).toBe(accessibleName);
-        expect(aNode.toString()).toBe(`${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.name}${aNode.separator}${aNode.value}`
+        );
 
         // Tests for textarea with label tag.
         const nodeId = `test-password-id`;
@@ -282,7 +349,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe(null);
         expect(aNode.name).toBe(nodeName);
         expect(aNode.value).toBe(accessibleName);
-        expect(aNode.toString()).toBe(`${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.name}${aNode.separator}${aNode.value}`
+        );
     });
 
     test('nodeParser parses textarea tag', () => {
@@ -290,7 +359,10 @@ describe('NodeParser class tests', function () {
         var nodeName = 'test-textarea';
         var accessibleName = 'Test Textarea';
         var nodeValue = 'textarea content';
-        var node = htmlToElement(`<textarea name="${nodeName}" aria-label="${accessibleName}">${nodeValue}</textarea>`, 'textarea');
+        var node = htmlToElement(
+            `<textarea name="${nodeName}" aria-label="${accessibleName}">${nodeValue}</textarea>`,
+            'textarea'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -298,7 +370,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('textbox');
         expect(aNode.name).toBe(accessibleName);
         expect(aNode.value).toBe(nodeValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
 
         // Tests for textarea with label tag.
         const nodeId = `test-textarea-id`;
@@ -308,11 +382,12 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('textbox');
         expect(aNode.name).toBe(accessibleName);
         expect(aNode.value).toBe(nodeValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
     });
 
     test('nodeParser parses select tags', () => {
-
         // Tests for select element with ARIA label.
         var role = 'combobox';
         const selectNodeName = 'test-select';
@@ -328,7 +403,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe(role);
         expect(aNode.name).toBe(selectAccessibleName);
         expect(aNode.value).toBe(optionValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
 
         node = htmlToElement(html, 'option');
         nodeParser = new NodeParser({
@@ -338,7 +415,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('option');
         expect(aNode.name).toBe(optionValue);
         expect(aNode.value).toBe(optionValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
 
         // Tests for select with label tag.
         const nodeId = 'test-select-id';
@@ -352,7 +431,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe(role);
         expect(aNode.name).toBe(selectAccessibleName);
         expect(aNode.value).toBe(optionValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
 
         // Tests for elements with listbox and listitem roles.
         role = 'listbox';
@@ -370,11 +451,12 @@ describe('NodeParser class tests', function () {
         // * aNode.value should be set to the option value.
         expect(aNode.name).toBe(selectNodeName);
         expect(aNode.value).toBe(selectAccessibleName);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
     });
 
     test('nodeParser parses radio button group input tags', () => {
-
         // Tests for radio button group in fieldset with legend.
         const groupName = 'Test Group';
         const nodeId = 'test-radio-id';
@@ -393,7 +475,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.name).toBe(groupName);
         expect(aNode.value).toBe(label);
         expect(aNode.metadata).toBe(metadata);
-        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
 
         // Tests for ARIA "radiogroup" and "radio" roles.
         html = `<body><div role="radiogroup" aria-labelledby="heading"><h3 id=""heading">${groupName}</h3><span role="radio" aria-checked="true">${label}</span></div></body>`;
@@ -407,11 +491,12 @@ describe('NodeParser class tests', function () {
         expect(aNode.name).toBe('');
         expect(aNode.value).toBe(label);
         expect(aNode.metadata).toBe(metadata);
-        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.value}`
+        );
     });
 
     test('nodeParser parses checkbox group input tags', () => {
-
         // Tests for checkboxgroup in fieldset with legend.
         const groupName = 'Test Group';
         const nodeId = 'test-checkbox-id';
@@ -430,7 +515,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.name).toBe(groupName);
         expect(aNode.value).toBe(label);
         expect(aNode.metadata).toBe(metadata);
-        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
 
         // Tests for ARIA checkbox roles.
         html = `<body><div role="group" aria-labelledby="heading"><h3 id="heading">${groupName}</h3><span role="checkbox" aria-checked="true">${label}</span></div></body>`;
@@ -444,15 +531,19 @@ describe('NodeParser class tests', function () {
         expect(aNode.name).toBe(groupName);
         expect(aNode.value).toBe(label);
         expect(aNode.metadata).toBe(metadata);
-        expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role} ${aNode.metadata}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
+        );
     });
 
     test('nodeParser parses button tag', () => {
-
         // Tests for button element.
         var nodeName = 'test-button';
         var accessibleName = 'Test Button';
-        var node = htmlToElement(`<button name="${nodeName}">${accessibleName}</button>`, 'button');
+        var node = htmlToElement(
+            `<button name="${nodeName}">${accessibleName}</button>`,
+            'button'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -460,10 +551,15 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('button');
         expect(aNode.name).toBe(accessibleName);
         expect(aNode.value).toBe('');
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}`
+        );
 
         // Tests for element with button role.
-        node = htmlToElement(`<div role="button" name="${nodeName}">${accessibleName}</div>`, 'div');
+        node = htmlToElement(
+            `<div role="button" name="${nodeName}">${accessibleName}</div>`,
+            'div'
+        );
         nodeParser = new NodeParser({
             rootNode: node
         });
@@ -471,7 +567,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('button');
         expect(aNode.name).toBe(accessibleName);
         expect(aNode.value).toBe('');
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.name}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.name}`
+        );
     });
 
     // Tables.
@@ -488,7 +586,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('table');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe(captionValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         node = htmlToElement(html, 'caption');
         nodeParser = new NodeParser({
@@ -498,7 +598,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('table caption');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe(captionValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         node = htmlToElement(html, 'tr');
         nodeParser = new NodeParser({
@@ -508,7 +610,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('table row');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe(headingValue + cellValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         node = htmlToElement(html, 'th');
         nodeParser = new NodeParser({
@@ -518,7 +622,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('table heading');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe(headingValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         node = htmlToElement(html, 'td');
         nodeParser = new NodeParser({
@@ -528,7 +634,9 @@ describe('NodeParser class tests', function () {
         expect(aNode.role).toBe('table cell');
         expect(aNode.name).toBe(undefined);
         expect(aNode.value).toBe(cellValue);
-        expect(aNode.toString()).toBe(`${aNode.role}${aNode.separator}${aNode.value}`);
+        expect(aNode.toString()).toBe(
+            `${aNode.role}${aNode.separator}${aNode.value}`
+        );
 
         // TODO Add tests for table, columnheading, row, and cell roles.
     });

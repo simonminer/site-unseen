@@ -19,7 +19,7 @@ beforeAll(() => {
 var caption = undefined;
 beforeEach(() => {
     caption = new Caption();
-})
+});
 
 describe('Caption class tests', function () {
     test('constructor creates caption', () => {
@@ -31,18 +31,32 @@ describe('Caption class tests', function () {
     });
 
     test('generateText returns accessible description of node', () => {
-        expect(caption.generateText(document.querySelector('h1'))).toBe(`heading level 1${sep}Page heading`);
-        expect(caption.generateText(document.querySelector('a'))).toBe(`link${sep}This is a link.`);
-        expect(caption.generateText(document.querySelector('div'))).toBe(`Image Description`);
-        expect(caption.generateText(document.querySelector('span'))).toBe(`Image Description`);
-        expect(caption.generateText(document.querySelector('img'))).toBe(`img${sep}Image Description`);
-        expect(caption.generateText(document.querySelector('p'))).toBe(`This is a paragraph.`);
+        expect(caption.generateText(document.querySelector('h1'))).toBe(
+            `heading level 1${sep}Page heading`
+        );
+        expect(caption.generateText(document.querySelector('a'))).toBe(
+            `link${sep}This is a link.`
+        );
+        expect(caption.generateText(document.querySelector('div'))).toBe(
+            `Image Description`
+        );
+        expect(caption.generateText(document.querySelector('span'))).toBe(
+            `Image Description`
+        );
+        expect(caption.generateText(document.querySelector('img'))).toBe(
+            `img${sep}Image Description`
+        );
+        expect(caption.generateText(document.querySelector('p'))).toBe(
+            `This is a paragraph.`
+        );
     });
 
     test('update sets caption node text', () => {
         caption.node = document.createElement('div');
         caption.update(document.querySelector('h1'));
-        expect(caption.node.innerHTML).toBe(`heading level 1${sep}Page heading`);
+        expect(caption.node.innerHTML).toBe(
+            `heading level 1${sep}Page heading`
+        );
         caption.update(document.querySelector('a'));
         expect(caption.node.innerHTML).toBe(`link${sep}This is a link.`);
     });
@@ -60,5 +74,4 @@ describe('Caption class tests', function () {
         expect(div.getAttribute('id')).toBe(caption.id);
         expect(caption.node).toBe(div);
     });
-
 });

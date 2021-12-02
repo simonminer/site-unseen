@@ -4,28 +4,27 @@
  * matching some condition.
  */
 
- 'use strict';
+'use strict';
 
- export class ElementList {
-
-     /**
-      * @member
-      * List of nodes that that match this element list.
-      */
+export class ElementList {
+    /**
+     * @member
+     * List of nodes that that match this element list.
+     */
     nodes = [];
 
-     /**
-      * @member
-      * Index of the current element in the object's list of nodes.
-      */
+    /**
+     * @member
+     * Index of the current element in the object's list of nodes.
+     */
     currentNodeIndex = -1;
 
-     /**
-      * @member
-      * Type of wrap-around when a node is requested before
-      * the first or after the last node in the list.
-      * values include 'start' or 'end'.
-      */
+    /**
+     * @member
+     * Type of wrap-around when a node is requested before
+     * the first or after the last node in the list.
+     * values include 'start' or 'end'.
+     */
     wrappedTo = undefined;
 
     /**
@@ -64,8 +63,11 @@
             rootNode = document.body;
         }
 
-        rootNode.querySelectorAll(selector).forEach(node => {
-            if (finderType === 'selector' || (finderType === 'function' && finder(node))) {
+        rootNode.querySelectorAll(selector).forEach((node) => {
+            if (
+                finderType === 'selector' ||
+                (finderType === 'function' && finder(node))
+            ) {
                 nodes.push(node);
             }
         });
@@ -91,8 +93,7 @@
             const nodeIndex = this.nodes.indexOf(node);
             if (nodeIndex >= 0) {
                 this.currentNodeIndex = nodeIndex;
-            }
-            else {
+            } else {
                 this.currentNodeIndex = -1;
                 return;
             }
@@ -128,14 +129,14 @@
         }
         // Or loop around to to the start of the list if we are at the end.
         else {
-           index = 0;
-           this.wrappedTo = 'start';
+            index = 0;
+            this.wrappedTo = 'start';
         }
 
         return this.nodes[index];
     }
 
-     /**
+    /**
      * @method
      * Returns the previous node in the DOM matched by this element list.
      * @returns {Node} - The previous matching node (which could be the last one
@@ -161,9 +162,9 @@
         }
         // Or loop around to to the start of the list if we are at the end.
         else {
-           index = this.nodes.length - 1;
-           this.wrappedTo = 'end';
+            index = this.nodes.length - 1;
+            this.wrappedTo = 'end';
         }
         return this.nodes[index];
     }
- }
+}

@@ -4,7 +4,10 @@ const { htmlToElement } = require('./test-utils.js');
 describe('AccessibleNode class tests', function () {
     test('constructor creates accessible node', () => {
         var linkName = 'test-link';
-        var node = htmlToElement(`<a name="${linkName}">This is a link</a>`, 'a');
+        var node = htmlToElement(
+            `<a name="${linkName}">This is a link</a>`,
+            'a'
+        );
         var aNode = new AccessibleNode(node);
         expect(aNode instanceof AccessibleNode).toBe(true);
         expect(aNode.actualNode).toBe(node);
@@ -30,6 +33,8 @@ describe('AccessibleNode class tests', function () {
 
         var metadata = 'test metadata';
         aNode.metadata = metadata;
-        expect(aNode.toString()).toBe(`${role} ${metadata}${sep}${name}${sep}${value}`);
+        expect(aNode.toString()).toBe(
+            `${role} ${metadata}${sep}${name}${sep}${value}`
+        );
     });
 });
