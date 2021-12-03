@@ -20,5 +20,6 @@ describe('TableCellNode class tests', function () {
         expect(aNode.rowHeading).toBe(undefined);
         expect(aNode.columnHeading).toBe(undefined);
         expect(aNode.cellType).toBe('cell');
+        expect(aNode.table).toBe(undefined);
     });
 });

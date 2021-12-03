@@ -49,4 +49,10 @@ export class TableCellNode extends AccessibleNode {
      * Type of this table cell -- either 'cell' or 'heading'.
      */
     cellType = 'cell';
+
+    /**
+     * @member
+     * The table this cell is part of.
+     */
+    table = undefined;
 }
