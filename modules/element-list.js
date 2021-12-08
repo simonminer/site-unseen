@@ -1,35 +1,33 @@
 /**
- * @class
  * Base class to represent a list of HTML nodes/elements
  * matching some condition.
  */
 
 'use strict';
 
-export class ElementList {
+class ElementList {
     /**
-     * @member
      * List of nodes that that match this element list.
+     * @type {Node[]}
      */
     nodes = [];
 
     /**
-     * @member
      * Index of the current element in the object's list of nodes.
+     * @type {number}
      */
     currentNodeIndex = -1;
 
     /**
-     * @member
      * Type of wrap-around when a node is requested before
      * the first or after the last node in the list.
      * values include 'start' or 'end'.
+     * @type {boolean}
      */
     wrappedTo = undefined;
 
     /**
-     * @constructor
-     * @param {String} or {Function} finder - CSS selector or function to build the list of nodes.
+     * @param {string|function} finder - CSS selector or function to build the list of nodes.
      * @param {Node} rootNode - Root node against which selector is run (optional). (defaults to document body).
      * @returns {ElementList} - A new instance of the ElementList class.
      */
@@ -40,13 +38,13 @@ export class ElementList {
     }
 
     /**
-     * @method
      * Finds and returns a list of nodes which matches the specified finder CSS selector or function.
-     * @param {String} or {Function} finder - CSS selector or function to build the list of nodes.
-     * - If this parameter is a Function, it takes the node being processed as an argument and return a boolean
+     * @method
+     * @param {string|function} finder - CSS selector or function to build the list of nodes.
+     * - If this parameter is a function, it takes the node being processed as an argument and return a boolean
      *   value indicating whether or not the node belongs in this element list.
      * @param {Node} rootNode - Root node against which selector is run (optional). (defaults to document body).
-     * @returns {Array[Node]} - List of nodes matching the object's selector.
+     * @returns {Node[]} - List of nodes matching the object's selector.
      */
     findNodes(finder, rootNode = null) {
         var nodes = [];
@@ -76,8 +74,8 @@ export class ElementList {
     }
 
     /**
+     * Potentially sets and returns the current node matched by this element list.
      * @method
-     * Returns the current node matched by this element list.
      * @param {Node} node - The node being set to the new current node in this list (optional).
      * @returns {Node} - The current matching node or undefined if there are none
      * or the list of nodes has not been traversed yet.
@@ -104,8 +102,8 @@ export class ElementList {
     }
 
     /**
-     * @method
      * Returns the next node in the DOM matched by this element list.
+     * @method
      * @returns {Node} - The next matching node (which could be the first one
      * if we are at the end of the list), or undefined if there are no matching nodes.
      */
@@ -137,8 +135,8 @@ export class ElementList {
     }
 
     /**
-     * @method
      * Returns the previous node in the DOM matched by this element list.
+     * @method
      * @returns {Node} - The previous matching node (which could be the last one
      * if we are at the start of the list), or null if there are no matching nodes.
      */
@@ -167,4 +165,8 @@ export class ElementList {
         }
         return this.nodes[index];
     }
+}
+
+module.exports = {
+    ElementList
 }

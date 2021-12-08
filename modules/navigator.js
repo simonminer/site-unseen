@@ -1,28 +1,28 @@
 /**
- * @class
  * Class to parse the DOM for navigable elements,
  * mark them as such, and manage keyboard navigation
  * through them.
+ * @extends ElementList
  */
 'use strict';
 
 import { ElementList } from './element-list.js';
 import { ScreenReader } from './screen-reader.js';
 
-export class Navigator extends ElementList {
+class Navigator extends ElementList {
     /**
-     * @member
      * CSS class assigned to elements that are navigable by the screen reader.
+     * @type {string}
      */
     className = 'srn';
 
     /**
      * HTML tag lists are taken from https://developer.mozilla.org/en-US/docs/Web/HTML/Element.
      *
-     * @member
      * List of interactive HTML tags. These are
      * already in the tab order, but the also need
      * to be navigable via screen reader controls.
+     * @type {string[]}
      */
     interactiveTags = [
         'a',
@@ -34,9 +34,9 @@ export class Navigator extends ElementList {
     ];
 
     /**
-     * @member
      * List of non-interactive HTML tags that should be
      * navigable by the screen reader.
+     * @type {string[]}
      */
     nonInteractiveTags = [
         'address',
@@ -80,36 +80,37 @@ export class Navigator extends ElementList {
     ];
 
     /**
-     * @member
      * List of HTML tags that could potentially
      * be navigable by the screen reader,
      * depending on their contents.
+     * @type {string[]}
      */
     potentiallyNavigableTags = ['div', 'span'];
 
     /**
-     * @member
      * Number of nodes that have been assigned
      * tabindex attributes by this object.
+     * @type {number}
      */
     tabIndexNodeCount = 0;
 
     /**
-     * @member
      * List of nodes that can be navigated
      * by the screen reader
+     * @type {Node[]}
      */
     nodes = [];
 
     /**
-     * @member
      * Index of current node in list of navigable odes.
+     * @type {number}
      */
     currentNodeIndex = -1;
 
     /**
-     * @member
      * Function to handle right and left arrow key presses.
+     * @type {function}
+     * @static
      */
     static arrowKeyHandlerFunction = function (event) {
         // Move to the p0previous or next accessible node when the left or right
@@ -131,8 +132,9 @@ export class Navigator extends ElementList {
     };
 
     /**
-     * @member
      * Function to handle Tab key presses.
+     * @type {function}
+     * @static
      */
     static tabHandlerFunction = function (event) {
         if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
@@ -141,12 +143,13 @@ export class Navigator extends ElementList {
     };
 
     /**
-     * @member
      * Type of wrap-around when the screen reader reaches the
      * first or last navigable node:
      * values include 'start' or 'end'.
+     * @type {boolean}
      */
     wrappedTo = undefined;
+
     static _properties = [
         'className',
         'tabIndexNodeCount',
@@ -155,7 +158,6 @@ export class Navigator extends ElementList {
     ];
 
     /**
-     * @constructor
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
      */
     constructor(properties) {
@@ -170,7 +172,6 @@ export class Navigator extends ElementList {
     }
 
     /**
-     * @method
      * @param {Node} node - The HTML element being for considered for a tabindex attribute.
      * @returns {boolean}
      * Tests whether or not the given HTML node needs a tabindex="-1" attribute
@@ -206,7 +207,6 @@ export class Navigator extends ElementList {
     }
 
     /**
-     * @method
      * @param {Node} node - The HTML element to be processed.
      * Examines the specified HTML node, flagging it appropriately
      * if it can be navigated by a screen reader.
@@ -230,7 +230,6 @@ export class Navigator extends ElementList {
     }
 
     /**
-     * @method
      * @param {Node} rootNode - Top-level node from which to find and process elements
      * Parses the DOM starting from the specified root node,
      * finding and flagging nodes that are navigable by the screen reader.
@@ -241,3 +240,7 @@ export class Navigator extends ElementList {
         });
     }
 }
+
+module.exports = {
+    Navigator
+};

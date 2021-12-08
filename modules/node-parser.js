@@ -1,5 +1,4 @@
 /**
- * @class
  * Class to parse HTML nodes for accessibility information.
  */
 'use strict';
@@ -12,22 +11,24 @@ if (window.axe == undefined) {
     window.axe = require('axe-core');
 }
 
-export class NodeParser {
+class NodeParser {
     /**
-     * @member
      * Root node from which the virtual Dom tree starts.
+     * @type {Node}
      */
     rootNode = document.body;
 
     /**
-     * @member
      * Flattened virtual DOM tree produced by the axe-core library.
+     * @type {VirtualNode}
      */
     virtualTree = undefined;
 
     /**
-     * @member
-     * List of tags without ARIA roles.
+     * Associative array keyd by names of tags without
+     * ARIA roles and mapped to the names of their
+     * practical roles.
+     * @type {Object}
      */
     tagsWithoutRole = {
         caption: 'table caption',
@@ -41,10 +42,10 @@ export class NodeParser {
     };
 
     /**
-     * @member
      * Associative array keyed by HTML tags with
      * implicit ARIA landmark roles. These are mapped
      * to their corresponding roles.
+     * @type {Object}
      */
     landmarkTagToRoleMap = {
         aside: 'complementary',
@@ -57,8 +58,8 @@ export class NodeParser {
     };
 
     /**
-     * @member
      * List of roles corresponding to page regions/landmarks.
+     * @type {string[]}
      */
     // TODO Should the region role be included in this list?
     landmarkRoles = [
@@ -73,8 +74,8 @@ export class NodeParser {
     ];
 
     /**
-     * @member
      * List of roles for form field elements.
+     * @type {string[]}
      */
     formFieldRoles = [
         'button',
@@ -84,6 +85,7 @@ export class NodeParser {
         'radio',
         'textbox'
     ];
+
     static _properties = [
         'tagsWithoutRole',
         'landmarkRoles',
@@ -92,7 +94,6 @@ export class NodeParser {
     ];
 
     /**
-     * @constructor
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
      */
     constructor(properties) {
@@ -107,7 +108,6 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Generates and returns a flattened virtual node tree
      * using the axe-core library. This tree is used to
      * extract accessibility information from nodes.
@@ -120,7 +120,6 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Extracts or infers the accessible role, name, value,
      * and other metadata of the specified node,
      * returning an AccessibleNode object containing this data.
@@ -226,7 +225,6 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Returns the numeric heading level associated with
      * the specified node or undefined if none is found.
      * @param {AccessibleNode} headingNode - AccessibleNode for the heading element being parsed.
@@ -254,12 +252,11 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Returns an array of AccessibleNode objects corresponding
      * to the children of the specified AccessibleNode with
      * the listitem role.
      * @param {AccessibleNode} listNode - The AccessibleNode for the list element whose list item children are being counted
-     * @return {Array[AccessibleNode]}
+     * @return {AccessibleNode[]}
      */
     getListItemChildren(listNode) {
         var listItemChildren = [];
@@ -284,7 +281,6 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Returns the number of list items in the given list node
      * or undefined if something goes wrong.
      * @param {AccessibleNode} listNode - The AccessibleNode for the list element whose list item children are being counted
@@ -302,7 +298,6 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Extracts accessible node data for the specified radio button field.
      * @param {AccessibleNode} radioButtonNode - The accessible node for the radio button.
      */
@@ -346,7 +341,6 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Extracts accessible node data for the specified checkbox field.
      * @param {AccessibleNode} checkboxNode - The accessible node for the checkbox.
      */
@@ -390,7 +384,6 @@ export class NodeParser {
     }
 
     /**
-     * @method
      * Sets form field ata appropriate based on its type and role
      * @param {AccessibleNode} formFieldNode - The accessible node for the form field element.
      */
@@ -419,3 +412,7 @@ export class NodeParser {
         }
     }
 }
+
+module.exports = {
+    NodeParser
+};

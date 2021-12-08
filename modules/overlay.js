@@ -1,26 +1,25 @@
 /**
- * @class
  * Class to represent the overlay to hide the webpage
  * to be navigated by screen reader.
  */
 'use strict';
 
-export class Overlay {
+class Overlay {
     /**
-     * @member
      * ID of overly element.
+     * @type {string}
      */
     id = 'overlay';
 
     /**
-     * @member
      * Overlay node in DOM.
+     * @type {Node}
      */
     node = undefined;
 
     /**
-     * @member
      * Overlay CSS selector values.
+     * @type {string}
      */
     css = {
         'background-color': '#000000',
@@ -37,7 +36,6 @@ export class Overlay {
     static _properties = ['id', 'css'];
 
     /**
-     * @constructor
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
      */
     constructor(properties) {
@@ -51,9 +49,8 @@ export class Overlay {
     }
 
     /**
-     * @method
      * @returns {Element}
-     * Generates a <style> element with the CSS properties for the overlay.
+     * Generates a `<style>` element with the CSS properties for the overlay.
      */
     getCSS() {
         var cssProperties = [];
@@ -69,7 +66,6 @@ export class Overlay {
     }
 
     /**
-     * @method
      * @returns {Element}
      * Generates the HTML element for the overlay.
      */
@@ -79,4 +75,8 @@ export class Overlay {
         this.node = node;
         return node;
     }
+}
+
+module.exports = {
+    Overlay
 }

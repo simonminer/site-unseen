@@ -1,5 +1,4 @@
 /**
- * @class
  * Class to represent the screen reader caption which displays
  * the role, state/property, and value of an HTML element.
  */
@@ -7,21 +6,22 @@
 
 import { NodeParser } from './node-parser.js';
 
-export class Caption {
+class Caption {
     /**
-     * @member
      * ID of caption element in DOM.
+     * @type {string}
      */
     id = 'caption';
 
     /**
-     * @member
      * Caption node in DOM.
+     * @type {Node}
      */
     node = undefined;
 
     /**
      * Caption CSS selector name/value pairs.
+     * @type {string}
      */
     css = {
         color: '#ffffff',
@@ -40,21 +40,20 @@ export class Caption {
     };
 
     /**
-     * @member
      * Separator between elements of the accessible description.
+     * @type {string}
      */
     separator = ': ';
 
     /**
-     * @member
      * Instance of the NodeParser class used to generate text for this caption.
+     * @type {NodeParser}
      */
     nodeParser = new NodeParser();
 
     static _properties = ['id', 'css', 'separator', 'nodeParser'];
 
     /**
-     * @constructor
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
      */
     constructor(properties) {
@@ -68,7 +67,6 @@ export class Caption {
     }
 
     /**
-     * @method
      * Generates and returns an accessible description of the
      * role, name,  state/property, and/or value of the specified node.
      * @param {Node} node - Node to describe in the caption.
@@ -81,18 +79,17 @@ export class Caption {
     }
 
     /**
-     * @method
      * Updates the caption with the text generated
      * fromt he specified node.
-     * @param {NOde} node - Node whose contents should update the caption.
+     * @param {Node} node - Node whose contents should update the caption.
+     * @returns {null}
      */
     update(node) {
         this.node.innerHTML = this.generateText(node);
     }
 
     /**
-     * @method
-     * Generates the <style> HTML element for the caption CSS styles
+     * Generates the `<style>` HTML element for the caption CSS styles
      * @returns {Element}
      */
     getCSS() {
@@ -109,7 +106,6 @@ export class Caption {
     }
 
     /**
-     * @method
      * Generates the HTML element for the screen reader caption
      * and stores it in this object's node attribute.
      * @returns {Element}
@@ -121,3 +117,7 @@ export class Caption {
         return node;
     }
 }
+
+module.exports = {
+    Caption
+};

@@ -1,6 +1,6 @@
 /**
- * @class
  * Class to parse HTML tables into accessible data structures.
+ * @extends NodeParser
  */
 
 'use strict';
@@ -9,23 +9,22 @@ import { NodeParser } from './node-parser.js';
 import { TableNode } from './accessible-node/table-node.js';
 import { TableCellNode } from './accessible-node/table-cell-node.js';
 
-export class TableNodeParser extends NodeParser {
+class TableNodeParser extends NodeParser {
     /**
-     * @member
      * Number of rows in this table.
+     * @type {number}
      */
     rowCount = 0;
 
     /**
-     * @member
      * @static
      * Associateive array mapping table nodes (Node objects)
      * to their corresponding TableNode objects.
+     * @type {Object}
      */
     static tables = {};
 
     /**
-     * @method
      * Parse the contents of the specified accessible node
      * (which must be have a role of "table") to set up
      * accessibility and navigational data.
@@ -63,4 +62,8 @@ export class TableNodeParser extends NodeParser {
             }
         }
     }
+}
+
+module.exports = {
+    TableNodeParser
 }
