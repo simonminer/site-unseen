@@ -1,5 +1,4 @@
 /**
- * @class
  * Class to represent and manage a browser-based screen reader simulator.
  */
 'use strict';
@@ -10,40 +9,36 @@ import { NodeParser } from './node-parser.js';
 import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
-export class ScreenReader {
+class ScreenReader {
     /**
-     * @member
-     * {Node} - Root node whose content is to be manipulated by the screen reader.
+     * Root node whose content is to be manipulated by the screen reader.
+     * @type {Node}
      */
     rootNode = undefined;
 
     /**
-     * @member
-     * {Navigator}
+     * @type {Navigator}
      */
     navigator = undefined;
 
     /**
-     * @member
-     * {Overlay}
+     * @type {Overlay}
      */
     overlay = undefined;
 
     /**
-     * @member
-     * {Caption}
+     * @type {Caption}
      */
     caption = undefined;
 
     /**
-     * @member
-     * {ShortcutKeyManager}
+     * @type {ShortcutKeyManager}
      */
     shortcutKeyManager;
 
     /**
-     * @member
      * Associative array of callback function names and definitions
+     * @type {Object}
      */
     callbacks = {
         updateCaptionText: function () {
@@ -53,19 +48,19 @@ export class ScreenReader {
     };
 
     /**
-     * @method
-     * @static
      * Retrieve a copy of the screen reader object or undefined if none is present.
      * @returns {ScreenReader}
+     * @static
      */
     static get() {
         return document._screenReader;
     }
 
     /**
-     * @constructor
-     * @param {Node} rootNode - Root node of content manipulated by this screen reader (optional). Defaults to document.body.
-     * @param {ShortcutKeyManager} skm - Object to manage shortcut key interactions (optional). Defaults to ShortcutKeyManager with its default keyboard shortcuts.
+     * @param {Node} rootNode - Root node of content manipulated by this screen reader (optional).
+     * Defaults to document.body.
+     * @param {ShortcutKeyManager} skm - Object to manage shortcut key interactions (optional).
+     * Defaults to ShortcutKeyManager with its default keyboard shortcuts.
      * @returns {ScreenReader} - screen reader object
      */
     constructor(rootNode, skm) {
@@ -82,15 +77,14 @@ export class ScreenReader {
             : new ShortcutKeyManager(this.rootNode);
 
         // Set up event listeners to facilitate screen reader keyboard controls.
-        this.configureEventListeners();
+        this.setupEventListeners();
 
         // Attach the new screen reader object to the top of the DOM for later use.
         document._screenReader = this;
     }
 
     /**
-     * @method
-     * Adds role="application" attributes to each
+     * Adds `role="application"` attributes to each
      * child of the screen reader root node.
      */
     setApplicationRoleOnChildren() {
@@ -101,7 +95,6 @@ export class ScreenReader {
     }
 
     /**
-     * @method
      * Iterates through the elements in the DOM, adding
      * tabindex attributes as needed to make them focusable
      * for screen reader navigation.
@@ -112,7 +105,6 @@ export class ScreenReader {
     }
 
     /**
-     * @method
      * Generate and add the overlay to the DOM.
      */
     appendOverlay() {
@@ -133,11 +125,10 @@ export class ScreenReader {
     }
 
     /**
-     * @method
      * Sets up event listeners to facilitator screen
      * reader keyboard controls.
      */
-    configureEventListeners() {
+    setupEventListeners() {
         // Navigate and update the caption with the arrow and tab keys.
         const rootNode = this.rootNode;
         rootNode.addEventListener('keydown', Navigator.arrowKeyHandlerFunction);
@@ -184,7 +175,6 @@ export class ScreenReader {
     }
 
     /**
-     * @method
      * Sets the specified node as the current position
      * in the document, giving it keyboard focus and
      * displaying its accessible text in the caption.
@@ -197,3 +187,7 @@ export class ScreenReader {
         this.caption.update(activeElement);
     }
 }
+
+module.exports = {
+    ScreenReader
+};

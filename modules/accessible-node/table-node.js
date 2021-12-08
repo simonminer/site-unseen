@@ -1,5 +1,4 @@
 /**
- * @class
  * Class to encapsulate accessibility data for an HTML table node/tag.
  */
 
@@ -7,32 +6,36 @@
 
 import { AccessibleNode } from '../accessible-node.js';
 
-export class TableNode extends AccessibleNode {
+class TableNode extends AccessibleNode {
     /**
-     * @member
      * Number of rows in this table.
+     * @type {number}
      */
     rowCount = 0;
 
     /**
-     * @member
      * Number of columns in this table.
+     * @type {number}
      */
     columnCount = 0;
 
     /**
-     * @member
      * Two-dimensional array of cells in this table.
      * Each element is either a TableCellNode or
      * undefined in the case of an adjacent cell that
      * spans multiple rows or columns.
+     * @type {Node[]}
      */
     cells = [];
 
     /**
-     * @member
      * Associative array mapping elements in this table (Node objects)
      * to their corresponding TableCellNode objects.
+     * @type {Object}
      */
     nodes = {};
+}
+
+module.exports = {
+    TableNode
 }

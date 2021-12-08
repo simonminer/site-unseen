@@ -1,5 +1,4 @@
 /**
- * @class
  * Class to manage shortcut keys in the current application.
  */
 'use strict';
@@ -7,11 +6,11 @@
 import { ShortcutKey } from './shortcut-key.js';
 import { ScreenReader } from './screen-reader.js';
 
-export class ShortcutKeyManager {
+class ShortcutKeyManager {
     /**
-     * @member
      * Default set of keyboard character to CSS selector mapping data
      * used to set up shortcut keys.
+     * @type {Object}
      */
     defaultShortcutKeyData = {
         // Press h/H to move forward/backward through headings.
@@ -29,33 +28,33 @@ export class ShortcutKeyManager {
     };
 
     /*
-     * @member
      * Shortcut key map whose keys are keys to press with ShortcutKey object values.
+     * @type {Object}
      */
     shortcutKeys = undefined;
 
     /**
-     * @member
      * Function to call on the node returned when a shortcut key is pressed, which
      * takes both the node and event called on it as arguments.
      * Defaults to moving focus to the node.
+     * @type {function}
      */
     shortcutKeyFunction = function (node, event) {
         ScreenReader.get().moveTo(node);
     };
 
     /**
-     * @member
      * Type of wrap-around when a shortcut key is pressed on its
      * first or last instance of its list of nodes:
      * values include 'start' or 'end'.
+     * type {boolean}
      */
     wrappedTo = undefined;
 
     /**
-     * static
-     * @member
      * Event handler to bind to 'keydown' events to handle shortcut key presses.
+     * @static
+     * @type {function}
      */
     static eventHandlerFunction = function (event) {
         // Don't do anything if the Command key (on a Mac is pressed).
@@ -108,7 +107,6 @@ export class ShortcutKeyManager {
     };
 
     /**
-     * @constructor
      * @param {Node} rootNode - Root node to use for finding shortcut key matches.
      * @param {Object} shortcutKeyData - Set of key/value pairs mapping keyboard characters to CSS selectors (optional). Defaults to data in defaultShortcutKeyData attribute.
      * @param {Function} func - Function to be executed on the node selected by a shortcut key (optional). Defaults to moving focus to the node.
@@ -132,7 +130,6 @@ export class ShortcutKeyManager {
     }
 
     /**
-     * @method
      * Use the specified set of key/selector pairs to construct
      * a map to connect keys to ShortcutKey objects.
      * @param {Object} shortcutKeyData - Set of key/value pairs mapping keyboard characters to CSS selectors.
@@ -167,7 +164,6 @@ export class ShortcutKeyManager {
      * The specified function must take two parameters:
      * - The node returned by the shortcut key.
      * - The event processed by the 'keydown' listener.
-     * @method
      * @param {func} - The function to call on the node returned by pressing the shortcut key.
      */
     bindShortcutKeysToFunction(func) {
@@ -176,3 +172,7 @@ export class ShortcutKeyManager {
         return true;
     }
 }
+
+module.exports = {
+    ShortcutKeyManager
+};

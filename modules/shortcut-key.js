@@ -1,22 +1,27 @@
 /**
- * @class
  * Class to represent a screen reader shortcut key to iterate through a set of
  * tags in the DOM when a certain key is pressed.
+ * @extends ElementList
  */
 
 'use strict';
 
 import { ElementList } from './element-list.js';
 
-export class ShortcutKey extends ElementList {
-    // Key to press to advance to the next node.
+class ShortcutKey extends ElementList {
+    /**
+     * Key to press to advance to the next node.
+     * @type {string}
+     */
     key = undefined;
 
-    // CSS selector for DOM nodes matched by this shortcut key.
+    /**
+     * CSS selector for DOM nodes matched by this shortcut key.
+     * @type {string}
+     */
     selector = '';
 
     /**
-     * @constructor
      *
      * @param {String} key - Key to press to advance to the next node.
      * @param {String} selector - CSS selector for DOM nodes matched by this shortcut key
@@ -31,4 +36,8 @@ export class ShortcutKey extends ElementList {
             this.nodes = this.findNodes(this.selector, rootNode);
         }
     }
+}
+
+module.exports = {
+    ShortcutKey
 }
