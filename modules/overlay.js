@@ -33,6 +33,12 @@ export class Overlay {
         position: 'fixed'
     };
 
+    /**
+     * CSS class name of button elements on the overlay
+     * @type {string}
+     */
+    buttonClassName = 'overlay-button';
+
     static _properties = ['id', 'css'];
 
     /**
@@ -46,6 +52,21 @@ export class Overlay {
                 }
             });
         }
+    }
+
+    /**
+     * Generates the HTML for a <button> element using the specified name.
+     * Note that the button gets assigned an "id" attribute of "{name}-button" (lower-cased)
+     * and a "class" attributge of "overlay-button".
+     * @param {string} name - Name of the button element used for its "id" attribute and text.
+     * @returns {Element}
+     */
+    generateButton(name) {
+        var button = document.createElement('button');
+        button.setAttribute('id', `${name.toLowerCase()}-button`);
+        button.setAttribute('class', this.buttonClassName);
+        button.appendChild(document.createTextNode(name));
+        return button;
     }
 
     /**

@@ -13,6 +13,7 @@ describe('Overlay class tests', function () {
         expect(overlay instanceof Overlay).toBe(true);
         expect(overlay.id).toBe(id);
         expect(overlay.node).toBe(undefined);
+        expect(overlay.buttonClassName).toBe('overlay-button');
     });
 
     test('getCSS() creates <style> element', () => {
@@ -27,5 +28,17 @@ describe('Overlay class tests', function () {
         expect(overlay.node).toBe(div);
         expect(div.tagName.toLowerCase()).toBe('div');
         expect(div.getAttribute('id')).toBe(overlay.id);
+    });
+
+    test('generateButton() creates <button> element', () => {
+        ['Peak', 'Settings', 'Help'].forEach((name) => {
+            const button = overlay.generateButton(name);
+            expect(button instanceof Element).toBe(true);
+            expect(button.tagName.toLowerCase()).toBe('button');
+            const id = `${name.toLowerCase()}-button`;
+            expect(button.getAttribute('id')).toBe(id);
+            expect(button.getAttribute('class')).toBe(overlay.buttonClassName);
+            expect(button.textContent).toBe(name);
+        });
     });
 });
