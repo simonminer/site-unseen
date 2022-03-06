@@ -6,7 +6,7 @@
 
 import { AccessibleNode } from '../accessible-node.js';
 
-class TableNode extends AccessibleNode {
+export class TableNode extends AccessibleNode {
     /**
      * Number of rows in this table.
      * @type {number}
@@ -35,7 +35,3 @@ class TableNode extends AccessibleNode {
      */
     nodes = {};
 }
-
-module.exports = {
-    TableNode
-};

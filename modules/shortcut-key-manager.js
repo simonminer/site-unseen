@@ -6,7 +6,7 @@
 import { ShortcutKey } from './shortcut-key.js';
 import { ScreenReader } from './screen-reader.js';
 
-class ShortcutKeyManager {
+export class ShortcutKeyManager {
     /**
      * Default set of keyboard character to CSS selector mapping data
      * used to set up shortcut keys.
@@ -172,7 +172,3 @@ class ShortcutKeyManager {
         return true;
     }
 }
-
-module.exports = {
-    ShortcutKeyManager
-};

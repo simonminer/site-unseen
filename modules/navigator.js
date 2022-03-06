@@ -9,7 +9,7 @@
 import { ElementList } from './element-list.js';
 import { ScreenReader } from './screen-reader.js';
 
-class Navigator extends ElementList {
+export class Navigator extends ElementList {
     /**
      * CSS class assigned to elements that are navigable by the screen reader.
      * @type {string}
@@ -240,7 +240,3 @@ class Navigator extends ElementList {
         });
     }
 }
-
-module.exports = {
-    Navigator
-};

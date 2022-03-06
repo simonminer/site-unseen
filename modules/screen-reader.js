@@ -9,7 +9,7 @@ import { NodeParser } from './node-parser.js';
 import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
-class ScreenReader {
+export class ScreenReader {
     /**
      * Root node whose content is to be manipulated by the screen reader.
      * @type {Node}
@@ -187,7 +187,3 @@ class ScreenReader {
         this.caption.update(activeElement);
     }
 }
-
-module.exports = {
-    ScreenReader
-};

@@ -11,7 +11,7 @@ if (window.axe == undefined) {
     window.axe = require('axe-core');
 }
 
-class NodeParser {
+export class NodeParser {
     /**
      * Root node from which the virtual Dom tree starts.
      * @type {Node}
@@ -412,7 +412,3 @@ class NodeParser {
         }
     }
 }
-
-module.exports = {
-    NodeParser
-};

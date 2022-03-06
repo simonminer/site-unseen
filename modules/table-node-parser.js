@@ -9,7 +9,7 @@ import { NodeParser } from './node-parser.js';
 import { TableNode } from './accessible-node/table-node.js';
 import { TableCellNode } from './accessible-node/table-cell-node.js';
 
-class TableNodeParser extends NodeParser {
+export class TableNodeParser extends NodeParser {
     /**
      * Number of rows in this table.
      * @type {number}
@@ -63,7 +63,3 @@ class TableNodeParser extends NodeParser {
         }
     }
 }
-
-module.exports = {
-    TableNodeParser
-};

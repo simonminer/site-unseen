@@ -8,7 +8,7 @@
 
 import { ElementList } from './element-list.js';
 
-class ShortcutKey extends ElementList {
+export class ShortcutKey extends ElementList {
     /**
      * Key to press to advance to the next node.
      * @type {string}
@@ -37,7 +37,3 @@ class ShortcutKey extends ElementList {
         }
     }
 }
-
-module.exports = {
-    ShortcutKey
-};

@@ -6,7 +6,7 @@
 
 import { AccessibleNode } from '../accessible-node.js';
 
-class TableCellNode extends AccessibleNode {
+export class TableCellNode extends AccessibleNode {
     /**
      * Index of this cell in its table's list of rows.
      * @type {number}
@@ -55,7 +55,3 @@ class TableCellNode extends AccessibleNode {
      */
     table = undefined;
 }
-
-module.exports = {
-    TableCellNode
-};

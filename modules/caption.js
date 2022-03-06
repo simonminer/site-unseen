@@ -6,7 +6,7 @@
 
 import { NodeParser } from './node-parser.js';
 
-class Caption {
+export class Caption {
     /**
      * ID of caption element in DOM.
      * @type {string}
@@ -117,7 +117,3 @@ class Caption {
         return node;
     }
 }
-
-module.exports = {
-    Caption
-};

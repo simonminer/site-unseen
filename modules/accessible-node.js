@@ -4,7 +4,7 @@
 
 'use strict';
 
-class AccessibleNode {
+export class AccessibleNode {
     /**
      * Name of the tag associated with this node.
      * @type {string}
@@ -91,7 +91,3 @@ class AccessibleNode {
         return text;
     }
 }
-
-module.exports = {
-    AccessibleNode
-};

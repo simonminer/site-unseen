@@ -5,7 +5,7 @@
 
 'use strict';
 
-class ElementList {
+export class ElementList {
     /**
      * List of nodes that that match this element list.
      * @type {Node[]}
@@ -166,7 +166,3 @@ class ElementList {
         return this.nodes[index];
     }
 }
-
-module.exports = {
-    ElementList
-};

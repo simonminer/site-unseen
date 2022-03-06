@@ -4,7 +4,7 @@
  */
 'use strict';
 
-class Overlay {
+export class Overlay {
     /**
      * ID of overly element.
      * @type {string}
@@ -76,7 +76,3 @@ class Overlay {
         return node;
     }
 }
-
-module.exports = {
-    Overlay
-};
