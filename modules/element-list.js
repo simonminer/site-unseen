@@ -169,4 +169,4 @@ class ElementList {
 
 module.exports = {
     ElementList
-}
+};

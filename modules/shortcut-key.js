@@ -40,4 +40,4 @@ class ShortcutKey extends ElementList {
 
 module.exports = {
     ShortcutKey
-}
+};

@@ -38,4 +38,4 @@ class TableNode extends AccessibleNode {
 
 module.exports = {
     TableNode
-}
+};

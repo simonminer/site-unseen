@@ -66,4 +66,4 @@ class TableNodeParser extends NodeParser {
 
 module.exports = {
     TableNodeParser
-}
+};
