@@ -11,5 +11,6 @@
     },
     "rules": {
         "prettier/prettier": "error"
-    }
+    },
+    "ignorePatterns": ["doc"]
 }
