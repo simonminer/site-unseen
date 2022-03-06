@@ -28,6 +28,7 @@ describe('Overlay class tests', function () {
         expect(overlay.node).toBe(div);
         expect(div.tagName.toLowerCase()).toBe('div');
         expect(div.getAttribute('id')).toBe(overlay.id);
+        expect(Object.keys(overlay.buttons).length).toBeGreaterThan(0);
     });
 
     test('generateButton() creates <button> element', () => {

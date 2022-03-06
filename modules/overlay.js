@@ -21,17 +21,33 @@ export class Overlay {
      * Overlay CSS selector values.
      * @type {string}
      */
-    css = {
-        'background-color': '#000000',
-        opacity: '0.75',
-        'z-index': '1',
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        width: '100%',
-        height: '100%',
-        position: 'fixed'
-    };
+    css = `
+#overlay {
+    background-color: #000000;
+    opacity: 0.75;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.overlay-button {
+    color: #ffffff;
+    background-color: #006600;
+    margin: 10px 5px;
+    padding: 5px 10px;
+    float: right;
+    border-radius: 10px;
+    font-size: 15pt;
+}
+    `;
+
+    /**
+     * Map of overlay button names to their corresponding elements.
+     * @type{Map}
+     */
+    buttons = {};
 
     /**
      * CSS class name of button elements on the overlay
@@ -74,15 +90,8 @@ export class Overlay {
      * Generates a `<style>` element with the CSS properties for the overlay.
      */
     getCSS() {
-        var cssProperties = [];
-        for (const property in this.css) {
-            if (Object.hasOwnProperty.call(this.css, property)) {
-                cssProperties.push(property + ': ' + this.css[property]);
-            }
-        }
-        var css = `#${this.id} { ${cssProperties.join('; ')}; }`;
         var node = document.createElement('style');
-        node.appendChild(document.createTextNode(css));
+        node.appendChild(document.createTextNode(this.css));
         return node;
     }
 
@@ -94,6 +103,13 @@ export class Overlay {
         var node = document.createElement('div');
         node.setAttribute('id', this.id);
         this.node = node;
+
+        // Create overlay buttons
+        ['Help', 'Settings', 'Peak'].forEach((name) => {
+            this.buttons[name] = this.generateButton(name);
+            node.appendChild(this.buttons[name]);
+        });
+
         return node;
     }
 }
