@@ -41,6 +41,9 @@ export class Overlay {
     border-radius: 10px;
     font-size: 15pt;
 }
+.hidden {
+    display: none;
+}
     `;
 
     /**
@@ -102,7 +105,6 @@ export class Overlay {
     getHTML() {
         var node = document.createElement('div');
         node.setAttribute('id', this.id);
-        this.node = node;
 
         // Create overlay buttons
         ['Help', 'Settings', 'Peak'].forEach((name) => {
@@ -110,6 +112,21 @@ export class Overlay {
             node.appendChild(this.buttons[name]);
         });
 
+        this.node = node;
         return node;
+    }
+
+    /**
+     * Hides the overlay.
+     */
+    hide() {
+        this.node.classList.add('hidden');
+    }
+
+    /**
+     * Displays the overlay.
+     */
+    show() {
+        this.node.classList.remove('hidden');
     }
 }

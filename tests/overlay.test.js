@@ -42,4 +42,13 @@ describe('Overlay class tests', function () {
             expect(button.textContent).toBe(name);
         });
     });
+
+    test('hide() and show()de and show  the overlay', () => {
+        overlay.getHTML();
+        expect(overlay.node.classList.contains('hidden')).toBe(false);
+        overlay.hide();
+        expect(overlay.node.classList.contains('hidden')).toBe(true);
+        overlay.show();
+        expect(overlay.node.classList.contains('hidden')).toBe(false);
+    });
 });
