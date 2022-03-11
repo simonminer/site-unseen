@@ -12,6 +12,12 @@ export class Overlay {
     id = 'overlay';
 
     /**
+     * Name of CSS class to hide overlay
+     * @type {string}
+     */
+    static hiddenClassName = 'hidden';
+
+    /**
      * Overlay node in DOM.
      * @type {Node}
      */
@@ -41,7 +47,7 @@ export class Overlay {
     border-radius: 10px;
     font-size: 15pt;
 }
-.hidden {
+.${Overlay.hiddenClassName} {
     display: none;
 }
     `;
@@ -120,13 +126,25 @@ export class Overlay {
      * Hides the overlay.
      */
     hide() {
-        this.node.classList.add('hidden');
+        this.node.classList.add(Overlay.hiddenClassName);
     }
 
     /**
      * Displays the overlay.
      */
     show() {
-        this.node.classList.remove('hidden');
+        this.node.classList.remove(Overlay.hiddenClassName);
+    }
+
+    /**
+     * @returns {boolean}
+     * Returns a booolean value indicating
+     * whether the overlay is currently hidden.
+     */
+    isHidden() {
+        var isHidden = this.node.classList.contains(Overlay.hiddenClassName)
+            ? true
+            : false;
+        return isHidden;
     }
 }

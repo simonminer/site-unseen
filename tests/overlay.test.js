@@ -43,12 +43,16 @@ describe('Overlay class tests', function () {
         });
     });
 
-    test('hide() and show()de and show  the overlay', () => {
+    test('overlay can be hidden and shown', () => {
         overlay.getHTML();
-        expect(overlay.node.classList.contains('hidden')).toBe(false);
+        var className = Overlay.hiddenClassName;
+        var re = new RegExp(className, 'sm');
+        expect(overlay.css.match(re).length).toBe(1);
+
+        expect(overlay.isHidden()).toBe(false);
         overlay.hide();
-        expect(overlay.node.classList.contains('hidden')).toBe(true);
+        expect(overlay.isHidden()).toBe(true);
         overlay.show();
-        expect(overlay.node.classList.contains('hidden')).toBe(false);
+        expect(overlay.isHidden()).toBe(false);
     });
 });
