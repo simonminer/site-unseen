@@ -67,10 +67,10 @@ export class Overlay {
     buttonClassName = 'overlay-button';
 
     /**
-     * Event handler function for "Peak" button.
+     * Event handler function for "Peek" button.
      * @type {Function}
      */
-    peakButtonHandler = function () {
+    peekButtonHandler = function () {
         const overlay = ScreenReader.get().overlay;
         if (overlay.isHidden()) {
             overlay.show();
@@ -134,12 +134,12 @@ export class Overlay {
         node.setAttribute('id', this.id);
 
         // Create overlay buttons
-        ['Help', 'Settings', 'Peak'].forEach((name) => {
+        ['Help', 'Peek'].forEach((name) => {
             this.buttons[name] = this.generateButton(name);
             node.appendChild(this.buttons[name]);
         });
 
-        this.buttons['Peak'].addEventListener('click', this.peakButtonHandler);
+        this.buttons['Peek'].addEventListener('click', this.peekButtonHandler);
 
         this.node = node;
         return node;

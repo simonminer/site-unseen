@@ -32,7 +32,7 @@ describe('Overlay class tests', function () {
     });
 
     test('generateButton() creates <button> element', () => {
-        ['Peak', 'Settings', 'Help'].forEach((name) => {
+        ['Peek', 'Settings', 'Help'].forEach((name) => {
             const button = overlay.generateButton(name);
             expect(button instanceof Element).toBe(true);
             expect(button.tagName.toLowerCase()).toBe('button');
