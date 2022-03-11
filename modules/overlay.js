@@ -34,7 +34,7 @@ export class Overlay {
 }
 .overlay-button {
     color: #ffffff;
-    background-color: #006600;
+    background-color: #1c4bad;
     margin: 10px 5px;
     padding: 5px 10px;
     float: right;
