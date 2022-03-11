@@ -4,6 +4,8 @@
  */
 'use strict';
 
+import { ScreenReader } from './screen-reader.js';
+
 export class Overlay {
     /**
      * ID of overly element.
@@ -64,7 +66,26 @@ export class Overlay {
      */
     buttonClassName = 'overlay-button';
 
-    static _properties = ['id', 'css'];
+    /**
+     * Event handler function for "Peak" button.
+     * @type {Function}
+     */
+    peakButtonHandler = function () {
+        const overlay = ScreenReader.get().overlay;
+        if (overlay.isHidden()) {
+            overlay.show();
+        } else {
+            overlay.hide();
+        }
+    };
+
+    static _properties = [
+        'id',
+        'hiddenClassName',
+        'css',
+        'buttons',
+        'buttonClassName'
+    ];
 
     /**
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
@@ -117,6 +138,8 @@ export class Overlay {
             this.buttons[name] = this.generateButton(name);
             node.appendChild(this.buttons[name]);
         });
+
+        this.buttons['Peak'].addEventListener('click', this.peakButtonHandler);
 
         this.node = node;
         return node;
