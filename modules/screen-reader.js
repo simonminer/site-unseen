@@ -146,6 +146,18 @@ export class ScreenReader {
             'click',
             overlay.peekButtonHandler
         );
+        rootNode.addEventListener('keydown', function (event) {
+            const screenReader = ScreenReader.get();
+            if (
+                event.key === '*' &&
+                !screenReader.caption.nodeParser.isTextInputField(
+                    document.activeElement
+                ) &&
+                !screenReader.overlay.isHidden()
+            ) {
+                screenReader.overlay.buttons['Peek'].click();
+            }
+        });
 
         // Keep the caption current as form field values change.
         rootNode.querySelectorAll('input, select, textarea').forEach((node) => {
