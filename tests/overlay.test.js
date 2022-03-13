@@ -11,10 +11,11 @@ beforeEach(() => {
 describe('Overlay class tests', function () {
     test('constructor creates overlay', () => {
         expect(overlay instanceof Overlay).toBe(true);
-        expect(overlay.id).toBe(id);
+        expect(Overlay.id).toBe(id);
         expect(overlay.node).toBe(undefined);
         expect(overlay.buttonClassName).toBe('overlay-button');
         expect(Overlay.peekTimeout).toBeGreaterThan(0);
+        expect(Overlay.opacity).toBeGreaterThan(0);
     });
 
     test('getCSS() creates <style> element', () => {
@@ -28,7 +29,7 @@ describe('Overlay class tests', function () {
         expect(div instanceof Element).toBe(true);
         expect(overlay.node).toBe(div);
         expect(div.tagName.toLowerCase()).toBe('div');
-        expect(div.getAttribute('id')).toBe(overlay.id);
+        expect(div.getAttribute('id')).toBe(Overlay.id);
         expect(Object.keys(overlay.buttons).length).toBeGreaterThan(0);
     });
 

@@ -11,13 +11,19 @@ export class Overlay {
      * ID of overly element.
      * @type {string}
      */
-    id = 'overlay';
+    static id = 'overlay';
 
     /**
      * Name of CSS class to hide overlay
      * @type {string}
      */
     static hiddenClassName = 'hidden';
+
+    /**
+     * Opacity of overlay
+     * @type {number}
+     */
+    static opacity = 0.9;
 
     /**
      * Overlay node in DOM.
@@ -30,9 +36,9 @@ export class Overlay {
      * @type {string}
      */
     css = `
-#overlay {
+#${Overlay.id} {
     background-color: #000000;
-    opacity: 0.75;
+    opacity: ${Overlay.opacity};
     z-index: 1;
     position: fixed;
     top: 0;
@@ -141,7 +147,7 @@ export class Overlay {
      */
     getHTML() {
         var node = document.createElement('div');
-        node.setAttribute('id', this.id);
+        node.setAttribute('id', Overlay.id);
 
         // Create overlay buttons
         ['Help', 'Peek'].forEach((name) => {
