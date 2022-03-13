@@ -14,6 +14,7 @@ describe('Overlay class tests', function () {
         expect(overlay.id).toBe(id);
         expect(overlay.node).toBe(undefined);
         expect(overlay.buttonClassName).toBe('overlay-button');
+        expect(Overlay.peekTimeout).toBeGreaterThan(0);
     });
 
     test('getCSS() creates <style> element', () => {

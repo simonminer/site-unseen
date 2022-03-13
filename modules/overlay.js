@@ -56,7 +56,7 @@ export class Overlay {
 
     /**
      * Map of overlay button names to their corresponding elements.
-     * @type{Map}
+     * @type {Object}
      */
     buttons = {};
 
@@ -76,8 +76,18 @@ export class Overlay {
             overlay.show();
         } else {
             overlay.hide();
+            setTimeout(function () {
+                const overlay = ScreenReader.get().overlay;
+                overlay.show();
+            }, Overlay.peekTimeout);
         }
     };
+
+    /**
+     * Number of miliseconds the "Peek" action remains active
+     * @type {int}
+     */
+    static peekTimeout = 3000;
 
     static _properties = [
         'id',
