@@ -341,7 +341,7 @@ describe('NodeParser class tests', function () {
             `${aNode.name}${aNode.separator}${aNode.value}`
         );
 
-        // Tests for textarea with label tag.
+        // Tests for password  with label tag.
         const nodeId = `test-password-id`;
         const html = `<body><form><label for="${nodeId}"><nput type="password" name="${nodeName}" id="${nodeId}" />`;
         const tree = htmlToElement(html, 'body');
@@ -641,11 +641,11 @@ describe('NodeParser class tests', function () {
         // TODO Add tests for table, columnheading, row, and cell roles.
     });
 
-    /*
     // Region/landmark elements.
     test('nodeParser parses landmark elements', () => {
-        ['aside', 'footer', 'header', 'main', 'nav'].forEach(function(tagName) {
-
+        ['aside', 'footer', 'header', 'main', 'nav'].forEach(function (
+            tagName
+        ) {
             // Tests for landmark tags.
             var html = `<${tagName}>Test Content</${tagName}>`;
             var node = htmlToElement(html, tagName);
@@ -674,8 +674,11 @@ describe('NodeParser class tests', function () {
             expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}`);
         });
 
-        nodeParser.landmarkRoles.forEach(function(role) {
-            const node = htmlToElement(`<div role="${role}">Test Contents</div>`, 'div');
+        nodeParser.landmarkRoles.forEach(function (role) {
+            const node = htmlToElement(
+                `<div role="${role}">Test Contents</div>`,
+                'div'
+            );
             nodeParser = new NodeParser({
                 rootNode: node
             });
@@ -687,5 +690,35 @@ describe('NodeParser class tests', function () {
             expect(aNode.toString()).toBe(`${aNode.role} ${aNode.metadata}`);
         });
     });
-    */
+
+    test('isTextInputField indentifies text input form elements', () => {
+        ['text', 'password'].forEach((type) => {
+            const node = htmlToElement(`<input type="${type}">`, 'input');
+            nodeParser = new NodeParser({
+                rootNode: node
+            });
+            expect(nodeParser.isTextInputField(node)).toBe(true);
+        });
+        ['radio', 'checkbox'].forEach((type) => {
+            const node = htmlToElement(`<input type="${type}">`, 'input');
+            nodeParser = new NodeParser({
+                rootNode: node
+            });
+            expect(nodeParser.isTextInputField(node)).toBe(false);
+        });
+
+        const node = htmlToElement(`<textarea></textarea`, 'textarea');
+        nodeParser = new NodeParser({
+            rootNode: node
+        });
+        expect(nodeParser.isTextInputField(node)).toBe(true);
+
+        ['h1', 'p', 'div'].forEach((tagName) => {
+            const node = htmlToElement(`<${tagName}></${tagName}`, tagName);
+            nodeParser = new NodeParser({
+                rootNode: node
+            });
+            expect(nodeParser.isTextInputField(node)).toBe(false);
+        });
+    });
 });

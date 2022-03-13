@@ -66,6 +66,14 @@ export class ShortcutKeyManager {
 
         // Don't do anything if the user is on a form field
         // that accepts text inupt.
+        if (
+            ScreenReader.get().caption.nodeParser.isTextInputField(
+                document.activeElement
+            )
+        ) {
+            return;
+        }
+        /*
         const activeElement = document.activeElement;
         const aNode =
             ScreenReader.get().caption.nodeParser.parse(activeElement);
@@ -76,6 +84,7 @@ export class ShortcutKeyManager {
         ) {
             return;
         }
+        */
 
         var skm = ScreenReader.get().shortcutKeyManager;
         skm.wrappedTo = undefined;

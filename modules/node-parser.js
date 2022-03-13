@@ -411,4 +411,18 @@ export class NodeParser {
             formFieldNode.value = node.value;
         }
     }
+
+    /**
+     * Tests whehter the specified node is a text input field.
+     * @param {Node} node - The node being examined
+     * @returns {boolean}
+     */
+    isTextInputField(node) {
+        const aNode = this.parse(node);
+        return aNode.role === 'textbox' ||
+            aNode.role === 'combobox' ||
+            node.getAttribute('type') === 'password'
+            ? true
+            : false;
+    }
 }
