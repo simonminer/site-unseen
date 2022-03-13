@@ -79,12 +79,12 @@ export class Overlay {
     peekButtonHandler = function () {
         const overlay = ScreenReader.get().overlay;
         if (overlay.isHidden()) {
-            overlay.show();
+            overlay.show(true);
         } else {
-            overlay.hide();
+            overlay.hide(true);
             setTimeout(function () {
                 const overlay = ScreenReader.get().overlay;
-                overlay.show();
+                overlay.show(true);
             }, Overlay.peekTimeout);
         }
     };
@@ -162,17 +162,45 @@ export class Overlay {
     }
 
     /**
-     * Hides the overlay.
+     * Hidesthe overlay.
+     * @param {boolean} fade - Flag indicating whether or not to fade out the overlay.
      */
-    hide() {
-        this.node.classList.add(Overlay.hiddenClassName);
+    hide(fade) {
+        if (fade) {
+            var opacity = Overlay.opacity;
+            var element = this.node;
+            var timer = setInterval(function () {
+                if (opacity <= 0.1) {
+                    clearInterval(timer);
+                    element.classList.add(Overlay.hiddenClassName);
+                }
+                element.style.opacity = opacity;
+                element.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
+                opacity -= 0.1;
+            }, 20);
+        } else {
+            this.node.classList.add(Overlay.hiddenClassName);
+        }
     }
 
     /**
-     * Displays the overlay.
+     * Fades in and displays the overlay.
+     * @param {boolean} fade - Flag indicating whether or not to fade in the overlay.
      */
-    show() {
+    show(fade) {
         this.node.classList.remove(Overlay.hiddenClassName);
+        if (fade) {
+            var opacity = 0.1;
+            var element = this.node;
+            var timer = setInterval(function () {
+                if (opacity >= Overlay.opacity - 0.01) {
+                    clearInterval(timer);
+                }
+                element.style.opacity = opacity;
+                element.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
+                opacity += 0.1;
+            }, 20);
+        }
     }
 
     /**
