@@ -155,8 +155,6 @@ export class Overlay {
             node.appendChild(this.buttons[name]);
         });
 
-        this.buttons['Peek'].addEventListener('click', this.peekButtonHandler);
-
         this.node = node;
         return node;
     }

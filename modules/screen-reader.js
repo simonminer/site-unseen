@@ -140,6 +140,10 @@ export class ScreenReader {
             ShortcutKeyManager.eventHandlerFunction
         );
 
+        // Enable "Peek" button and keyboard shortcut.
+        const overlay = this.overlay;
+        overlay.buttons['Peek'].addEventListener('click', overlay.peekButtonHandler);
+
         // Keep the caption current as form field values change.
         rootNode.querySelectorAll('input, select, textarea').forEach((node) => {
             const aNode = this.caption.nodeParser.parse(node);
