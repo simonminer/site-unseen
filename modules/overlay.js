@@ -76,7 +76,7 @@ export class Overlay {
      * Event handler function for "Peek" button.
      * @type {Function}
      */
-    peekButtonHandler = function () {
+    peekHandler = function () {
         const overlay = ScreenReader.get().overlay;
         if (overlay.isVisible()) {
             overlay.hide(true);

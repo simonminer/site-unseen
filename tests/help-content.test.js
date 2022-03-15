@@ -30,6 +30,9 @@ describe('OHelpContent class tests', function () {
         expect(help.node.classList.contains(Overlay.hiddenClassName)).toBe(
             true
         );
+
+        expect(help.closeButton instanceof HTMLButtonElement).toBe(true);
+        expect(help.closeButton.getAttribute('id')).toBe(HelpContent.closeButtonId);
     });
 
     test('help can be hidden and shown', () => {

@@ -13,6 +13,7 @@ export class HelpContent {
      */
     static id = 'help';
 
+    static closeButtonId = 'help-close-button';
     /**
      * Help content node in DOM.
      * @type {Node}
@@ -41,7 +42,7 @@ export class HelpContent {
 #help-heading {
     text-align: center;
 }
-#help-close {
+#${HelpContent.closeButtonId} {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -83,7 +84,7 @@ export class HelpContent {
 <div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
     <div id="help-heading">
         <h2>Site Unseen Keyboard Commands</h2>
-        <button id="help-close">x</button>
+        <button id="${HelpContent.closeButtonId}">x</button>
     </div>
     <div id="help-content">
         <table>
@@ -185,6 +186,18 @@ export class HelpContent {
 `;
 
     /**
+     * Top-level HTML element of the help content display.
+     * @type {Node}
+     */
+    node = undefined;
+
+    /**
+     * Button element to close help content display.
+     * @type {Node}
+     */
+    closeButton = undefined;
+
+    /**
      * Event handler function for viewing the help content
      * @type {Function}
      */
@@ -197,7 +210,7 @@ export class HelpContent {
         }
     };
 
-    static _properties = ['id', 'node', 'html'];
+    static _properties = ['id', 'node', 'html', 'node', 'closeButtonId'];
 
     /**
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
@@ -230,6 +243,10 @@ export class HelpContent {
         const placeholder = document.createElement('div');
         placeholder.innerHTML = this.html;
         this.node = placeholder.firstElementChild;
+
+        // Find the close button.
+        this.closeButton = this.node.querySelector('#' + HelpContent.closeButtonId);
+
         return this.node;
     }
 

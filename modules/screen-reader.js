@@ -155,19 +155,27 @@ export class ScreenReader {
         const overlay = this.overlay;
         overlay.buttons['Peek'].addEventListener(
             'click',
-            overlay.peekButtonHandler
+            overlay.peekHandler
         );
         overlay.buttons['Help'].addEventListener(
+            'click',
+            this.helpContent.helpContentHandler
+        );
+        this.helpContent.closeButton.addEventListener(
             'click',
             this.helpContent.helpContentHandler
         );
         rootNode.addEventListener('keydown', function (event) {
             const screenReader = ScreenReader.get();
             const nodeParser = screenReader.caption.nodeParser;
+            const overlay = screenReader.overlay;
+            const helpContent = screenReader.helpContent;
             if (!nodeParser.isTextInputField(document.activeElement)) {
-                if (event.key === '*' && screenReader.overlay.isVisible()) {
+                if (event.key === '*' && overlay.isVisible() && !helpContent.isVisible()) {
                     screenReader.overlay.buttons['Peek'].click();
-                } else if (event.key === '?') { 
+                } else if (event.key === '?' && overlay.isVisible()) { 
+                    screenReader.overlay.buttons['Help'].click();
+                } else if (event.key === 'Escape' && helpContent.isVisible()) { 
                     screenReader.overlay.buttons['Help'].click();
                 }
             }
