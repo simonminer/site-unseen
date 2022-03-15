@@ -51,10 +51,10 @@ describe('Overlay class tests', function () {
         var re = new RegExp(className, 'sm');
         expect(overlay.css.match(re).length).toBe(1);
 
-        expect(overlay.isHidden()).toBe(false);
+        expect(overlay.isVisible()).toBe(true);
         overlay.hide();
-        expect(overlay.isHidden()).toBe(true);
+        expect(overlay.isVisible()).toBe(false);
         overlay.show();
-        expect(overlay.isHidden()).toBe(false);
+        expect(overlay.isVisible()).toBe(true);
     });
 });

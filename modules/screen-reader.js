@@ -5,6 +5,7 @@
 
 import { Overlay } from './overlay.js';
 import { Caption } from './caption.js';
+import { HelpContent } from './help-content.js';
 import { NodeParser } from './node-parser.js';
 import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
@@ -30,6 +31,11 @@ export class ScreenReader {
      * @type {Caption}
      */
     caption = undefined;
+
+    /**
+     * @type {HelpContent}
+     */
+    helpContent = undefined;
 
     /**
      * @type {ShortcutKeyManager}
@@ -122,6 +128,11 @@ export class ScreenReader {
         });
         overlayNode.appendChild(this.caption.getCSS());
         overlayNode.appendChild(this.caption.getHTML());
+
+        // Put the help contents inside the overlay.
+        this.helpContent = new HelpContent();
+        overlayNode.appendChild(this.helpContent.getCSS());
+        overlayNode.appendChild(this.helpContent.getHTML());
     }
 
     /**
@@ -140,22 +151,25 @@ export class ScreenReader {
             ShortcutKeyManager.eventHandlerFunction
         );
 
-        // Enable "Peek" button and keyboard shortcut.
+        // Enable "Peek" and "Help" buttons and keyboard shortcuts.
         const overlay = this.overlay;
         overlay.buttons['Peek'].addEventListener(
             'click',
             overlay.peekButtonHandler
         );
+        overlay.buttons['Help'].addEventListener(
+            'click',
+            this.helpContent.helpContentHandler
+        );
         rootNode.addEventListener('keydown', function (event) {
             const screenReader = ScreenReader.get();
-            if (
-                event.key === '*' &&
-                !screenReader.caption.nodeParser.isTextInputField(
-                    document.activeElement
-                ) &&
-                !screenReader.overlay.isHidden()
-            ) {
-                screenReader.overlay.buttons['Peek'].click();
+            const nodeParser = screenReader.caption.nodeParser;
+            if (!nodeParser.isTextInputField(document.activeElement)) {
+                if (event.key === '*' && screenReader.overlay.isVisible()) {
+                    screenReader.overlay.buttons['Peek'].click();
+                } else if (event.key === '?') { 
+                    screenReader.overlay.buttons['Help'].click();
+                }
             }
         });
 

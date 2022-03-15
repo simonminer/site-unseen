@@ -78,14 +78,14 @@ export class Overlay {
      */
     peekButtonHandler = function () {
         const overlay = ScreenReader.get().overlay;
-        if (overlay.isHidden()) {
-            overlay.show(true);
-        } else {
+        if (overlay.isVisible()) {
             overlay.hide(true);
             setTimeout(function () {
                 const overlay = ScreenReader.get().overlay;
                 overlay.show(true);
             }, Overlay.peekTimeout);
+        } else {
+            overlay.show(true);
         }
     };
 
@@ -206,10 +206,10 @@ export class Overlay {
      * Returns a booolean value indicating
      * whether the overlay is currently hidden.
      */
-    isHidden() {
-        var isHidden = this.node.classList.contains(Overlay.hiddenClassName)
-            ? true
-            : false;
-        return isHidden;
+    isVisible() {
+        var isVisible = this.node.classList.contains(Overlay.hiddenClassName)
+            ? false
+            : true;
+        return isVisible;
     }
 }

@@ -4,6 +4,7 @@
 'use strict';
 
 import { Overlay } from './overlay.js';
+import { ScreenReader } from './screen-reader.js';
 
 export class HelpContent {
     /**
@@ -24,30 +25,31 @@ export class HelpContent {
      */
     css = `
 #${HelpContent.id} {
-    max-width: 860px;
+    max-width: 950px;
     margin: auto;
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
-    height: 300px;
+    height: 450px;
     font-family: sans-serif;
     background-color: #fff;
     color: #1c4bad;
     border-radius: 10px;
     position: relative;
-    top: 30%;
+    top: 20%;
     z-index: 100;
+    padding: 5px;
 }
 #help-heading {
     text-align: center;
 }
 #help-close {
     position: absolute;
-    top: 0px;
+    top: 10px;
     right: 10px;
     background-color: #1c4bad;
     color: #ffffff;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
+    font-size: 24px;
+    border-radius: 3px;
+    padding: 2px 8px;
 }
 #help-content {
     padding: 0 20px;
@@ -64,6 +66,9 @@ export class HelpContent {
     border-radius: 3px;
     border: 1px solid #333333;
     font-weight: bold;
+}
+.shortcut-keys, .shortcut-description {
+    border: none;
 }
 .shortcut-description {
     padding-right: 15px;
@@ -178,6 +183,19 @@ export class HelpContent {
     </div>
 </div>
 `;
+
+    /**
+     * Event handler function for viewing the help content
+     * @type {Function}
+     */
+    helpContentHandler = function () {
+        const helpContent = ScreenReader.get().helpContent;
+        if (helpContent.isVisible()) {
+            helpContent.hide();
+        } else {
+            helpContent.show();
+        }
+    };
 
     static _properties = ['id', 'node', 'html'];
 
