@@ -23,7 +23,7 @@ export class Overlay {
      * Opacity of overlay
      * @type {number}
      */
-    static opacity = 0.9;
+    static opacity = 1;
 
     /**
      * Overlay node in DOM.
