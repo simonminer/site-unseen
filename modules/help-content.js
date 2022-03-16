@@ -202,11 +202,13 @@ export class HelpContent {
      * @type {Function}
      */
     helpContentHandler = function () {
-        const helpContent = ScreenReader.get().helpContent;
+        const screenReader = ScreenReader.get();
+        const helpContent = screenReader.helpContent;
+        const overlayButtons = screenReader.overlay.buttons;
         if (helpContent.isVisible()) {
-            helpContent.hide();
+            helpContent.hide(overlayButtons);
         } else {
-            helpContent.show();
+            helpContent.show(overlayButtons);
         }
     };
 
@@ -245,23 +247,37 @@ export class HelpContent {
         this.node = placeholder.firstElementChild;
 
         // Find the close button.
-        this.closeButton = this.node.querySelector('#' + HelpContent.closeButtonId);
+        this.closeButton = this.node.querySelector(
+            '#' + HelpContent.closeButtonId
+        );
 
         return this.node;
     }
 
     /**
      * Hides the help content.
+     * @param {Object} overlayButtons - map of button name/elemens to display when
+     * the help content is hidden.
      */
-    hide() {
+    hide(overlayButtons) {
         this.node.classList.add(Overlay.hiddenClassName);
+        ['Peek', 'Help'].forEach((buttonName) => {
+            overlayButtons[buttonName].classList.remove(
+                Overlay.hiddenClassName
+            );
+        });
     }
 
     /**
      * Displays the help content.
+     * @param {Object} overlayButtons - map of button name/elemens to hide when
+     * the help content is visible.
      */
-    show() {
+    show(overlayButtons) {
         this.node.classList.remove(Overlay.hiddenClassName);
+        ['Peek', 'Help'].forEach((buttonName) => {
+            overlayButtons[buttonName].classList.add(Overlay.hiddenClassName);
+        });
     }
 
     /**

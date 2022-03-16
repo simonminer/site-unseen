@@ -153,10 +153,7 @@ export class ScreenReader {
 
         // Enable "Peek" and "Help" buttons and keyboard shortcuts.
         const overlay = this.overlay;
-        overlay.buttons['Peek'].addEventListener(
-            'click',
-            overlay.peekHandler
-        );
+        overlay.buttons['Peek'].addEventListener('click', overlay.peekHandler);
         overlay.buttons['Help'].addEventListener(
             'click',
             this.helpContent.helpContentHandler
@@ -171,11 +168,15 @@ export class ScreenReader {
             const overlay = screenReader.overlay;
             const helpContent = screenReader.helpContent;
             if (!nodeParser.isTextInputField(document.activeElement)) {
-                if (event.key === '*' && overlay.isVisible() && !helpContent.isVisible()) {
+                if (
+                    event.key === '*' &&
+                    overlay.isVisible() &&
+                    !helpContent.isVisible()
+                ) {
                     screenReader.overlay.buttons['Peek'].click();
-                } else if (event.key === '?' && overlay.isVisible()) { 
+                } else if (event.key === '?' && overlay.isVisible()) {
                     screenReader.overlay.buttons['Help'].click();
-                } else if (event.key === 'Escape' && helpContent.isVisible()) { 
+                } else if (event.key === 'Escape' && helpContent.isVisible()) {
                     screenReader.overlay.buttons['Help'].click();
                 }
             }

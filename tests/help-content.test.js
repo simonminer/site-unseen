@@ -1,9 +1,11 @@
-const Overlay = require('../modules/overlay.js').Overlay;
 const HelpContent = require('../modules/help-content.js').HelpContent;
+const Overlay = require('../modules/overlay.js').Overlay;
+const ScreenReader = require('../modules/screen-reader.js').ScreenReader;
 
 const id = 'help';
 
 var help = undefined;
+const screenReader = new ScreenReader();
 beforeEach(() => {
     help = new HelpContent();
 });
@@ -32,19 +34,35 @@ describe('OHelpContent class tests', function () {
         );
 
         expect(help.closeButton instanceof HTMLButtonElement).toBe(true);
-        expect(help.closeButton.getAttribute('id')).toBe(HelpContent.closeButtonId);
+        expect(help.closeButton.getAttribute('id')).toBe(
+            HelpContent.closeButtonId
+        );
     });
 
     test('help can be hidden and shown', () => {
+        const overlayButtons = screenReader.overlay.buttons;
         help.getHTML();
 
         expect(help.node.classList.contains(Overlay.hiddenClassName)).toBe(
             true
         );
         expect(help.isVisible()).toBe(false);
-        help.show();
+        help.show(overlayButtons);
         expect(help.isVisible()).toBe(true);
-        help.hide();
+        expect(
+            overlayButtons['Peek'].classList.contains(Overlay.hiddenClassName)
+        ).toBe(true);
+        expect(
+            overlayButtons['Help'].classList.contains(Overlay.hiddenClassName)
+        ).toBe(true);
+
+        help.hide(overlayButtons);
         expect(help.isVisible()).toBe(false);
+        expect(
+            overlayButtons['Peek'].classList.contains(Overlay.hiddenClassName)
+        ).toBe(false);
+        expect(
+            overlayButtons['Help'].classList.contains(Overlay.hiddenClassName)
+        ).toBe(false);
     });
 });
