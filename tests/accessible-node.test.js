@@ -1,4 +1,5 @@
-const AccessibleNode = require('../src/modules/accessible-node.js').AccessibleNode;
+const AccessibleNode =
+    require('../src/modules/accessible-node.js').AccessibleNode;
 const { htmlToElement } = require('./test-utils.js');
 
 describe('AccessibleNode class tests', function () {
