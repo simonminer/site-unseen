@@ -1,4 +1,4 @@
-const ScreenReader = require('../modules/screen-reader.js').ScreenReader;
+const ScreenReader = require('../src/modules/screen-reader.js').ScreenReader;
 
 var screenReader = undefined;
 beforeEach(() => {

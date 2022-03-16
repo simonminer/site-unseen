@@ -1,4 +1,4 @@
-const ShortcutKey = require('../modules/shortcut-key.js').ShortcutKey;
+const ShortcutKey = require('../src/modules/shortcut-key.js').ShortcutKey;
 
 // One-time setup.
 const key = 'a';

@@ -1,6 +1,6 @@
 const TableNodeParser =
-    require('../modules/table-node-parser.js').TableNodeParser;
-const NodeParser = require('../modules/node-parser.js').NodeParser;
+    require('../src/modules/table-node-parser.js').TableNodeParser;
+const NodeParser = require('../src/modules/node-parser.js').NodeParser;
 const { htmlToElement } = require('./test-utils.js');
 
 describe('TableNodeParser class tests', function () {

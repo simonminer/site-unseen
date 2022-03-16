@@ -1,6 +1,6 @@
-const HelpContent = require('../modules/help-content.js').HelpContent;
-const Overlay = require('../modules/overlay.js').Overlay;
-const ScreenReader = require('../modules/screen-reader.js').ScreenReader;
+const HelpContent = require('../src/modules/help-content.js').HelpContent;
+const Overlay = require('../src/modules/overlay.js').Overlay;
+const ScreenReader = require('../src/modules/screen-reader.js').ScreenReader;
 
 const id = 'help';
 

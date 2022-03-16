@@ -1,4 +1,4 @@
-const ElementList = require('../modules/element-list.js').ElementList;
+const ElementList = require('../src/modules/element-list.js').ElementList;
 
 // One-time setup.
 const selector = 'a';

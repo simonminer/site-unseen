@@ -1,6 +1,6 @@
-const ScreenReader = require('../modules/screen-reader.js').ScreenReader;
+const ScreenReader = require('../src/modules/screen-reader.js').ScreenReader;
 const ShortcutKeyManager =
-    require('../modules/shortcut-key-manager.js').ShortcutKeyManager;
+    require('../src/modules/shortcut-key-manager.js').ShortcutKeyManager;
 
 // One-time setup.
 beforeAll(() => {

@@ -1,4 +1,4 @@
-const Overlay = require('../modules/overlay.js').Overlay;
+const Overlay = require('../src/modules/overlay.js').Overlay;
 
 const id = 'overlay';
 

@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "jest",
-        "server": "./node_modules/http-server/bin/http-server -c-1",
+        "server": "./node_modules/http-server/bin/http-server ./src -c-1",
         "lint": "eslint .",
         "jsdoc": "./node_modules/jsdoc/jsdoc.js -a all -c jsdoc.json -r -R README.md modules/ -d doc"
     },

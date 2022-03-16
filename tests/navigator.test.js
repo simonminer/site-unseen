@@ -1,4 +1,4 @@
-const Navigator = require('../modules/navigator.js').Navigator;
+const Navigator = require('../src/modules/navigator.js').Navigator;
 
 beforeAll(() => {
     document.body.innerHTML = `

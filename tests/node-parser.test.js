@@ -1,4 +1,4 @@
-const NodeParser = require('../modules/node-parser.js').NodeParser;
+const NodeParser = require('../src/modules/node-parser.js').NodeParser;
 const { htmlToElement } = require('./test-utils.js');
 
 var nodeParser = undefined;

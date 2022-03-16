@@ -1,5 +1,5 @@
-const Caption = require('../modules/caption.js').Caption;
-const NodeParser = require('../modules/node-parser.js').NodeParser;
+const Caption = require('../src/modules/caption.js').Caption;
+const NodeParser = require('../src/modules/node-parser.js').NodeParser;
 
 const id = 'caption';
 const sep = ': ';
