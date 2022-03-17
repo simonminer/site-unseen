@@ -11,10 +11,40 @@ module.exports = {
         })
     ],
     output: {
-        clean: true
+        clean: true,
+        filename: 'site-unseen.[hash].js'
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            modules: true
+                        }
+                    }
+                ],
+                include: /\.module\.css$/
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+                exclude: /\.module\.css$/
+            }
+        ]
     },
     devServer: {
         static: './dist',
         open: true
+    },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
     }
 };
