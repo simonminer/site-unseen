@@ -12,5 +12,5 @@
     "rules": {
         "prettier/prettier": "error"
     },
-    "ignorePatterns": ["doc"]
+    "ignorePatterns": ["doc", "dist"]
 }

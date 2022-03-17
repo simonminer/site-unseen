@@ -203,11 +203,10 @@ export class HelpContent {
     helpContentHandler = function () {
         const screenReader = ScreenReader.get();
         const helpContent = screenReader.helpContent;
-        const overlayButtons = screenReader.overlay.buttons;
         if (helpContent.isVisible()) {
-            helpContent.hide(overlayButtons);
+            helpContent.hide(screenReader);
         } else {
-            helpContent.show(overlayButtons);
+            helpContent.show(screenReader);
         }
     };
 
@@ -255,28 +254,40 @@ export class HelpContent {
 
     /**
      * Hides the help content.
-     * @param {Object} overlayButtons - map of button name/elemens to display when
+     * @param {ScreenReader} screenReader - the screen reader object (used to hide other controls).
      * the help content is hidden.
      */
-    hide(overlayButtons) {
+    hide(screenReader) {
         this.node.classList.add(Overlay.hiddenClassName);
+
+        // Display the "Peek" and "Help" buttons.
+        const overlayButtons = screenReader.overlay.buttons;
         ['Peek', 'Help'].forEach((buttonName) => {
             overlayButtons[buttonName].classList.remove(
                 Overlay.hiddenClassName
             );
         });
+
+        // Display the caption.
+        screenReader.caption.show();
     }
 
     /**
      * Displays the help content.
-     * @param {Object} overlayButtons - map of button name/elemens to hide when
+     * @param {ScreenReader} screenReader - the screen reader object (used to display other controls).
      * the help content is visible.
      */
-    show(overlayButtons) {
+    show(screenReader) {
         this.node.classList.remove(Overlay.hiddenClassName);
+
+        // Hide the "Peek" and "Help" buttons.
+        const overlayButtons = screenReader.overlay.buttons;
         ['Peek', 'Help'].forEach((buttonName) => {
             overlayButtons[buttonName].classList.add(Overlay.hiddenClassName);
         });
+
+        // Hide the caption.
+        screenReader.caption.hide();
     }
 
     /**

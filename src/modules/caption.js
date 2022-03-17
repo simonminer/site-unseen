@@ -5,6 +5,7 @@
 'use strict';
 
 import { NodeParser } from './node-parser.js';
+import { Overlay } from './overlay.js';
 
 export class Caption {
     /**
@@ -115,5 +116,31 @@ export class Caption {
         node.setAttribute('id', this.id);
         this.node = node;
         return node;
+    }
+
+    /**
+     * Hide the screen reader caption.
+     */
+    hide() {
+        this.node.classList.add(Overlay.hiddenClassName);
+    }
+
+    /**
+     * Display the screen reader caption.
+     */
+    show() {
+        this.node.classList.remove(Overlay.hiddenClassName);
+    }
+
+    /**
+     * @returns {boolean}
+     * Returns a booolean value indicating
+     * whether the caption is currently hidden.
+     */
+    isVisible() {
+        var isVisible = this.node.classList.contains(Overlay.hiddenClassName)
+            ? false
+            : true;
+        return isVisible;
     }
 }

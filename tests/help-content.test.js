@@ -47,7 +47,7 @@ describe('OHelpContent class tests', function () {
             true
         );
         expect(help.isVisible()).toBe(false);
-        help.show(overlayButtons);
+        help.show(screenReader);
         expect(help.isVisible()).toBe(true);
         expect(
             overlayButtons['Peek'].classList.contains(Overlay.hiddenClassName)
@@ -55,8 +55,9 @@ describe('OHelpContent class tests', function () {
         expect(
             overlayButtons['Help'].classList.contains(Overlay.hiddenClassName)
         ).toBe(true);
+        expect(screenReader.caption.isVisible()).toBe(false);
 
-        help.hide(overlayButtons);
+        help.hide(screenReader);
         expect(help.isVisible()).toBe(false);
         expect(
             overlayButtons['Peek'].classList.contains(Overlay.hiddenClassName)
@@ -64,5 +65,6 @@ describe('OHelpContent class tests', function () {
         expect(
             overlayButtons['Help'].classList.contains(Overlay.hiddenClassName)
         ).toBe(false);
+        expect(screenReader.caption.isVisible()).toBe(true);
     });
 });

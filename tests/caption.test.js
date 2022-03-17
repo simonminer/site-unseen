@@ -1,5 +1,6 @@
 const Caption = require('../src/modules/caption.js').Caption;
 const NodeParser = require('../src/modules/node-parser.js').NodeParser;
+const Overlay = require('../src/modules/overlay.js').Overlay;
 
 const id = 'caption';
 const sep = ': ';
@@ -73,5 +74,16 @@ describe('Caption class tests', function () {
         expect(div.tagName.toLowerCase()).toBe('div');
         expect(div.getAttribute('id')).toBe(caption.id);
         expect(caption.node).toBe(div);
+    });
+
+    test('caption can be hidden and shown', () => {
+        caption.getHTML();
+        var className = Overlay.hiddenClassName;
+
+        expect(caption.isVisible()).toBe(true);
+        caption.hide();
+        expect(caption.isVisible()).toBe(false);
+        caption.show();
+        expect(caption.isVisible()).toBe(true);
     });
 });
