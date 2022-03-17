@@ -7,7 +7,7 @@
         "test": "jest",
         "dev": "webpack server --mode development",
         "build": "webpack --mode production",
-        "server": "./node_modules/http-server/bin/http-server ./src -c-1",
+        "server": "./node_modules/http-server/bin/http-server ./dist -c-1",
         "lint": "eslint .",
         "jsdoc": "./node_modules/jsdoc/jsdoc.js -a all -c jsdoc.json -r -R README.md src/modules/ -d doc"
     },
