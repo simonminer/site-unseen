@@ -29,13 +29,12 @@ export class HelpContent {
     max-width: 950px;
     margin: auto;
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
-    height: 450px;
     font-family: sans-serif;
     background-color: #fff;
     color: #1c4bad;
     border-radius: 10px;
     position: relative;
-    top: 20%;
+    top: 10%;
     z-index: 100;
     padding: 5px;
 }
@@ -83,7 +82,7 @@ export class HelpContent {
     html = `
 <div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
     <div id="help-heading">
-        <h2>Site Unseen Keyboard Commands</h2>
+        <h2>Keyboard Commands</h2>
         <button id="${HelpContent.closeButtonId}">x</button>
     </div>
     <div id="help-content">
@@ -94,13 +93,13 @@ export class HelpContent {
                         <kbd>&larr;</kbd> / <kbd>&rarr;</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Next/previous element
+                        Next / previous element
                     </td>
                     <td class="shortcut-keys">
                         <kbd>h</kbd> / <kbd>H</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Next/previous heading
+                        Next / previous heading
                     </td>
                 </tr>
                 <tr>
@@ -108,25 +107,25 @@ export class HelpContent {
                         <kbd>Tab</kbd> / <kbd>Shif+Tab</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Next/previous interactive element
+                        Next / previous interactive element
                     </td>
                     <td class="shortcut-keys">
                         <kbd>k</kbd> / <kbd>K</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Next/previous link
+                        Next / previous link
                     </td>
                 </tr>
                 <tr>
                     <td class="shortcut-keys"><kbd>Enter</kbd></td>
                     <td class="shortcut-description">
-                        Press button/follow link/select current option
+                        Press button / follow link / select current option
                     </td>
                     <td class="shortcut-keys">
                         <kbd>l</kbd> / <kbd>L</kbd>
                     </td>
                     <td class="shortcut-description">
-                        Next/previous list
+                        Next / previous list
                     </td>
                 </tr>
                 <tr>
@@ -134,13 +133,13 @@ export class HelpContent {
                         <kbd>&uarr;</kbd> / <kbd>&darr;</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Next/previous radio button/checkbos/menu item
+                        Next / previous radio button / checkbos / menu item
                     </td>
                     <td class="shortcut-keys">
                         <kbd>f</kbd> / <kbd>F</kbd>
                     </td>
                     <td class="shortcut-description">
-                        Next/previous form input field
+                        Next / previous form input field
                     </td>
                 </tr>
                 <tr>
@@ -148,13 +147,13 @@ export class HelpContent {
                         <kbd>Space</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Select current radio button/checkbox/menu item
+                        Select current radio button / checkbox / menu item
                     </td>
                     <td class="shortcut-keys">
                         <kbd>b</kbd> / <kbd>B</kbd>
                     </td>
                     <td class="shortcut-description">
-                        Next/previous button
+                        Next / previous button
                     </td>
                 </tr>
                 <tr>
@@ -168,7 +167,7 @@ export class HelpContent {
                         <kbd>r</kbd> / <kbd>R</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Next/previous landmark region
+                        Next / previous landmark region
                     </td>
                 </tr>
                 <tr>
@@ -176,7 +175,7 @@ export class HelpContent {
                         <kbd>?</kbd>
                     </td>
                     <td class="shortcut-Description">
-                        Display/hide this help documentation
+                        Display / hide this help documentation
                     </td>
                 </tr>
             </tbody>
