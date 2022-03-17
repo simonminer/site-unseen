@@ -1,4 +1,6 @@
 'use strict';
-import { ScreenReader } from './modules/screen-reader.js';
 import './styles.css';
+require.context( './assets/images', false, /\.(png|jpe?g|svg)$/ );
+
+import { ScreenReader } from './modules/screen-reader.js';
 new ScreenReader();

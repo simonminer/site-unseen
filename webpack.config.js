@@ -1,8 +1,21 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
+    entry: './src/index.js',
+    output: {
+        clean: true,
+        filename: 'site-unseen.[hash:8].js',
+        path: path.resolve(__dirname, 'dist')
+    },
     plugins: [
+        new FaviconsWebpackPlugin({
+            logo: './src/site-unseen-logo.png',
+            mode: 'webapp',
+            devMode: 'light',
+            outputPath: 'assets/images/'
+        }),
         new HtmlWebpackPlugin({
             hash: true,
             template: './src/index.html',
@@ -10,36 +23,28 @@ module.exports = {
             inject: 'body'
         })
     ],
-    output: {
-        clean: true,
-        filename: 'site-unseen.[hash].js'
-    },
-
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1,
-                            modules: true
-                        }
-                    }
-                ],
-                include: /\.module\.css$/
+                use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-                exclude: /\.module\.css$/
+                test: /\.(gif|png|jpe?g)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'assets/images/'
+                        }
+                    }
+                ]
             }
         ]
     },
     devServer: {
-        static: './dist',
+        static: './src',
         open: true
     },
     performance: {
