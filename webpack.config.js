@@ -11,10 +11,11 @@ module.exports = {
     },
     plugins: [
         new FaviconsWebpackPlugin({
-            logo: './src/site-unseen-logo.png',
+            logo: './src/assets/images/site-unseen-logo.png',
             mode: 'webapp',
             devMode: 'light',
-            outputPath: 'assets/images/'
+            outputPath: './assets/images/',
+            prefix: 'assets/images/'
         }),
         new HtmlWebpackPlugin({
             hash: true,
