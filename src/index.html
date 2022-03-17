@@ -2,6 +2,7 @@
     <head>
         <title>Site Unseene</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.4.1/axe.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <header>
@@ -76,13 +77,13 @@
                 To see Site Unseen in action on a sample web page, issue the
                 following commands in a Mac OSX or Unix terminal window.
             </p>
-            <pre>
+            <p class="code">
 git clone https://github.com/simonminer/site-unseen.git
 cd site-unseen
 npm install
 npm run build
 npm run server
-            </pre>
+            </p>
             <p>
                 Then point your web browser to
                 <a href="http://localhost:8080" target="_blank">http://localhost:8080/</a>.
@@ -93,9 +94,9 @@ npm run server
                 You can start a Site Unseen development server with this command
                 after installing the repo.
             </p>
-            <pre>
+            <p class="code">
 npm run dev
-            </pre>
+            </p>
             <h2>Keyboard Commands</h2>
             <p>
                 Use the following keyboard commands to navigate through the
@@ -104,12 +105,12 @@ npm run dev
             <table>
                 <tbody>
                     <tr>
-                        <th>Command</th>
+                        <th id="shortcut-keys-heading">Command</th>
                         <th>Description</th>
                     </tr>
                     <tr>
                         <td class="shortcut-keys">
-                            <kbd>Tab</kbd>&nbsp;and&nbsp;<kbd>Shif+Tab</kbd>
+                            <kbd>Tab</kbd> and <kbd>Shif+Tab</kbd>
                         </td>
                         <td class="shortcut-Description">
                             Move back and forth between the interactive elements
