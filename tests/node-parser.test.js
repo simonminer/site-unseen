@@ -326,6 +326,7 @@ describe('NodeParser class tests', function () {
         // Tests for password field  with ARIA label.
         var nodeName = 'test-password';
         var accessibleName = 'Test Password';
+        const role = 'textbox';
         var node = htmlToElement(
             `<input type="password" name="${nodeName}" aria-label="${accessibleName}" />`,
             'input'
@@ -334,11 +335,11 @@ describe('NodeParser class tests', function () {
             rootNode: node
         });
         var aNode = nodeParser.parse(node);
-        expect(aNode.role).toBe(null);
-        expect(aNode.name).toBe(nodeName);
-        expect(aNode.value).toBe(accessibleName);
+        expect(aNode.role).toBe(role);
+        expect(aNode.name).toBe(accessibleName);
+        expect(aNode.value).toBe('');
         expect(aNode.toString()).toBe(
-            `${aNode.name}${aNode.separator}${aNode.value}`
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.value}`
         );
 
         // Tests for password  with label tag.
@@ -346,11 +347,11 @@ describe('NodeParser class tests', function () {
         const html = `<body><form><label for="${nodeId}"><nput type="password" name="${nodeName}" id="${nodeId}" />`;
         const tree = htmlToElement(html, 'body');
         node = htmlToElement(html, 'input');
-        expect(aNode.role).toBe(null);
-        expect(aNode.name).toBe(nodeName);
-        expect(aNode.value).toBe(accessibleName);
+        expect(aNode.role).toBe(role);
+        expect(aNode.name).toBe(accessibleName);
+        expect(aNode.value).toBe('');
         expect(aNode.toString()).toBe(
-            `${aNode.name}${aNode.separator}${aNode.value}`
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.value}`
         );
     });
 
