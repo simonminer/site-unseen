@@ -6,7 +6,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         clean: true,
-        filename: 'site-unseen.[hash:8].js',
+        filename: 'site-unseen.min.js',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [

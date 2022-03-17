@@ -80,15 +80,22 @@
 git clone https://github.com/simonminer/site-unseen.git
 cd site-unseen
 npm install
-npm run server        
+npm run build
+npm run server
             </pre>
             <p>
                 Then point your web browser to
-                <a href="http://localhost:8080" target="_blank"
-                    >http://localhost:8080/</a
-                >. When you are finished, press <kbd>Control+C</kbd> on the
+                <a href="http://localhost:8080" target="_blank">http://localhost:8080/</a>.
+                When you are finished, press <kbd>Control+C</kbd> on the
                 command line to stop the server.
             </p>
+            <p>
+                You can start a Site Unseen development server with this command
+                after installing the repo.
+            </p>
+            <pre>
+npm run dev
+            </pre>
             <h2>Keyboard Commands</h2>
             <p>
                 Use the following keyboard commands to navigate through the
@@ -219,8 +226,11 @@ npm run server
                     </tr>
                 </tbody>
             </table>
-            <h2>Contact Us</h2>
-            <p>Send us your questions and feedback about Site Unseen.</p>
+            <h2>Test Form</h2>
+            <p>
+                The following form can be used to experience how Site Unseen processes various form elements.
+                The form is for testing purposes only. It does not actually capture or send data anywhere.
+            </p>
             <form action="">
                 <div class="input-field">
                     <label for="name">Your Name</label><br />
@@ -240,10 +250,9 @@ npm run server
                         accessibility.</label
                     ><br />
                     <select id="involvement" name="a11y-involvement">
-                        <option id="new">Just Getting Started</option>
-                        <option id="designer">Web Designer</option>
-                        <option id="desveloper">Web Developer</option>
-                        <option id="champion">Accessible Champion</option>
+                        <option id="none">What's web accessibility?</option>
+                        <option id="new">Just getting started</option>
+                        <option id="champion">Accessibility champion</option>
                     </select>
                 </div>
                 <div>
@@ -308,7 +317,7 @@ npm run server
                     <input
                         type="submit"
                         name="submit-form"
-                        value="Submit Form"
+                        value="Submit (Not Really)"
                     />
                     <button name="test-button">Test Button</button>
                 </div>
@@ -316,7 +325,7 @@ npm run server
         </main>
         <footer>
             <dl>
-                <dt>&copy; 2021</dt>
+                <dt>&copy; 2022</dt>
                 <dd>Site Unseen</dd>
             </dl>
         </footer>

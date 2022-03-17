@@ -49,12 +49,18 @@ in a Mac OS or Unix terminal window.
 git clone https://github.com/simonminer/site-unseen.git
 cd site-unseen
 npm install
+npm run build
 npm run server
 ```
 
 Then point your web browser to [http://localhost:8080/](http://localhost:8080/).
 
 When you are finished, press `Control+C` on the command line to stop the server.
+
+You can start a Site Unseen development server with this command after installing the repo.
+```
+npm run dev
+```
 
 ## Keyboard Commands
 
