@@ -241,6 +241,15 @@ export class ScreenReader {
                 screenReader.moveTo(node);
             }
         });
+
+        // Activate the underlying element when
+        // the user double taps the overlay.
+        overlay.node.addEventListener('dblclick', function (event) {
+            const currentNode = ScreenReader.get().navigator.currentNode();
+            if (currentNode !== undefined) {
+                currentNode.click();
+            }
+        });
     }
 
     /**
