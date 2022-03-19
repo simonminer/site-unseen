@@ -158,10 +158,15 @@ export class ScreenReader {
             'click',
             this.helpContent.helpContentHandler
         );
-        this.helpContent.closeButton.addEventListener(
-            'click',
-            this.helpContent.helpContentHandler
-        );
+
+        // Enable "Close" buttons in the help content dialog.
+        this.helpContent.closeButtons.forEach((button) => {
+            button.addEventListener(
+                'click',
+                this.helpContent.helpContentHandler
+            );
+        });
+
         rootNode.addEventListener('keydown', function (event) {
             const screenReader = ScreenReader.get();
             const nodeParser = screenReader.caption.nodeParser;

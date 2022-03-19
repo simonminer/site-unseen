@@ -40,7 +40,7 @@ export class Caption {
     right: 0.5rem;
     text-align: left;
 }
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 825px) {
     #${Caption.id} {
         width: 91%;
         height: 55%;

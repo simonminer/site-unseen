@@ -13,7 +13,7 @@ export class HelpContent {
      */
     static id = 'help';
 
-    static closeButtonId = 'help-close-button';
+    static closeButtonClassName = 'help-close-button';
     /**
      * Help content node in DOM.
      * @type {Node}
@@ -26,7 +26,7 @@ export class HelpContent {
      */
     css = `
 #${HelpContent.id} {
-    width: 950px;
+    width: 900px;
     max-width: 80%;
     margin: auto;
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
@@ -43,7 +43,7 @@ export class HelpContent {
 .help-heading {
     text-align: center;
 }
-#${HelpContent.closeButtonId} {
+.${HelpContent.closeButtonClassName} {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -60,6 +60,7 @@ export class HelpContent {
     text-align: right;
     padding-right: 20px;
     padding-bottom: 10px;
+    width: 15%;
 }
 .shortcut-keys kbd {
     background-color: #fff;
@@ -71,29 +72,31 @@ export class HelpContent {
 }
 .shortcut-keys, .shortcut-description {
     border: none;
+    padding: 0.5rem;
 }
 .shortcut-description {
     padding-right: 15px;
 }
-
 .desktop {
     display: block;
 }
-
 .mobile {
     display: none;
 }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 825px) {
     #${HelpContent.id} {
-        width: 400px;
+        width: 350px;
         max-width: 80%;
     }
-
+    .shortcut-keys, .shortcut-description {
+        padding: 0.2rem;
+        text-align: left;
+        width: 25%;
+    }
     .desktop {
         display: none;
     }
-
     .mobile {
         display: block;
     }
@@ -108,7 +111,7 @@ export class HelpContent {
 <div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
     <div class="help-heading desktop">
         <h2>Keyboard Commands</h2>
-        <button id="${HelpContent.closeButtonId}">x</button>
+        <button class="${HelpContent.closeButtonClassName}">x</button>
     </div>
     <div class="help-content desktop">
         <table>
@@ -208,7 +211,7 @@ export class HelpContent {
     </div>
     <div class="help-heading mobile">
         <h2>Gestures</h2>
-        <button id="${HelpContent.closeButtonId}">x</button>
+        <button class="${HelpContent.closeButtonClassName}">x</button>
     </div>
     <div class="help-content mobile">
         <table>
@@ -252,9 +255,9 @@ export class HelpContent {
 
     /**
      * Button element to close help content display.
-     * @type {Node}
+     * @type {Node[]}
      */
-    closeButton = undefined;
+    closeButtons = undefined;
 
     /**
      * Event handler function for viewing the help content
@@ -270,7 +273,7 @@ export class HelpContent {
         }
     };
 
-    static _properties = ['id', 'node', 'html', 'node', 'closeButtonId'];
+    static _properties = ['id', 'node', 'html', 'node', 'closeButtonClassName'];
 
     /**
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.
@@ -305,8 +308,8 @@ export class HelpContent {
         this.node = placeholder.firstElementChild;
 
         // Find the close button.
-        this.closeButton = this.node.querySelector(
-            '#' + HelpContent.closeButtonId
+        this.closeButtons = this.node.querySelectorAll(
+            '.' + HelpContent.closeButtonClassName
         );
 
         return this.node;

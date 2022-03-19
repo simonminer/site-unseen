@@ -33,10 +33,13 @@ describe('OHelpContent class tests', function () {
             true
         );
 
-        expect(help.closeButton instanceof HTMLButtonElement).toBe(true);
-        expect(help.closeButton.getAttribute('id')).toBe(
-            HelpContent.closeButtonId
-        );
+        expect(help.closeButtons.length).toBeGreaterThan(1);
+        help.closeButtons.forEach((button) => {
+            expect(button instanceof HTMLButtonElement).toBe(true);
+            expect(button.getAttribute('class')).toBe(
+                HelpContent.closeButtonClassName
+            );
+        });
     });
 
     test('help can be hidden and shown', () => {
