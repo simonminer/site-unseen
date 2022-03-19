@@ -214,6 +214,33 @@ export class ScreenReader {
                 }
             });
         });
+
+        // Move to the next or previous element when
+        // the user swipes right or left, respectively.
+        overlay.node.addEventListener('touchstart', function (event) {
+            ScreenReader.get().overlay.startX = event.changedTouches[0].screenX;
+        });
+        overlay.node.addEventListener('touchend', function (event) {
+            const screenReader = ScreenReader.get();
+            const overlay = screenReader.overlay;
+            const navigator = screenReader.navigator;
+            overlay.endX = event.changedTouches[0].screenX;
+            var node = undefined;
+
+            // Swipe right to next element.
+            if (overlay.endX > overlay.startX) {
+                console.log('swipe right');
+                node = navigator.nextNode();
+            }
+            // Swipe left to previous element.
+            else if (overlay.startX > overlay.endX) {
+                console.log('swipe left');
+                node = navigator.previousNode();
+            }
+            if (node) {
+                screenReader.moveTo(node);
+            }
+        });
     }
 
     /**

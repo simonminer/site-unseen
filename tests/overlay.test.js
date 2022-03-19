@@ -14,6 +14,9 @@ describe('Overlay class tests', function () {
         expect(Overlay.id).toBe(id);
         expect(overlay.node).toBe(undefined);
         expect(overlay.buttonClassName).toBe('overlay-button');
+        expect(overlay.startX).toBe(0);
+        expect(overlay.endX).toBe(0);
+
         expect(Overlay.peekTimeout).toBeGreaterThan(0);
         expect(Overlay.opacity).toBeGreaterThan(0);
     });

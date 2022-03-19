@@ -95,6 +95,18 @@ export class Overlay {
      */
     static peekTimeout = 3000;
 
+    /**
+     * Starting coordinate for mouse move or swipe.
+     * @type {int}
+     */
+    startX = 0;
+
+    /**
+     * Ending coordinate for mouse move or swipe.
+     * @type {int}
+     */
+    endX = 0;
+
     static _properties = [
         'id',
         'hiddenClassName',
