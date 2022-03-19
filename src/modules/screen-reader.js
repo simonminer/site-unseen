@@ -215,41 +215,16 @@ export class ScreenReader {
             });
         });
 
-        // Move to the next or previous element when
-        // the user swipes right or left, respectively.
-        overlay.node.addEventListener('touchstart', function (event) {
-            ScreenReader.get().overlay.startX = event.changedTouches[0].screenX;
-        });
-        overlay.node.addEventListener('touchend', function (event) {
-            const screenReader = ScreenReader.get();
-            const overlay = screenReader.overlay;
-            const navigator = screenReader.navigator;
-            overlay.endX = event.changedTouches[0].screenX;
-            var node = undefined;
+        // Move to the next or previous element when the user
+        // swipes or moves the mouse right or left, respectively.
+        overlay.node.addEventListener('touchstart', overlay.pressStartHandler);
+        overlay.node.addEventListener('mousedown', overlay.pressStartHandler);
+        overlay.node.addEventListener('touchend', overlay.pressEndHandler);
+        overlay.node.addEventListener('mouseup', overlay.pressEndHandler);
 
-            // Swipe right to next element.
-            if (overlay.endX > overlay.startX) {
-                console.log('swipe right');
-                node = navigator.nextNode();
-            }
-            // Swipe left to previous element.
-            else if (overlay.startX > overlay.endX) {
-                console.log('swipe left');
-                node = navigator.previousNode();
-            }
-            if (node) {
-                screenReader.moveTo(node);
-            }
-        });
-
-        // Activate the underlying element when
-        // the user double taps the overlay.
-        overlay.node.addEventListener('dblclick', function (event) {
-            const currentNode = ScreenReader.get().navigator.currentNode();
-            if (currentNode !== undefined) {
-                currentNode.click();
-            }
-        });
+        // Activate the underlying element when the user
+        // double clicks or double taps the overlay.
+        overlay.node.addEventListener('dblclick', overlay.doubleClickHandler);
     }
 
     /**

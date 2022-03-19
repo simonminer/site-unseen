@@ -73,6 +73,12 @@ export class Overlay {
     buttonClassName = 'overlay-button';
 
     /**
+     * Number of miliseconds the "Peek" action remains active
+     * @type {int}
+     */
+    static peekTimeout = 3000;
+
+    /**
      * Event handler function for "Peek" button.
      * @type {Function}
      */
@@ -90,12 +96,6 @@ export class Overlay {
     };
 
     /**
-     * Number of miliseconds the "Peek" action remains active
-     * @type {int}
-     */
-    static peekTimeout = 3000;
-
-    /**
      * Starting coordinate for mouse move or swipe.
      * @type {int}
      */
@@ -106,6 +106,63 @@ export class Overlay {
      * @type {int}
      */
     endX = 0;
+
+    /**
+     * Event handler to register the start of
+     * a swipe guesture or dragging the mouse
+     * @type {Function}
+     */
+    pressStartHandler = function (event) {
+        ScreenReader.get().overlay.startX =
+            event.clientX !== undefined
+                ? event.clientX
+                : event.changedTouches[0].screenX;
+    };
+
+    /**
+     * Event handler to register and act
+     * on the end of a horizontal swipe or
+     * mouse drag - moving the focus to
+     * the next or previous element.
+     * @type {Function}
+     */
+    pressEndHandler = function (event) {
+        const screenReader = ScreenReader.get();
+        const overlay = screenReader.overlay;
+        const navigator = screenReader.navigator;
+        overlay.endX =
+            event.clientX !== undefined
+                ? event.clientX
+                : event.changedTouches[0].screenX;
+        var node = undefined;
+
+        // Swipe right to next element.
+        if (overlay.endX > overlay.startX) {
+            console.log('swipe right');
+            node = navigator.nextNode();
+        }
+        // Swipe left to previous element.
+        else if (overlay.startX > overlay.endX) {
+            console.log('swipe left');
+            node = navigator.previousNode();
+        }
+        if (node) {
+            screenReader.moveTo(node);
+        }
+    };
+
+    /**
+     * Event handler to press the
+     * underlying element when the user
+     * double clicks the overlay.
+     * @type {Function}
+     */
+    doubleClickHandler = function (event) {
+        const currentNode = ScreenReader.get().navigator.currentNode();
+        if (currentNode !== undefined) {
+            currentNode.click();
+        }
+    };
 
     static _properties = [
         'id',
