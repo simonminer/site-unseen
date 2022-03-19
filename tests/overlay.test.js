@@ -1,4 +1,5 @@
 const Overlay = require('../src/modules/overlay.js').Overlay;
+const { sleep } = require('./test-utils.js');
 
 const id = 'overlay';
 
@@ -16,6 +17,8 @@ describe('Overlay class tests', function () {
         expect(overlay.buttonClassName).toBe('overlay-button');
         expect(overlay.startX).toBe(0);
         expect(overlay.endX).toBe(0);
+        expect(overlay.previousTapTime).toBe(0);
+        expect(overlay.maxDoubleTapDelay).toBeGreaterThan(0);
 
         expect(Overlay.peekTimeout).toBeGreaterThan(0);
         expect(Overlay.opacity).toBeGreaterThan(0);
@@ -59,5 +62,15 @@ describe('Overlay class tests', function () {
         expect(overlay.isVisible()).toBe(false);
         overlay.show();
         expect(overlay.isVisible()).toBe(true);
+    });
+
+    test('overlay can register double tap', async () => {
+        expect(overlay.previousTapTime).toBe(0);
+        expect(overlay.isDoubleTap()).toBe(false);
+        await sleep(parseInt(overlay.maxDoubleTapDelay / 2));
+        expect(overlay.isDoubleTap()).toBe(true);
+        expect(overlay.previousTapTime).toBe(0);
+        await sleep(parseInt(overlay.maxDoubleTapDelay * 2));
+        expect(overlay.isDoubleTap()).toBe(false);
     });
 });

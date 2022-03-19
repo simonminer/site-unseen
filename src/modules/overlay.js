@@ -108,8 +108,22 @@ export class Overlay {
     endX = 0;
 
     /**
+     * Time (in Epoch miliseconds) of previous user tap.
+     * @type {int}
+     */
+    previousTapTime = 0;
+
+    /**
+     * Maximum delay (in miliseconds) between taps
+     * to register a double tap.
+     * @type {int}
+     */
+    maxDoubleTapDelay = 500;
+
+    /**
      * Event handler to register the start of
-     * a swipe guesture or dragging the mouse
+     * a horizontal swipe guesture. 
+     * (Inspired by https://stackoverflow.com/a/56663695/2171535.)
      * @type {Function}
      */
     pressStartHandler = function (event) {
@@ -120,10 +134,10 @@ export class Overlay {
     };
 
     /**
-     * Event handler to register and act
-     * on the end of a horizontal swipe or
-     * mouse drag - moving the focus to
-     * the next or previous element.
+     * Event handler to register and act on
+     * the end of a horizontal swipe gesture,
+     * moving the focus to the next or previous element.
+     * (Inspired by https://stackoverflow.com/a/56663695/2171535.)
      * @type {Function}
      */
     pressEndHandler = function (event) {
@@ -201,8 +215,8 @@ export class Overlay {
     }
 
     /**
-     * @returns {Element}
      * Generates a `<style>` element with the CSS properties for the overlay.
+     * @returns {Element}
      */
     getCSS() {
         var node = document.createElement('style');
@@ -211,8 +225,8 @@ export class Overlay {
     }
 
     /**
-     * @returns {Element}
      * Generates the HTML element for the overlay.
+     * @returns {Element}
      */
     getHTML() {
         var node = document.createElement('div');
@@ -271,14 +285,36 @@ export class Overlay {
     }
 
     /**
-     * @returns {boolean}
      * Returns a booolean value indicating
      * whether the overlay is currently hidden.
+     * @returns {boolean}
      */
     isVisible() {
         var isVisible = this.node.classList.contains(Overlay.hiddenClassName)
             ? false
             : true;
         return isVisible;
+    }
+
+    /** Returts a boolean value indicating
+     * whether a double tap just occurred.
+     * @returns {boolean}
+     */
+    isDoubleTap() {
+        var isDoubleTap = false;
+        // This is a second tap.
+        if (this.previousTapTime) {
+            // Does it qualify as a double tap?
+            const now = new Date().getTime();
+            if (now - this.previousTapTime <= this.maxDoubleTapDelay ) {
+                isDoubleTap = true;
+                this.previousTapTime = 0;
+            }
+        }
+        // This is an initial tap; log when it happened.
+        else {
+            this.previousTapTime = new Date().getTime();
+        }
+        return isDoubleTap;
     }
 }
