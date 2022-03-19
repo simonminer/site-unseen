@@ -171,19 +171,6 @@ export class Overlay {
         }
     };
 
-    /**
-     * Event handler to press the
-     * underlying element when the user
-     * double clicks the overlay.
-     * @type {Function}
-     */
-    doubleClickHandler = function (event) {
-        const currentNode = ScreenReader.get().navigator.currentNode();
-        if (currentNode !== undefined) {
-            currentNode.click();
-        }
-    };
-
     static _properties = [
         'id',
         'hiddenClassName',
