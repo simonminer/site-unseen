@@ -40,14 +40,7 @@ export class HelpContent {
     padding: 5px;
 }
 
-@media only screen and (max-width: 760px) {
-    #${HelpContent.id} {
-        width: 400px;
-        max-width: 80%;
-    }
-}
-
-#help-heading {
+.help-heading {
     text-align: center;
 }
 #${HelpContent.closeButtonId} {
@@ -60,7 +53,7 @@ export class HelpContent {
     border-radius: 3px;
     padding: 2px 8px;
 }
-#help-content {
+.help-content {
     padding: 0 20px;
 }
 .shortcut-keys {
@@ -82,19 +75,42 @@ export class HelpContent {
 .shortcut-description {
     padding-right: 15px;
 }
+
+.desktop {
+    display: block;
+}
+
+.mobile {
+    display: none;
+}
+
+@media only screen and (max-width: 760px) {
+    #${HelpContent.id} {
+        width: 400px;
+        max-width: 80%;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: block;
+    }
+}
 `;
 
     /**
-     * HTML for the HelpContent desktop display.
+     * HTML for the HelpContent display.
      * @type {string}
      */
-    desktopHTML = `
+    html = `
 <div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
-    <div id="help-heading">
+    <div class="help-heading desktop">
         <h2>Keyboard Commands</h2>
         <button id="${HelpContent.closeButtonId}">x</button>
     </div>
-    <div id="help-content">
+    <div class="help-content desktop">
         <table>
             <tbody>
                 <tr>
@@ -190,19 +206,11 @@ export class HelpContent {
             </tbody>
         </table>
     </div>
-</div>
-`;
-    /**
-     * HTML for the HelpContent mobile and tablet display.
-     * @type {string}
-     */
-    mobileHTML = `
-<div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
-    <div id="help-heading">
+    <div class="help-heading mobile">
         <h2>Gestures</h2>
         <button id="${HelpContent.closeButtonId}">x</button>
     </div>
-    <div id="help-content">
+    <div class="help-content mobile">
         <table>
             <tbody>
                 <tr>
@@ -289,13 +297,11 @@ export class HelpContent {
 
     /**
      * Generates the HTML element for the help content.
-     * @param {String} context - Either "desktop" (the drault) or "mobile".
      * @returns {Element}
      */
-    getHTML(context = 'desktop') {
+    getHTML() {
         const placeholder = document.createElement('div');
-        placeholder.innerHTML =
-            context === 'desktop' ? this.desktopHTML : this.mobileHTML;
+        placeholder.innerHTML = this.html;
         this.node = placeholder.firstElementChild;
 
         // Find the close button.

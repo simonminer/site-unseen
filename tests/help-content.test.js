@@ -37,9 +37,6 @@ describe('OHelpContent class tests', function () {
         expect(help.closeButton.getAttribute('id')).toBe(
             HelpContent.closeButtonId
         );
-
-        const mobileDiv = help.getHTML('mobile');
-        expect(mobileDiv.innerHTML).not.toBe(div.innerHTML);
     });
 
     test('help can be hidden and shown', () => {
