@@ -122,7 +122,7 @@ export class Overlay {
 
     /**
      * Event handler to register the start of
-     * a horizontal swipe guesture. 
+     * a horizontal swipe guesture.
      * (Inspired by https://stackoverflow.com/a/56663695/2171535.)
      * @type {Function}
      */
@@ -150,18 +150,24 @@ export class Overlay {
                 : event.changedTouches[0].screenX;
         var node = undefined;
 
-        // Swipe right to next element.
-        if (overlay.endX > overlay.startX) {
-            console.log('swipe right');
-            node = navigator.nextNode();
+        // Double tap activates the current node.
+        if (overlay.isDoubleTap() && navigator.currentNode() !== undefined) {
+            navigator.currentNode().click();
         }
-        // Swipe left to previous element.
-        else if (overlay.startX > overlay.endX) {
-            console.log('swipe left');
-            node = navigator.previousNode();
-        }
-        if (node) {
-            screenReader.moveTo(node);
+
+        // Complete swipe gesture.
+        else {
+            // Swipe right to next element.
+            if (overlay.endX > overlay.startX) {
+                node = navigator.nextNode();
+            }
+            // Swipe left to previous element.
+            else if (overlay.startX > overlay.endX) {
+                node = navigator.previousNode();
+            }
+            if (node) {
+                screenReader.moveTo(node);
+            }
         }
     };
 
@@ -306,8 +312,11 @@ export class Overlay {
         if (this.previousTapTime) {
             // Does it qualify as a double tap?
             const now = new Date().getTime();
-            if (now - this.previousTapTime <= this.maxDoubleTapDelay ) {
-                isDoubleTap = true;
+            const delay = now - this.previousTapTime;
+            if (delay > 0) {
+                if (delay <= this.maxDoubleTapDelay) {
+                    isDoubleTap = true;
+                }
                 this.previousTapTime = 0;
             }
         }

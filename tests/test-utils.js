@@ -1,4 +1,4 @@
-const regeneratorRuntime = require("regenerator-runtime");
+const regeneratorRuntime = require('regenerator-runtime');
 
 /**
  * Create an HTMLElement object for the first
@@ -19,7 +19,7 @@ function htmlToElement(html, tagName) {
  * Inspired by https://stackoverflow.com/a/39914235/2171535.
  */
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 module.exports = { htmlToElement, sleep };
