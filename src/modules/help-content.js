@@ -26,7 +26,8 @@ export class HelpContent {
      */
     css = `
 #${HelpContent.id} {
-    max-width: 950px;
+    width: 950px;
+    max-width: 80%;
     margin: auto;
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
     font-family: sans-serif;
@@ -38,6 +39,14 @@ export class HelpContent {
     z-index: 100;
     padding: 5px;
 }
+
+@media only screen and (max-width: 760px) {
+    #${HelpContent.id} {
+        width: 400px;
+        max-width: 80%;
+    }
+}
+
 #help-heading {
     text-align: center;
 }
@@ -76,10 +85,10 @@ export class HelpContent {
 `;
 
     /**
-     * HTML for the HelpContent display.
+     * HTML for the HelpContent desktop display.
      * @type {string}
      */
-    html = `
+    desktopHTML = `
 <div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
     <div id="help-heading">
         <h2>Keyboard Commands</h2>
@@ -183,6 +192,49 @@ export class HelpContent {
     </div>
 </div>
 `;
+    /**
+     * HTML for the HelpContent mobile and tablet display.
+     * @type {string}
+     */
+    mobileHTML = `
+<div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
+    <div id="help-heading">
+        <h2>Gestures</h2>
+        <button id="${HelpContent.closeButtonId}">x</button>
+    </div>
+    <div id="help-content">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="shortcut-keys">
+                        <em>Swipe right</em>
+                    </td>
+                    <td class="shortcut-Description">
+                        Previous element
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shortcut-keys">
+                        <em>Swipe left</em>
+                    </td>
+                    <td class="shortcut-Description">
+                        Previous element
+                    </td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="shortcut-keys">
+                        <em>Double tap</em>
+                    </td>
+                    <td class="shortcut-description">
+                        Press button / follow link / select current option
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+`;
 
     /**
      * Top-level HTML element of the help content display.
@@ -226,8 +278,8 @@ export class HelpContent {
     }
 
     /**
-     * @returns {Element}
      * Generates a `<style>` element with the CSS rules for the help content.
+     * @returns {Element}
      */
     getCSS() {
         var node = document.createElement('style');
@@ -236,12 +288,14 @@ export class HelpContent {
     }
 
     /**
-     * @returns {Element}
      * Generates the HTML element for the help content.
+     * @param {String} context - Either "desktop" (the drault) or "mobile".
+     * @returns {Element}
      */
-    getHTML() {
+    getHTML(context = 'desktop') {
         const placeholder = document.createElement('div');
-        placeholder.innerHTML = this.html;
+        placeholder.innerHTML =
+            context === 'desktop' ? this.desktopHTML : this.mobileHTML;
         this.node = placeholder.firstElementChild;
 
         // Find the close button.

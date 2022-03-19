@@ -18,13 +18,13 @@ describe('OHelpContent class tests', function () {
     });
 
     test('getCSS() creates <style> element', () => {
-        var style = help.getCSS();
+        const style = help.getCSS();
         expect(style instanceof Element).toBe(true);
         expect(style.tagName.toLowerCase()).toBe('style');
     });
 
     test('getHTML() creates <div> element', () => {
-        var div = help.getHTML();
+        const div = help.getHTML();
         expect(div instanceof Element).toBe(true);
         expect(help.node).toBe(div);
         expect(div.tagName.toLowerCase()).toBe('div');
@@ -37,6 +37,9 @@ describe('OHelpContent class tests', function () {
         expect(help.closeButton.getAttribute('id')).toBe(
             HelpContent.closeButtonId
         );
+
+        const mobileDiv = help.getHTML('mobile');
+        expect(mobileDiv.innerHTML).not.toBe(div.innerHTML);
     });
 
     test('help can be hidden and shown', () => {
