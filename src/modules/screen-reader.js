@@ -216,11 +216,9 @@ export class ScreenReader {
         });
 
         // Move to the next or previous element when the user
-        // swipes or moves the mouse right or left, respectively.
+        // swipes right or left, respectively.
         overlay.node.addEventListener('touchstart', overlay.pressStartHandler);
-        overlay.node.addEventListener('mousedown', overlay.pressStartHandler);
         overlay.node.addEventListener('touchend', overlay.pressEndHandler);
-        overlay.node.addEventListener('mouseup', overlay.pressEndHandler);
 
         // Activate the underlying element when the user
         // double clicks or double taps the overlay.
