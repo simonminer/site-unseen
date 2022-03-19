@@ -12,7 +12,7 @@ export class Caption {
      * ID of caption element in DOM.
      * @type {string}
      */
-    id = 'caption';
+    static id = 'caption';
 
     /**
      * Caption node in DOM.
@@ -24,21 +24,30 @@ export class Caption {
      * Caption CSS selector name/value pairs.
      * @type {string}
      */
-    css = {
-        color: '#ffffff',
-        'background-color': '#000000',
-        border: '3px solid #ffffff',
-        'border-radius': '10px',
-        'font-size': '1.3rem',
-        'font-weight': 'bold',
-        padding: '10px',
-        width: '40%',
-        height: '20%',
-        position: 'fixed',
-        bottom: '10px',
-        right: '10px',
-        'text-align': 'left'
-    };
+    css = `
+#${Caption.id} {
+    color: #ffffff;
+    background-color: #000000;
+    border: 3px solid #ffffff;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    width: 50%;
+    height: 30%;
+    position: fixed;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    text-align: left;
+}
+@media only screen and (max-width: 760px) {
+    #${Caption.id} {
+        width: 91%;
+        height: 55%;
+        font-size: 1rem;
+    }
+}
+`;
 
     /**
      * Separator between elements of the accessible description.
@@ -94,15 +103,8 @@ export class Caption {
      * @returns {Element}
      */
     getCSS() {
-        var cssProperties = [];
-        for (const property in this.css) {
-            if (Object.hasOwnProperty.call(this.css, property)) {
-                cssProperties.push(property + ': ' + this.css[property]);
-            }
-        }
-        var css = `#${this.id} { ${cssProperties.join('; ')}; }`;
         var node = document.createElement('style');
-        node.appendChild(document.createTextNode(css));
+        node.appendChild(document.createTextNode(this.css));
         return node;
     }
 
@@ -113,7 +115,7 @@ export class Caption {
      */
     getHTML() {
         var node = document.createElement('div');
-        node.setAttribute('id', this.id);
+        node.setAttribute('id', Caption.id);
         this.node = node;
         return node;
     }

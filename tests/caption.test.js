@@ -25,7 +25,7 @@ beforeEach(() => {
 describe('Caption class tests', function () {
     test('constructor creates caption', () => {
         expect(caption instanceof Caption).toBe(true);
-        expect(caption.id).toBe(id);
+        expect(Caption.id).toBe(id);
         expect(caption.separator).toBe(sep);
         expect(caption.nodeParser instanceof NodeParser).toBe(true);
         expect(caption.node).toBe(undefined);
@@ -72,7 +72,7 @@ describe('Caption class tests', function () {
         var div = caption.getHTML();
         expect(div instanceof Element).toBe(true);
         expect(div.tagName.toLowerCase()).toBe('div');
-        expect(div.getAttribute('id')).toBe(caption.id);
+        expect(div.getAttribute('id')).toBe(Caption.id);
         expect(caption.node).toBe(div);
     });
 

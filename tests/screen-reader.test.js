@@ -21,8 +21,11 @@ describe('ScreenReader class tests', function () {
         expect(
             screenReader.shortcutKeyManager.shortcutKeys instanceof Map
         ).toBe(true);
-        expect(document.getElementById(screenReader.overlay.id)).toBeDefined();
-        expect(document.getElementById(screenReader.caption.id)).toBeDefined();
+        expect(document.getElementById(screenReader.overlay)).toBeDefined();
+        expect(document.getElementById(screenReader.caption)).toBeDefined();
+        expect(
+            document.getElementById(screenReader.helpContents)
+        ).toBeDefined();
         expect(screenReader.caption.nodeParser.rootNode).toBe(document.body);
         expect(Object.keys(screenReader.callbacks).length).toBeGreaterThan(0);
     });
