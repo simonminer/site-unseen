@@ -39,7 +39,7 @@ export class Overlay {
 #${Overlay.id} {
     background-color: #000000;
     opacity: ${Overlay.opacity};
-    z-index: 1;
+    z-index: 2147483647;
     position: fixed;
     top: 0;
     left: 0;

@@ -12,7 +12,7 @@ module.exports = {
     plugins: [
         new FaviconsWebpackPlugin({
             logo: './src/assets/images/site-unseen-logo.png',
-            mode: 'webapp',
+            mode: 'light',
             devMode: 'light',
             outputPath: './assets/images/',
             prefix: 'assets/images/'
