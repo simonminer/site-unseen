@@ -2,7 +2,7 @@ const HelpContent = require('../src/modules/help-content.js').HelpContent;
 const Overlay = require('../src/modules/overlay.js').Overlay;
 const ScreenReader = require('../src/modules/screen-reader.js').ScreenReader;
 
-const id = 'help';
+const id = `${Overlay.cssPrefix}help`;
 
 var help = undefined;
 const screenReader = new ScreenReader();

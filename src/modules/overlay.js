@@ -7,17 +7,26 @@
 import { ScreenReader } from './screen-reader.js';
 
 export class Overlay {
+
+    /**
+     * Prefix for CSS ids and classes
+     * to prevent name collision with
+     * other selectors on the page.
+     * @type {String}
+     */
+    static cssPrefix = ScreenReader.cssPrefix;
+
     /**
      * ID of overly element.
      * @type {string}
      */
-    static id = 'overlay';
+    static id = `${cssPrefix}overlay`;
 
     /**
      * Name of CSS class to hide overlay
      * @type {string}
      */
-    static hiddenClassName = 'hidden';
+    static hiddenClassName = `${ScreenReader.cssPrefix}hidden`;
 
     /**
      * Opacity of overlay
@@ -46,7 +55,7 @@ export class Overlay {
     width: 100%;
     height: 100%;
 }
-.overlay-button {
+.${ScreenReader.cssPrefix}overlay-button {
     color: #ffffff;
     background-color: #1c4bad;
     margin: 10px 5px;
@@ -70,7 +79,7 @@ export class Overlay {
      * CSS class name of button elements on the overlay
      * @type {string}
      */
-    buttonClassName = 'overlay-button';
+    buttonClassName = `${ScreenReader.cssPrefix}overlay-button`;
 
     /**
      * Number of miliseconds the "Peek" action remains active
@@ -201,7 +210,7 @@ export class Overlay {
      */
     generateButton(name) {
         var button = document.createElement('button');
-        button.setAttribute('id', `${name.toLowerCase()}-button`);
+        button.setAttribute('id', `${ScreenReader.cssPrefix}${name.toLowerCase()}-button`);
         button.setAttribute('class', this.buttonClassName);
         button.appendChild(document.createTextNode(name));
         return button;
