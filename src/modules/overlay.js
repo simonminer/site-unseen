@@ -172,6 +172,17 @@ export class Overlay {
         }
     };
 
+    /**
+     * Event handler keeping the current element
+     * in focus when the user clicks or taps
+     * the overlay.
+     * @type {Function}
+     */
+    clickHandler = function (event) {
+        const screenReader = ScreenReader.get();
+        screenReader.moved(screenReader.navigator.currentNode());
+    };
+
     static _properties = [
         'id',
         'hiddenClassName',

@@ -158,6 +158,9 @@ export class ScreenReader {
             'click',
             this.helpContent.helpContentHandler
         );
+        // Make sure the current element stay sin focus if the user
+        // clicks or taps on the overlay.
+        overlay.node.addEventListener('click', overlay.clickHandler);
 
         // Enable "Close" buttons in the help content dialog.
         this.helpContent.closeButtons.forEach((button) => {
