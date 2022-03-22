@@ -261,7 +261,8 @@ export class HelpContent {
     closeButtons = undefined;
 
     /**
-     * Event handler function for viewing the help content
+     * Event handler function for viewing and hiding
+     * the help content
      * @type {Function}
      */
     helpContentHandler = function () {
@@ -269,6 +270,7 @@ export class HelpContent {
         const helpContent = screenReader.helpContent;
         if (helpContent.isVisible()) {
             helpContent.hide(screenReader);
+            screenReader.moveTo(screenReader.navigator.currentNode());
         } else {
             helpContent.show(screenReader);
         }

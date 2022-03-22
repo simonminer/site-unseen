@@ -88,8 +88,9 @@ export class Overlay {
         if (overlay.isVisible()) {
             overlay.hide(true);
             setTimeout(function () {
-                const overlay = ScreenReader.get().overlay;
-                overlay.show(true);
+                const screenReader = ScreenReader.get();
+                screenReader.overlay.show(true);
+                screenReader.moveTo(screenReader.navigator.currentNode());
             }, Overlay.peekTimeout);
         } else {
             overlay.show(true);
