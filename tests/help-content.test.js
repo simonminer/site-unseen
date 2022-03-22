@@ -1,8 +1,9 @@
 const HelpContent = require('../src/modules/help-content.js').HelpContent;
 const Overlay = require('../src/modules/overlay.js').Overlay;
+const Config = require('../src/modules/config.js').Config;
 const ScreenReader = require('../src/modules/screen-reader.js').ScreenReader;
 
-const id = `${Overlay.cssPrefix}help`;
+const id = `${Config.cssPrefix}help`;
 
 var help = undefined;
 const screenReader = new ScreenReader();

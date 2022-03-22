@@ -4,7 +4,7 @@
  */
 'use strict';
 
-import { ScreenReader } from './screen-reader.js';
+import { Config } from './config.js';
 import { Overlay } from './overlay.js';
 import { NodeParser } from './node-parser.js';
 
@@ -13,8 +13,7 @@ export class Caption {
      * ID of caption element in DOM.
      * @type {string}
      */
-//    static id = `${ScreenReader.cssPrefix}caption`;
-    static id = 'foo';
+    static id = `${Config.cssPrefix}caption`;
 
     /**
      * Caption node in DOM.

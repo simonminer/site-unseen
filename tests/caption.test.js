@@ -1,8 +1,9 @@
 const Caption = require('../src/modules/caption.js').Caption;
 const NodeParser = require('../src/modules/node-parser.js').NodeParser;
 const Overlay = require('../src/modules/overlay.js').Overlay;
+const Config = require('../src/modules/config.js').Config;
 
-const id = `${Overlay.cssPrefix}caption`;
+const id = `${Config.cssPrefix}caption`;
 const sep = ': ';
 
 beforeAll(() => {

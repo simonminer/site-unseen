@@ -1,7 +1,8 @@
 const Overlay = require('../src/modules/overlay.js').Overlay;
+const Config = require('../src/modules/config.js').Config;
 const { sleep } = require('./test-utils.js');
 
-const id = `${Overlay.cssPrefix}overlay`;
+const id = `${Config.cssPrefix}overlay`;
 
 var caption = undefined;
 var overlay = undefined;
@@ -12,10 +13,11 @@ beforeEach(() => {
 describe('Overlay class tests', function () {
     test('constructor creates overlay', () => {
         expect(overlay instanceof Overlay).toBe(true);
-        expect(Overlay.cssPrefix).not.toBe(undefined);
         expect(Overlay.id).toBe(id);
         expect(overlay.node).toBe(undefined);
-        expect(overlay.buttonClassName).toBe(`${Overlay.cssPrefix}overlay-button`);
+        expect(overlay.buttonClassName).toBe(
+            `${Config.cssPrefix}overlay-button`
+        );
         expect(overlay.startX).toBe(0);
         expect(overlay.endX).toBe(0);
         expect(overlay.previousTapTime).toBe(0);
@@ -45,7 +47,7 @@ describe('Overlay class tests', function () {
             const button = overlay.generateButton(name);
             expect(button instanceof Element).toBe(true);
             expect(button.tagName.toLowerCase()).toBe('button');
-            const id = `${Overlay.cssPrefix}${name.toLowerCase()}-button`;
+            const id = `${Config.cssPrefix}${name.toLowerCase()}-button`;
             expect(button.getAttribute('id')).toBe(id);
             expect(button.getAttribute('class')).toBe(overlay.buttonClassName);
             expect(button.textContent).toBe(name);

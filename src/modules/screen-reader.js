@@ -11,15 +11,6 @@ import { Navigator } from './navigator.js';
 import { ShortcutKeyManager } from './shortcut-key-manager.js';
 
 export class ScreenReader {
-
-     /**
-     * Prefix for CSS ids and classes
-     * to prevent name collision with
-     * other selectors on the page.
-     * @type {String}
-     */
-    static cssPrefix = cssPrefix;
-
     /**
      * Root node whose content is to be manipulated by the screen reader.
      * @type {Node}

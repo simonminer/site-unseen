@@ -3,6 +3,7 @@
  */
 'use strict';
 
+import { Config } from './config.js';
 import { ScreenReader } from './screen-reader.js';
 import { Overlay } from './overlay.js';
 
@@ -11,9 +12,9 @@ export class HelpContent {
      * ID of help content element.
      * @type {string}
      */
-    static id = `${ScreenReader.cssPrefix}help`;
+    static id = `${Config.cssPrefix}help`;
 
-    static closeButtonClassName = `${ScreenReader.cssPrefix}help-close-button`;
+    static closeButtonClassName = `${Config.cssPrefix}help-close-button`;
     /**
      * Help content node in DOM.
      * @type {Node}
@@ -53,16 +54,16 @@ export class HelpContent {
     border-radius: 3px;
     padding: 2px 8px;
 }
-.${ScreenReader.cssPrefix}help-content {
+.${Config.cssPrefix}help-content {
     padding: 0 20px;
 }
-.${ScreenReader.cssPrefix}shortcut-keys {
+.${Config.cssPrefix}shortcut-keys {
     text-align: right;
     padding-right: 20px;
     padding-bottom: 10px;
     width: 15%;
 }
-.${ScreenReader.cssPrefix}shortcut-keys kbd {
+.${Config.cssPrefix}shortcut-keys kbd {
     background-color: #fff;
     color: #000;
     padding: 3px 5px;
@@ -70,17 +71,17 @@ export class HelpContent {
     border: 1px solid #333333;
     font-weight: bold;
 }
-.${ScreenReader.cssPrefix}shortcut-keys, .${ScreenReader.cssPrefix}shortcut-description {
+.${Config.cssPrefix}shortcut-keys, .${Config.cssPrefix}shortcut-description {
     border: none;
     padding: 0.5rem;
 }
-.${ScreenReader.cssPrefix}shortcut-description {
+.${Config.cssPrefix}shortcut-description {
     padding-right: 15px;
 }
-.${ScreenReader.cssPrefix}desktop {
+.${Config.cssPrefix}desktop {
     display: block;
 }
-.${ScreenReader.cssPrefix}mobile {
+.${Config.cssPrefix}mobile {
     display: none;
 }
 
@@ -89,15 +90,15 @@ export class HelpContent {
         width: 350px;
         max-width: 80%;
     }
-    .${ScreenReader.cssPrefix}shortcut-keys, .${ScreenReader.cssPrefix}shortcut-description {
+    .${Config.cssPrefix}shortcut-keys, .${Config.cssPrefix}shortcut-description {
         padding: 0.2rem;
         text-align: left;
         width: 25%;
     }
-    .${ScreenReader.cssPrefix}desktop {
+    .${Config.cssPrefix}desktop {
         display: none;
     }
-    .${ScreenReader.cssPrefix}mobile {
+    .${Config.cssPrefix}mobile {
         display: block;
     }
 }
@@ -109,135 +110,135 @@ export class HelpContent {
      */
     html = `
 <div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
-    <div class="${ScreenReader.cssPrefix}help-heading ${ScreenReader.cssPrefix}desktop">
+    <div class="${Config.cssPrefix}help-heading ${Config.cssPrefix}desktop">
         <h2>Keyboard Commands</h2>
         <button class="${HelpContent.closeButtonClassName}">x</button>
     </div>
-    <div class="${ScreenReader.cssPrefix}help-content ${ScreenReader.cssPrefix}desktop">
+    <div class="${Config.cssPrefix}help-content ${Config.cssPrefix}desktop">
         <table>
             <tbody>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>&larr;</kbd> / <kbd>&rarr;</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Next / previous element
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>h</kbd> / <kbd>H</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Next / previous heading
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>Tab</kbd> / <kbd>Shif+Tab</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Next / previous interactive element
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>k</kbd> / <kbd>K</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Next / previous link
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys"><kbd>Enter</kbd></td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-description">
+                    <td class="${Config.cssPrefix}shortcut-keys"><kbd>Enter</kbd></td>
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Press button / follow link / select current option
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>l</kbd> / <kbd>L</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous list
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>&uarr;</kbd> / <kbd>&darr;</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Next / previous radio button / checkbos / menu item
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>f</kbd> / <kbd>F</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous form input field
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>Space</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Select current radio button / checkbox / menu item
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>b</kbd> / <kbd>B</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous button
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>*</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Display web page content for a few seconds
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>r</kbd> / <kbd>R</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Next / previous landmark region
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>?</kbd>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Display / hide this help documentation
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="${ScreenReader.cssPrefix}help-heading ${ScreenReader.cssPrefix}mobile">
+    <div class="${Config.cssPrefix}help-heading ${Config.cssPrefix}mobile">
         <h2>Gestures</h2>
         <button class="${HelpContent.closeButtonClassName}">x</button>
     </div>
-    <div class="${ScreenReader.cssPrefix}help-content ${ScreenReader.cssPrefix}mobile">
+    <div class="${Config.cssPrefix}help-content ${Config.cssPrefix}mobile">
         <table>
             <tbody>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <em>Swipe right</em>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Previous element
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <em>Swipe left</em>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-Description">
                         Previous element
                     </td>
                     </td>
                 </tr>
                 <tr>
-                    <td class="${ScreenReader.cssPrefix}shortcut-keys">
+                    <td class="${Config.cssPrefix}shortcut-keys">
                         <em>Double tap</em>
                     </td>
-                    <td class="${ScreenReader.cssPrefix}shortcut-description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Press button / follow link / select current option
                     </td>
                 </tr>

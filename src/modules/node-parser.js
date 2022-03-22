@@ -49,8 +49,9 @@ export class NodeParser {
      */
     landmarkTagToRoleMap = {
         aside: 'complementary',
-        footer: 'contentinfo',
+        dialog: 'dialog',
         form: 'form',
+        footer: 'contentinfo',
         header: 'banner',
         main: 'main',
         nav: 'navigation',
@@ -67,6 +68,7 @@ export class NodeParser {
         'banner',
         'complementary',
         'contentinfo',
+        'dialog',
         'form',
         'main',
         'navigation',
