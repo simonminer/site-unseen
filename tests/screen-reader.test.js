@@ -27,9 +27,11 @@ describe('ScreenReader class tests', function () {
         expect(screenReader.caption.nodeParser.rootNode).toBe(document.body);
         expect(Object.keys(screenReader.callbacks).length).toBeGreaterThan(0);
     });
+
     test('constructor stores screen reader in DOM', () => {
         expect(ScreenReader.get()).toBe(screenReader);
     });
+
     test('setApplicationRoleOnChildren adds role="application" attribute to children', () => {
         screenReader.setApplicationRoleOnChildren();
         var children = document.body.children;
@@ -37,6 +39,7 @@ describe('ScreenReader class tests', function () {
             expect(children[i].getAttribute('role')).toBe('application');
         }
     });
+
     test('moveTo sets currently active node', () => {
         var node = document.querySelector('h1');
         screenReader.moveTo(node);
@@ -45,5 +48,17 @@ describe('ScreenReader class tests', function () {
         expect(screenReader.caption.node.innerHTML).toBe(
             screenReader.caption.generateText(node)
         );
+    });
+
+    test('isNavigationActive is based on overlay and help content visibility', () => {
+        expect(screenReader.isNavigationActive()).toBe(true);
+        screenReader.overlay.hide();
+        expect(screenReader.isNavigationActive()).toBe(false);
+        screenReader.overlay.show();
+        expect(screenReader.isNavigationActive()).toBe(true);
+        screenReader.helpContent.show(screenReader);
+        expect(screenReader.isNavigationActive()).toBe(false);
+        screenReader.helpContent.hide(screenReader);
+        expect(screenReader.isNavigationActive()).toBe(true);
     });
 });

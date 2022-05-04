@@ -145,7 +145,7 @@ export class ScreenReader {
         rootNode.addEventListener('keydown', Navigator.arrowKeyHandlerFunction);
         rootNode.addEventListener('keyup', Navigator.tabHandlerFunction);
 
-        // Enable short cut keys.
+        // Enable shortcut keys.
         rootNode.addEventListener(
             'keydown',
             ShortcutKeyManager.eventHandlerFunction
@@ -158,7 +158,7 @@ export class ScreenReader {
             'click',
             this.helpContent.helpContentHandler
         );
-        // Make sure the current element stay sin focus if the user
+        // Make sure the current element stays in focus if the user
         // clicks or taps on the overlay.
         overlay.node.addEventListener('click', overlay.clickHandler);
 
@@ -244,5 +244,15 @@ export class ScreenReader {
         var activeElement = document.activeElement;
         this.navigator.currentNode(activeElement);
         this.caption.update(activeElement);
+    }
+
+    /**
+     * Returns a boolean value indicating whether or not
+     * the screen reader navigation controls can be used
+     * @returns {boolean}
+     */
+    isNavigationActive() {
+        const isActive = this.overlay.isVisible() && !this.helpContent.isVisible() ? true : false;
+        return isActive;
     }
 }
