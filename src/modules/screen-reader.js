@@ -236,6 +236,9 @@ export class ScreenReader {
      * @param {Node} node - The node being moved to
      */
     moveTo(node) {
+        if (!node) {
+            return;
+        }
         node.focus();
         var activeElement = document.activeElement;
         this.navigator.currentNode(activeElement);

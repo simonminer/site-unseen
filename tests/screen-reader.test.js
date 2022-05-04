@@ -41,6 +41,10 @@ describe('ScreenReader class tests', function () {
     });
 
     test('moveTo sets currently active node', () => {
+        expect(screenReader.moveTo()).toBe(undefined);
+        expect(screenReader.navigator.currentNode()).toBe(undefined);
+        expect(screenReader.caption.node.innerHTML).toBe('');
+
         var node = document.querySelector('h1');
         screenReader.moveTo(node);
         expect(document.activeElement).toBe(node);
