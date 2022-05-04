@@ -176,11 +176,7 @@ export class ScreenReader {
             const overlay = screenReader.overlay;
             const helpContent = screenReader.helpContent;
             if (!nodeParser.isTextInputField(document.activeElement)) {
-                if (
-                    event.key === '*' &&
-                    overlay.isVisible() &&
-                    !helpContent.isVisible()
-                ) {
+                if (event.key === '*' && screenReader.isNavigationActive()) {
                     screenReader.overlay.buttons['Peek'].click();
                 } else if (event.key === '?' && overlay.isVisible()) {
                     screenReader.overlay.buttons['Help'].click();
@@ -252,7 +248,10 @@ export class ScreenReader {
      * @returns {boolean}
      */
     isNavigationActive() {
-        const isActive = this.overlay.isVisible() && !this.helpContent.isVisible() ? true : false;
+        const isActive =
+            this.overlay.isVisible() && !this.helpContent.isVisible()
+                ? true
+                : false;
         return isActive;
     }
 }

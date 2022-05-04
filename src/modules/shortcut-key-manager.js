@@ -64,10 +64,16 @@ export class ShortcutKeyManager {
             return;
         }
 
+        // Don't do anything if screen reader navigation is inactive.
+        const screenReader = ScreenReader.get();
+        if (!screenReader.isNavigationActive()) {
+            return;
+        }
+
         // Don't do anything if the user is on a form field
         // that accepts text inupt.
         if (
-            ScreenReader.get().caption.nodeParser.isTextInputField(
+            screenReader.caption.nodeParser.isTextInputField(
                 document.activeElement
             )
         ) {

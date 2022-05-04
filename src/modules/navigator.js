@@ -113,10 +113,15 @@ export class Navigator extends ElementList {
      * @static
      */
     static arrowKeyHandlerFunction = function (event) {
-        // Move to the p0previous or next accessible node when the left or right
+        // Don't do anything if screen reader navigation is inactive.
+        const screenReader = ScreenReader.get();
+        if (!screenReader.isNavigationActive()) {
+            return;
+        }
+
+        // Move to the previous or next accessible node when the left or right
         // arrow is pressed, respectively.
-        var screenReader = ScreenReader.get();
-        var navigator = screenReader.navigator;
+        const navigator = screenReader.navigator;
         var node = undefined;
         if (event.key === 'ArrowRight') {
             event.preventDefault();
@@ -137,8 +142,14 @@ export class Navigator extends ElementList {
      * @static
      */
     static tabHandlerFunction = function (event) {
+        // Don't do anything if screen reader navigation is inactive.
+        const screenReader = ScreenReader.get();
+        if (!screenReader.isNavigationActive()) {
+            return;
+        }
+
         if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
-            ScreenReader.get().moveTo(document.activeElement);
+            screenReader.moveTo(document.activeElement);
         }
     };
 
@@ -178,7 +189,7 @@ export class Navigator extends ElementList {
      * attribute so that it can receive keyboard focus
      */
     isTabIndexNeeded(node) {
-        var tagName = node.tagName.toLowerCase();
+        const tagName = node.tagName.toLowerCase();
         var isNeeded = false;
 
         // Is the node non-interactive?
@@ -190,7 +201,7 @@ export class Navigator extends ElementList {
                 isNeeded = true;
             } else {
                 // Does the node have at least one child that contains text?
-                var children = node.childNodes;
+                const children = node.childNodes;
                 for (let i = 0; i < children.length; i++) {
                     if (
                         children[i].nodeType === 3 &&
@@ -214,7 +225,7 @@ export class Navigator extends ElementList {
     processNode(node) {
         // If the screen reader should be able to navigate
         // this node, make sure it has a tabindex attribute.
-        var isTabIndexNeeded = this.isTabIndexNeeded(node);
+        const isTabIndexNeeded = this.isTabIndexNeeded(node);
         if (isTabIndexNeeded) {
             node.setAttribute('tabindex', '-1');
             this.tabIndexNodeCount += 1;
@@ -222,7 +233,7 @@ export class Navigator extends ElementList {
 
         // Assign a special class to the node if can be navigated
         // by the screen reader.
-        var tagName = node.tagName.toLowerCase();
+        const tagName = node.tagName.toLowerCase();
         if (isTabIndexNeeded || this.interactiveTags.indexOf(tagName) >= 0) {
             node.classList.add(this.className);
             this.nodes.push(node);

@@ -181,7 +181,7 @@ export class Overlay {
      */
     clickHandler = function (event) {
         const screenReader = ScreenReader.get();
-        screenReader.moved(screenReader.navigator.currentNode());
+        screenReader.moveTo(screenReader.navigator.currentNode());
     };
 
     static _properties = [
