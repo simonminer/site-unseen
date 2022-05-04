@@ -15,6 +15,8 @@ export class ShortcutKeyManager {
     defaultShortcutKeyData = {
         // Press h/H to move forward/backward through headings.
         h: 'h1, h2, h3, h4, h5, h6',
+        // Press i/I to move forward/backward through images on the page.
+        i: 'img, svg, [role="image"]',
         // Press k/K to move forward/backward through links.
         k: 'a, [role="link"]',
         // Press r/R to move forward/backward through page regions and landmarks.

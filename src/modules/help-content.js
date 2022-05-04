@@ -193,10 +193,10 @@ export class HelpContent {
                         Display web page content for a few seconds
                     </td>
                     <td class="${Config.cssPrefix}shortcut-keys">
-                        <kbd>r</kbd> / <kbd>R</kbd>
+                        <kbd>i</kbd> / <kbd>I</kbd>
                     </td>
                     <td class="${Config.cssPrefix}shortcut-Description">
-                        Next / previous landmark region
+                        Next / previous image
                     </td>
                 </tr>
                 <tr>
@@ -205,6 +205,12 @@ export class HelpContent {
                     </td>
                     <td class="${Config.cssPrefix}shortcut-Description">
                         Display / hide this help documentation
+                    </td>
+                    <td class="${Config.cssPrefix}shortcut-keys">
+                        <kbd>r</kbd> / <kbd>R</kbd>
+                    </td>
+                    <td class="${Config.cssPrefix}shortcut-Description">
+                        Next / previous landmark region
                     </td>
                 </tr>
             </tbody>
