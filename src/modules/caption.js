@@ -85,7 +85,11 @@ export class Caption {
      */
     generateText(node) {
         const aNode = this.nodeParser.parse(node);
-        const text = aNode.toString();
+        var text = aNode.toString();
+        // Ensure the text does not include HTML tags.
+        if (text) {
+            text = text.replace(/<.+?>/gs, '');
+        }
         return text;
     }
 

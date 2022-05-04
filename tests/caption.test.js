@@ -16,6 +16,18 @@ beforeAll(() => {
     </span>
 </div>
 <p>This is a paragraph.</p>
+
+
+<ul>
+<li class="CBD-PreviewGroupItem CBD-PreviewGroupCircularImage">
+<a class="CBD-PreviewGroupItemImage" href="/page/promotion/did-you-know-we-carry?event=DYKWC">\
+<noscript><img class="CBD-PreviewGroupCircularImage" src="//g.christianbook.com/ns/cp_graphics/page/6/1010436/160x160_DidYouKnowWeCarry0821_1629744666.jpg?=1629744771" alt="More to Explore" title="More to Explore" /></noscript>
+<img data-defer="" class="CBD-ProductDeferredImage CBD-PreviewGroupCircularImage" src="//g.christianbook.com/ns/cp_graphics/page/6/1010436/160x160_DidYouKnowWeCarry0821_1629744666.jpg?=1629744771" alt="More to Explore" title="More to Explore" data-has-loaded="true"></a>
+<div class="CBD-PreviewGroupItemData">
+<a class="CBD-PreviewGroupItemLink CBD-PreviewGroupItemLink-Center" href="/page/promotion/did-you-know-we-carry?event=DYKWC" aria-hidden="true">More to Explore</a>
+</div>
+</li>
+</ul>
 `;
 });
 var caption = undefined;
@@ -50,6 +62,9 @@ describe('Caption class tests', function () {
         );
         expect(caption.generateText(document.querySelector('p'))).toBe(
             `This is a paragraph.`
+        );
+        expect(caption.generateText(document.querySelector('li'))).not.toMatch(
+            /<img>/
         );
     });
 
