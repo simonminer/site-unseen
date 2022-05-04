@@ -7,6 +7,7 @@ beforeAll(() => {
         <p>This is a paragraph.</p>
         <div><div>This is a nested div.</div></div>
         <input type="text" />
+        <h1 aria-hidden="true">Hidden</h1>
     </div>
     `;
 });

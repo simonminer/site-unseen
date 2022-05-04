@@ -223,6 +223,11 @@ export class Navigator extends ElementList {
      * if it can be navigated by a screen reader.
      */
     processNode(node) {
+        // Skip elements that are hidden from screen readers.
+        if (node.hasAttribute('aria-hidden')) {
+            return;
+        }
+
         // If the screen reader should be able to navigate
         // this node, make sure it has a tabindex attribute.
         const isTabIndexNeeded = this.isTabIndexNeeded(node);
