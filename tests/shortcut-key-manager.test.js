@@ -23,6 +23,7 @@ beforeAll(() => {
     <h2>Subheading</h2>
     <a href="test4">Test 4</a>
     <input type="text" name ="name" />
+    <img src="foo" alt="foo" />
 </div>
 `;
 });
