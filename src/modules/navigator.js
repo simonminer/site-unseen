@@ -183,7 +183,7 @@ export class Navigator extends ElementList {
     }
 
     /**
-     * @param {Node} node - The HTML element being for considered for a tabindex attribute.
+     * @param {Node} node - The HTML element being considered for a tabindex attribute.
      * @returns {boolean}
      * Tests whether or not the given HTML node needs a tabindex="-1" attribute
      * attribute so that it can receive keyboard focus
@@ -218,13 +218,24 @@ export class Navigator extends ElementList {
     }
 
     /**
+     * @param {Node} node - The HTML element being evaluated
+     * @returns {bool}
+     * Determines whether or not the specified node can
+     * be navigated by the screen reader.
+     */
+    isNavigable(node) {
+        const isNavigable = node.hasAttribute('aria-hidden') ? false : true;
+        return isNavigable;
+    }
+
+    /**
      * @param {Node} node - The HTML element to be processed.
      * Examines the specified HTML node, flagging it appropriately
      * if it can be navigated by a screen reader.
      */
     processNode(node) {
-        // Skip elements that are hidden from screen readers.
-        if (node.hasAttribute('aria-hidden')) {
+        // Can the screen reader navigate this node?
+        if (!this.isNavigable(node)) {
             return;
         }
 

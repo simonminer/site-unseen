@@ -28,9 +28,9 @@ describe('Navigator class tests', function () {
     });
 
     test('isTabIndexNeeded returns true for non-interactive tags', () => {
-        navigator.nonInteractiveTags.forEach((tagName) => {
-            var node = document.createElement(tagName);
-            expect(navigator.isTabIndexNeeded(node)).toBe(true);
+        document.querySelectorAll('h1').forEach((node) => {
+            const isNavigable = node.hasAttribute('aria-hidden') ? false : true;
+            expect(navigator.isNavigable(node)).toBe(isNavigable);
         });
     });
     test('isTabIndexNeeded returns false for interactive tags', () => {
@@ -73,6 +73,17 @@ describe('Navigator class tests', function () {
             node.appendChild(document.createTextNode('test'));
             expect(navigator.isTabIndexNeeded(node)).toBe(true);
         });
+    });
+
+    test('isNavigable returns true for visible tags', () => {
+        var node = document.createElement('h1');
+        node.setAttribute('aria-hidden', 'true');
+        expect(navigator.isNavigable(node)).toBe(false);
+    });
+    test('isNavigable returns false for tags with aria-hidden attribute', () => {
+        var node = document.createElement('h1');
+        node.setAttribute('aria-hidden', 'true');
+        expect(navigator.isNavigable(node)).toBe(false);
     });
 
     test('processNode assigns tabindex and class to non-interactive tags', () => {
