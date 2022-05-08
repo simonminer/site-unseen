@@ -27,7 +27,8 @@ export class Navigator extends ElementList {
     interactiveTags = [
         'a',
         'button',
-        'datalist',
+        // TODO: Get datalist element to return true from isNavigable method
+        // 'datalist',
         'input',
         'select',
         'textarea'
@@ -224,7 +225,13 @@ export class Navigator extends ElementList {
      * be navigated by the screen reader.
      */
     isNavigable(node) {
-        const isNavigable = node.hasAttribute('aria-hidden') ? false : true;
+        const style = window.getComputedStyle(node);
+        const isNavigable =
+            style.display === 'none' ||
+            style.visibility === 'hidden' ||
+            node.hasAttribute('aria-hidden')
+                ? false
+                : true;
         return isNavigable;
     }
 

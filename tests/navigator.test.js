@@ -7,7 +7,9 @@ beforeAll(() => {
         <p>This is a paragraph.</p>
         <div><div>This is a nested div.</div></div>
         <input type="text" />
-        <h1 aria-hidden="true">Hidden</h1>
+        <h1 style="display: none">display: none</h1>
+        <h1 style="visibility: hidden">visibility: hidden</h1>
+        <h1 aria-hidden="true">Hidden from assitive technologies</h1>
     </div>
     `;
 });
@@ -28,9 +30,9 @@ describe('Navigator class tests', function () {
     });
 
     test('isTabIndexNeeded returns true for non-interactive tags', () => {
-        document.querySelectorAll('h1').forEach((node) => {
-            const isNavigable = node.hasAttribute('aria-hidden') ? false : true;
-            expect(navigator.isNavigable(node)).toBe(isNavigable);
+        navigator.nonInteractiveTags.forEach((tagName) => {
+            var node = document.createElement(tagName);
+            expect(navigator.isTabIndexNeeded(node)).toBe(true);
         });
     });
     test('isTabIndexNeeded returns false for interactive tags', () => {
@@ -75,6 +77,18 @@ describe('Navigator class tests', function () {
         });
     });
 
+    test('isNavigable returns whether or not the screen reader can navigate a tag', () => {
+        document.querySelectorAll('h1').forEach((node) => {
+            const style = window.getComputedStyle(node);
+            const isNavigable =
+                style.display === 'none' ||
+                style.visibility === 'hidden' ||
+                node.hasAttribute('aria-hidden')
+                    ? false
+                    : true;
+            expect(navigator.isNavigable(node)).toBe(isNavigable);
+        });
+    });
     test('isNavigable returns true for visible tags', () => {
         var node = document.createElement('h1');
         node.setAttribute('aria-hidden', 'true');
@@ -83,6 +97,16 @@ describe('Navigator class tests', function () {
     test('isNavigable returns false for tags with aria-hidden attribute', () => {
         var node = document.createElement('h1');
         node.setAttribute('aria-hidden', 'true');
+        expect(navigator.isNavigable(node)).toBe(false);
+    });
+    test('isNavigable returns false for tag with display: none CSS rule', () => {
+        var node = document.createElement('h1');
+        node.setAttribute('style', 'display: none');
+        expect(navigator.isNavigable(node)).toBe(false);
+    });
+    test('isNavigable returns false for tag with visibility: hidden CSS rule', () => {
+        var node = document.createElement('h1');
+        node.setAttribute('style', 'visibility: hidden');
         expect(navigator.isNavigable(node)).toBe(false);
     });
 
