@@ -150,7 +150,19 @@ export class Navigator extends ElementList {
         }
 
         if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
-            screenReader.moveTo(document.activeElement);
+
+            // Is the node just tabbed to interactiv e?
+            var node = document.activeElement;
+            const navigator = screenReader.navigator;
+            if (!navigator.nodes.includes(node)) {
+
+                // If not, find the previous or next interactive element.
+                node =
+                    event.key === 'Tab'
+                        ? navigator.nextInteractiveNode()
+                        : navigator.previousInteractiveNode();
+            }
+            screenReader.moveTo(node);
         }
     };
 
@@ -254,7 +266,11 @@ export class Navigator extends ElementList {
             }
 
             // Is the current node interactive?
-            isInteractive = this.interactiveTags.includes(node.tagName.toLowerCase()) ? true : false;
+            isInteractive = this.interactiveTags.includes(
+                node.tagName.toLowerCase()
+            )
+                ? true
+                : false;
         }
         return node;
     }
@@ -278,7 +294,11 @@ export class Navigator extends ElementList {
             }
 
             // Is the current node interactive?
-            isInteractive = this.interactiveTags.includes(node.tagName.toLowerCase()) ? true : false;
+            isInteractive = this.interactiveTags.includes(
+                node.tagName.toLowerCase()
+            )
+                ? true
+                : false;
         }
         return node;
     }
