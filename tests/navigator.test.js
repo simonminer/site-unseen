@@ -1,21 +1,20 @@
 const Navigator = require('../src/modules/navigator.js').Navigator;
 
-beforeAll(() => {
-    document.body.innerHTML = `
-    <div id="content">
-        <h1>This is a heading</h1>
-        <p>This is a paragraph.</p>
-        <div><div>This is a nested div.</div></div>
-        <input type="text" />
-        <h1 style="display: none">display: none</h1>
-        <h1 style="visibility: hidden">visibility: hidden</h1>
-        <h1 aria-hidden="true">Hidden from assitive technologies</h1>
-    </div>
-    `;
-});
 var navigator = undefined;
 beforeEach(() => {
     navigator = new Navigator();
+    document.body.innerHTML = `
+    <div id="content">
+        <input type="text" />
+        <h1>This is a heading</h1>
+        <p>This is a paragraph.</p>
+        <div><div>This is a nested div.</div></div>
+        <h1 style="display: none">display: none</h1>
+        <h1 style="visibility: hidden">visibility: hidden</h1>
+        <a href="#top">Link</a>
+        <h1 aria-hidden="true">Hidden from assitive technologies</h1>
+    </div>
+    `;
 });
 
 describe('Navigator class tests', function () {
@@ -192,8 +191,8 @@ describe('Navigator class tests', function () {
         expect(document.querySelectorAll('[tabindex="-1"]').length).toBe(3);
         expect(
             document.querySelectorAll(`[class="${navigator.className}"]`).length
-        ).toBe(4);
-        expect(navigator.nodes.length).toBe(4);
+        ).toBe(5);
+        expect(navigator.nodes.length).toBe(5);
     });
 
     test('currentNode returns undefined in current node index < 0', () => {
@@ -256,5 +255,60 @@ describe('Navigator class tests', function () {
             navigator.nodes[navigator.nodes.length - 1]
         );
         expect(navigator.wrappedTo).toBe('end');
+    });
+
+    test('previousInteractiveNode returns the previous interactive tag', () => {
+        navigator.markNavigableNodes(document.body);
+        navigator.currentNode(document.querySelector('a'));
+        var previousInteractiveNode = navigator.previousInteractiveNode();
+        var tagName = previousInteractiveNode.tagName.toLowerCase();
+        expect(navigator.interactiveTags.includes(tagName)).toBe(true);
+        expect(tagName).toBe('input');
+        expect(navigator.wrappedTo).toBe(undefined);
+
+        previousInteractiveNode = navigator.previousInteractiveNode();
+        tagName = previousInteractiveNode.tagName.toLowerCase();
+        expect(navigator.interactiveTags.includes(tagName)).toBe(true);
+        expect(tagName).toBe('a');
+        expect(navigator.wrappedTo).toBe('end');
+    });
+    test('previousInteractiveNode returns the current node if there are no other interactive ones', () => {
+        document.body.querySelector('input').remove();
+        document.body.querySelector('a').remove();
+        const tagName = 'p';
+        navigator.markNavigableNodes(document.body);
+        const node = navigator.currentNode(document.querySelector(tagName));
+        const index = navigator.currentNodeIndex;
+        var previousInteractiveNode = navigator.previousInteractiveNode();
+        expect(previousInteractiveNode).toBe(node);
+        expect(previousInteractiveNode.tagName.toLowerCase()).toBe(tagName);
+        expect(navigator.currentNodeIndex).toBe(index);
+    });
+    test('nextInteractiveNode returns the next interactive tag', () => {
+        navigator.markNavigableNodes(document.body);
+        navigator.currentNode(document.querySelector('input'));
+        var nextInteractiveNode = navigator.nextInteractiveNode();
+        var tagName = nextInteractiveNode.tagName.toLowerCase();
+        expect(navigator.interactiveTags.includes(tagName)).toBe(true);
+        expect(tagName).toBe('a');
+        expect(navigator.wrappedTo).toBe(undefined);
+
+        nextInteractiveNode = navigator.nextInteractiveNode();
+        tagName = nextInteractiveNode.tagName.toLowerCase();
+        expect(navigator.interactiveTags.includes(tagName)).toBe(true);
+        expect(tagName).toBe('input');
+        expect(navigator.wrappedTo).toBe('start');
+    });
+    test('nextInteractiveNode returns the current node if there are no other interactive ones', () => {
+        document.body.querySelector('input').remove();
+        document.body.querySelector('a').remove();
+        const tagName = 'p';
+        navigator.markNavigableNodes(document.body);
+        const node = navigator.currentNode(document.querySelector(tagName));
+        const index = navigator.currentNodeIndex;
+        var nextInteractiveNode = navigator.nextInteractiveNode();
+        expect(nextInteractiveNode).toBe(node);
+        expect(nextInteractiveNode.tagName.toLowerCase()).toBe(tagName);
+        expect(navigator.currentNodeIndex).toBe(index);
     });
 });

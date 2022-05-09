@@ -236,6 +236,59 @@ export class Navigator extends ElementList {
     }
 
     /**
+     * Returns the previous interactive node in this
+     * object's node list.
+     * @return {Node}
+     */
+    previousInteractiveNode() {
+        var node = undefined;
+        var isInteractive = false;
+        var index = this.currentNodeIndex;
+        while (!isInteractive) {
+            // Move to the previous node.
+            node = this.currentNode(this.previousNode());
+
+            // Bail out if all nodes have been checked for interactivity.
+            if (index === this.currentNodeIndex) {
+                break;
+            }
+
+            // Is the current node interactive?
+            isInteractive = this.interactiveTags.includes(node.tagName.toLowerCase()) ? true : false;
+        }
+        return node;
+    }
+
+    /**
+     * Returns the next interactive node in this
+     * object's node list.
+     * @return {Node}
+     */
+    nextInteractiveNode() {
+        var node = undefined;
+        var isInteractive = false;
+        var index = this.currentNodeIndex;
+        while (!isInteractive) {
+            // Move to the next node.
+            node = this.currentNode(this.nextNode());
+
+            // Bail out if all nodes have been checked for interactivity.
+            if (index === this.currentNodeIndex) {
+                break;
+            }
+
+            // Is the current node interactive?
+            isInteractive = this.interactiveTags.includes(node.tagName.toLowerCase()) ? true : false;
+        }
+        return node;
+    }
+
+    /**
+     * Returns the next interactive node in this
+     * object's node list.
+     * @return {Node}
+     */
+    /**
      * @param {Node} node - The HTML element to be processed.
      * Examines the specified HTML node, flagging it appropriately
      * if it can be navigated by a screen reader.
