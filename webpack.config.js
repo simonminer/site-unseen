@@ -7,6 +7,7 @@ module.exports = {
     output: {
         clean: true,
         filename: 'site-unseen.min.js',
+        publicPath: '',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
