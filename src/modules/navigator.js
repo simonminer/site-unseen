@@ -89,11 +89,10 @@ export class Navigator extends ElementList {
     potentiallyNavigableTags = ['div', 'span'];
 
     /**
-     * Number of nodes that have been assigned
-     * tabindex attributes by this object.
-     * @type {number}
+     * List of nodes to which this object
+     * has added a `tabindeex="-1"` attribute.
      */
-    tabIndexNodeCount = 0;
+    tabIndexNodes = [];
 
     /**
      * List of nodes that can be navigated
@@ -176,7 +175,7 @@ export class Navigator extends ElementList {
 
     static _properties = [
         'className',
-        'tabIndexNodeCount',
+        'tabIndexNodes',
         'nodes',
         'wrappedTo'
     ];
@@ -324,7 +323,7 @@ export class Navigator extends ElementList {
         const isTabIndexNeeded = this.isTabIndexNeeded(node);
         if (isTabIndexNeeded) {
             node.setAttribute('tabindex', '-1');
-            this.tabIndexNodeCount += 1;
+            this.tabIndexNodes.push(node);
         }
 
         // Assign a special class to the node if can be navigated

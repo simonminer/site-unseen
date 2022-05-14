@@ -24,7 +24,7 @@ describe('Navigator class tests', function () {
         expect(navigator.nonInteractiveTags.length).toBeGreaterThan(0);
         expect(navigator.interactiveTags.length).toBeGreaterThan(0);
         expect(navigator.potentiallyNavigableTags.length).toBeGreaterThan(0);
-        expect(navigator.tabIndexNodeCount).toBe(0);
+        expect(navigator.tabIndexNodes.length).toBe(0);
         expect(navigator.nodes.length).toBe(0);
     });
 
@@ -116,7 +116,7 @@ describe('Navigator class tests', function () {
             expect(node.getAttribute('tabindex')).toBe('-1');
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
-        expect(navigator.tabIndexNodeCount).toBe(
+        expect(navigator.tabIndexNodes.length).toBe(
             navigator.nonInteractiveTags.length
         );
         expect(navigator.nodes.length).toBe(
@@ -130,7 +130,7 @@ describe('Navigator class tests', function () {
             expect(node.getAttribute('tabindex')).toBe(null);
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
-        expect(navigator.tabIndexNodeCount).toBe(0);
+        expect(navigator.tabIndexNodes.length).toBe(0);
         expect(navigator.nodes.length).toBe(navigator.interactiveTags.length);
     });
     test('processNode does nothing to empty <div> and <span> tags', () => {
@@ -140,7 +140,7 @@ describe('Navigator class tests', function () {
             expect(node.getAttribute('tabindex')).toBe(null);
             expect(node.classList.contains(navigator.className)).toBe(false);
         });
-        expect(navigator.tabIndexNodeCount).toBe(0);
+        expect(navigator.tabIndexNodes.length).toBe(0);
         expect(navigator.nodes.length).toBe(0);
     });
     test('processNode assigns tabindex and class to <div> and <span> tags containing only text', () => {
@@ -151,7 +151,7 @@ describe('Navigator class tests', function () {
             expect(node.getAttribute('tabindex')).toBe('-1');
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
-        expect(navigator.tabIndexNodeCount).toBe(
+        expect(navigator.tabIndexNodes.length).toBe(
             navigator.potentiallyNavigableTags.length
         );
         expect(navigator.nodes.length).toBe(
@@ -166,7 +166,7 @@ describe('Navigator class tests', function () {
             expect(node.getAttribute('tabindex')).toBe(null);
             expect(node.classList.contains(navigator.className)).toBe(false);
         });
-        expect(navigator.tabIndexNodeCount).toBe(0);
+        expect(navigator.tabIndexNodes.length).toBe(0);
         expect(navigator.nodes.length).toBe(0);
     });
     test('processNode assigns tabindex and class to <div> and <span> tags containing both text and other tags', () => {
@@ -178,7 +178,7 @@ describe('Navigator class tests', function () {
             expect(node.getAttribute('tabindex')).toBe('-1');
             expect(node.classList.contains(navigator.className)).toBe(true);
         });
-        expect(navigator.tabIndexNodeCount).toBe(
+        expect(navigator.tabIndexNodes.length).toBe(
             navigator.potentiallyNavigableTags.length
         );
         expect(navigator.nodes.length).toBe(
