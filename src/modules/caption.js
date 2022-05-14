@@ -104,6 +104,17 @@ export class Caption {
     }
 
     /**
+     * Sets the initial text of this caption object
+     * to the title or URL of the page, whichever
+     * is available.
+     * @returns {String}
+     */
+    setInitialText() {
+        this.node.innerHTML =
+            document.title !== '' ? document.title : window.location.href;
+    }
+
+    /**
      * Generates the `<style>` HTML element for the caption CSS styles
      * @returns {Element}
      */

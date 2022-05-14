@@ -102,4 +102,14 @@ describe('Caption class tests', function () {
         caption.show();
         expect(caption.isVisible()).toBe(true);
     });
+
+    test('setInitialText sets the caption text to the document title or URL', () => {
+        caption.getHTML();
+        caption.setInitialText();
+        expect(caption.node.innerHTML).toBe(window.location.href);
+        var title = 'Test title';
+        document.title = title;
+        caption.setInitialText();
+        expect(caption.node.innerHTML).toBe(title);
+    });
 });

@@ -24,9 +24,18 @@ describe('ScreenReader class tests', function () {
         expect(
             screenReader.shortcutKeyManager.shortcutKeys instanceof Map
         ).toBe(true);
-        expect(document.getElementById(screenReader.overlay)).toBeDefined();
-        expect(document.getElementById(screenReader.caption)).toBeDefined();
-        expect(document.getElementById(screenReader.helpContent)).toBeDefined();
+        expect(document.getElementById(Overlay.id).tagName.toLowerCase()).toBe(
+            'div'
+        );
+        expect(document.getElementById(Caption.id).tagName.toLowerCase()).toBe(
+            'div'
+        );
+        expect(document.getElementById(Caption.id).innerHTML).toBe(
+            window.location.href
+        );
+        expect(
+            document.getElementById(HelpContent.id).tagName.toLowerCase()
+        ).toBe('div');
         expect(screenReader.caption.nodeParser.rootNode).toBe(document.body);
         expect(Object.keys(screenReader.callbacks).length).toBeGreaterThan(0);
     });
@@ -46,7 +55,8 @@ describe('ScreenReader class tests', function () {
     test('moveTo sets currently active node', () => {
         expect(screenReader.moveTo()).toBe(undefined);
         expect(screenReader.navigator.currentNode()).toBe(undefined);
-        expect(screenReader.caption.node.innerHTML).toBe('');
+        // TODO Should caption text be cleared if the current node is undefined?
+        expect(screenReader.caption.node.innerHTML).toBe(window.location.href);
 
         var node = document.querySelector('h1');
         screenReader.moveTo(node);

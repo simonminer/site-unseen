@@ -164,6 +164,7 @@ export class ScreenReader {
         });
         overlayNode.appendChild(this.caption.getCSS());
         overlayNode.appendChild(this.caption.getHTML());
+        this.caption.setInitialText();
 
         // Put the help contents inside the overlay.
         this.helpContent = new HelpContent();
