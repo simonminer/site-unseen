@@ -151,8 +151,8 @@ export class ScreenReader {
      */
     appendOverlay() {
         this.overlay = new Overlay();
-        this.rootNode.appendChild(this.overlay.getCSS());
         var overlayNode = this.overlay.getHTML();
+        overlayNode.appendChild(this.overlay.getCSS());
         this.rootNode.appendChild(overlayNode);
 
         // Put the caption inside the overlay.
