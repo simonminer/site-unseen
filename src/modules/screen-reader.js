@@ -294,7 +294,10 @@ export class ScreenReader {
         // which will themselves be deleted in modern browsers.
         // See https://stackoverflow.com/questions/12528049.
         const rootNode = this.rootNode;
-        rootNode.removeEventListener('keydown', Navigator.arrowKeyHandlerFunction);
+        rootNode.removeEventListener(
+            'keydown',
+            Navigator.arrowKeyHandlerFunction
+        );
         rootNode.removeEventListener('keyup', Navigator.tabHandlerFunction);
         rootNode.removeEventListener(
             'keydown',
@@ -305,7 +308,10 @@ export class ScreenReader {
             this.callbacks['handleHelpContentButtonKeyboardShortcut']
         );
         rootNode.querySelectorAll('input, select, textarea').forEach((node) => {
-            node.removeEventListener( 'input', this.callbacks['updateCaptionText']);
+            node.removeEventListener(
+                'input',
+                this.callbacks['updateCaptionText']
+            );
         });
         rootNode.querySelectorAll('input[type="radio"]').forEach((node) => {
             node.removeEventListener(
