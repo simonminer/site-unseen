@@ -149,12 +149,10 @@ export class Navigator extends ElementList {
         }
 
         if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
-
             // Is the node just tabbed to interactiv e?
             var node = document.activeElement;
             const navigator = screenReader.navigator;
             if (!navigator.nodes.includes(node)) {
-
                 // If not, find the previous or next interactive element.
                 node =
                     event.key === 'Tab'
@@ -173,12 +171,7 @@ export class Navigator extends ElementList {
      */
     wrappedTo = undefined;
 
-    static _properties = [
-        'className',
-        'tabIndexNodes',
-        'nodes',
-        'wrappedTo'
-    ];
+    static _properties = ['className', 'tabIndexNodes', 'nodes', 'wrappedTo'];
 
     /**
      * @param {Object} properties - Set of key/value pairs to override the default properties of this class.

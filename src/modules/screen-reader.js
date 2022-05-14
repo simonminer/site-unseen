@@ -50,6 +50,39 @@ export class ScreenReader {
         updateCaptionText: function () {
             const caption = ScreenReader.get().caption;
             caption.update(event.target);
+        },
+        handleHelpContentButtonKeyboardShortcut: function (event) {
+            const screenReader = ScreenReader.get();
+            const nodeParser = screenReader.caption.nodeParser;
+            const overlay = screenReader.overlay;
+            const helpContent = screenReader.helpContent;
+            if (!nodeParser.isTextInputField(document.activeElement)) {
+                if (event.key === '*' && screenReader.isNavigationActive()) {
+                    screenReader.overlay.buttons['Peek'].click();
+                } else if (event.key === '?' && overlay.isVisible()) {
+                    screenReader.overlay.buttons['Help'].click();
+                } else if (event.key === 'Escape' && helpContent.isVisible()) {
+                    screenReader.overlay.buttons['Help'].click();
+                }
+            }
+        },
+        handleRadioButtonKeyboardAction: function (event) {
+            if (
+                event.key === 'ArrowUp' ||
+                event.key === 'ArrowDown' ||
+                event.key === 'Spacebar' ||
+                event.key === ' '
+            ) {
+                event.target.checked = true;
+                ScreenReader.get().callbacks['updateCaptionText'](event);
+            }
+        },
+        handleCheckboxKeyboardAction: function (event) {
+            if (event.key === 'Spacebar' || event.key === ' ') {
+                event.target.checked = !event.target.checked;
+                ScreenReader.get().callbacks['updateCaptionText'](event);
+                event.preventDefault();
+            }
         }
     };
 
@@ -170,21 +203,10 @@ export class ScreenReader {
             );
         });
 
-        rootNode.addEventListener('keydown', function (event) {
-            const screenReader = ScreenReader.get();
-            const nodeParser = screenReader.caption.nodeParser;
-            const overlay = screenReader.overlay;
-            const helpContent = screenReader.helpContent;
-            if (!nodeParser.isTextInputField(document.activeElement)) {
-                if (event.key === '*' && screenReader.isNavigationActive()) {
-                    screenReader.overlay.buttons['Peek'].click();
-                } else if (event.key === '?' && overlay.isVisible()) {
-                    screenReader.overlay.buttons['Help'].click();
-                } else if (event.key === 'Escape' && helpContent.isVisible()) {
-                    screenReader.overlay.buttons['Help'].click();
-                }
-            }
-        });
+        rootNode.addEventListener(
+            'keydown',
+            this.callbacks['handleHelpContentButtonKeyboardShortcut']
+        );
 
         // Keep the caption current as form field values change.
         rootNode.querySelectorAll('input, select, textarea').forEach((node) => {
@@ -197,26 +219,16 @@ export class ScreenReader {
             }
         });
         rootNode.querySelectorAll('input[type="radio"]').forEach((node) => {
-            node.addEventListener('keyup', function (event) {
-                if (
-                    event.key === 'ArrowUp' ||
-                    event.key === 'ArrowDown' ||
-                    event.key === 'Spacebar' ||
-                    event.key === ' '
-                ) {
-                    node.checked = true;
-                    ScreenReader.get().callbacks['updateCaptionText'](event);
-                }
-            });
+            node.addEventListener(
+                'keyup',
+                this.callbacks['handleRadioButtonKeyboardAction']
+            );
         });
         rootNode.querySelectorAll('input[type="checkbox"]').forEach((node) => {
-            node.addEventListener('keyup', function (event) {
-                if (event.key === 'Spacebar' || event.key === ' ') {
-                    node.checked = !node.checked;
-                    ScreenReader.get().callbacks['updateCaptionText'](event);
-                    event.preventDefault();
-                }
-            });
+            node.addEventListener(
+                'keyup',
+                this.callbacks['handleCheckboxKeyboardAction']
+            );
         });
 
         // Move to the next or previous element when the user
