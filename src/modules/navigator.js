@@ -14,7 +14,7 @@ export class Navigator extends ElementList {
      * CSS class assigned to elements that are navigable by the screen reader.
      * @type {string}
      */
-    className = 'srn';
+    className = '__srn';
 
     /**
      * HTML tag lists are taken from https://developer.mozilla.org/en-US/docs/Web/HTML/Element.

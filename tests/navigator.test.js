@@ -20,7 +20,7 @@ beforeEach(() => {
 describe('Navigator class tests', function () {
     test('constructor creates Navigator object', () => {
         expect(navigator instanceof Navigator).toBe(true);
-        expect(navigator.className).toBe('srn');
+        expect(navigator.className).toBe('__srn');
         expect(navigator.nonInteractiveTags.length).toBeGreaterThan(0);
         expect(navigator.interactiveTags.length).toBeGreaterThan(0);
         expect(navigator.potentiallyNavigableTags.length).toBeGreaterThan(0);
