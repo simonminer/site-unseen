@@ -43,7 +43,10 @@ export class ScreenReader {
     shortcutKeyManager;
 
     /**
-     * Associative array of callback function names and definitions
+     * Associative array of callback function names and definitions.
+     * These are necessary because these event handlers need to be
+     * added when the screen reader is set up and removed when it
+     * is destroyed. They also avoid code duplication.
      * @type {Object}
      */
     callbacks = {
@@ -106,7 +109,7 @@ export class ScreenReader {
         this.rootNode = rootNode ? rootNode : document.body;
 
         // Prepare the content for processing by the screen reader.
-        this.setApplicationRoleOnChildren();
+        //this.setApplicationRoleOnChildren();
         this.setupNavigation();
 
         // Set up components of the screen reader.
@@ -268,5 +271,56 @@ export class ScreenReader {
                 ? true
                 : false;
         return isActive;
+    }
+
+    /**
+     * Cleans up objects related to this screen reader
+     * and removes its elements, classes, and attributes
+     * from the DOM
+     */
+    cleanUp() {
+        // Remove class names added by the screen reader.
+        this.navigator.nodes.forEach((node) => {
+            node.classList.remove(this.navigator.className);
+        });
+
+        // Remove tabindex attributes added by the screen reader.
+        this.navigator.tabIndexNodes.forEach((node) => {
+            node.removeAttribute('tabindex');
+        });
+
+        // Unbind event handlers from elemetns on the page
+        // No need to remove ones from screen reader elements
+        // which will themselves be deleted in modern browsers.
+        // See https://stackoverflow.com/questions/12528049.
+        const rootNode = this.rootNode;
+        rootNode.removeEventListener('keydown', Navigator.arrowKeyHandlerFunction);
+        rootNode.removeEventListener('keyup', Navigator.tabHandlerFunction);
+        rootNode.removeEventListener(
+            'keydown',
+            ShortcutKeyManager.eventHandlerFunction
+        );
+        rootNode.removeEventListener(
+            'keydown',
+            this.callbacks['handleHelpContentButtonKeyboardShortcut']
+        );
+        rootNode.querySelectorAll('input, select, textarea').forEach((node) => {
+            node.removeEventListener( 'input', this.callbacks['updateCaptionText']);
+        });
+        rootNode.querySelectorAll('input[type="radio"]').forEach((node) => {
+            node.removeEventListener(
+                'keyup',
+                this.callbacks['handleRadioButtonKeyboardAction']
+            );
+        });
+        rootNode.querySelectorAll('input[type="checkbox"]').forEach((node) => {
+            node.removeEventListener(
+                'keyup',
+                this.callbacks['handleCheckboxKeyboardAction']
+            );
+        });
+
+        // Removing the overlay also deletes the caption and help content elements.
+        this.overlay.node.remove();
     }
 }

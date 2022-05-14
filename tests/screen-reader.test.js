@@ -1,4 +1,7 @@
 const ScreenReader = require('../src/modules/screen-reader.js').ScreenReader;
+const Overlay = require('../src/modules/overlay.js').Overlay;
+const Caption = require('../src/modules/caption.js').Caption;
+const HelpContent = require('../src/modules/help-content.js').HelpContent;;
 
 var screenReader = undefined;
 beforeEach(() => {
@@ -64,5 +67,21 @@ describe('ScreenReader class tests', function () {
         expect(screenReader.isNavigationActive()).toBe(false);
         screenReader.helpContent.hide(screenReader);
         expect(screenReader.isNavigationActive()).toBe(true);
+    });
+
+    test('cleanUp removes screen reader DOM elments, classes and attributes', () => {
+        const navigator = screenReader.navigator;
+        const className = navigator.className;
+        expect(document.querySelectorAll(`.${className}`).length).toBe(navigator.nodes.length);
+        expect(document.querySelectorAll(`[tabindex="-1"]`).length).toBe(navigator.tabIndexNodes.length);
+        expect(document.querySelectorAll(`#${HelpContent.id}`).length).toBe(1);
+        expect(document.querySelectorAll(`#${Caption.id}`).length).toBe(1);
+        expect(document.querySelectorAll(`#${Overlay.id}`).length).toBe(1);
+        screenReader.cleanUp();
+        expect(document.querySelectorAll(`.${className}`).length).toBe(0);
+        expect(document.querySelectorAll(`[tabindex="-1"]`).length).toBe(0);
+        expect(document.querySelectorAll(`#${HelpContent.id}`).length).toBe(0);
+        expect(document.querySelectorAll(`#${Caption.id}`).length).toBe(0);
+        expect(document.querySelectorAll(`#${Overlay.id}`).length).toBe(0);
     });
 });
