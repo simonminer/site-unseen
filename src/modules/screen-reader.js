@@ -59,7 +59,7 @@ export class ScreenReader {
             const nodeParser = screenReader.caption.nodeParser;
             const overlay = screenReader.overlay;
             const helpContent = screenReader.helpContent;
-            if (!nodeParser.isTextInputField(document.activeElement)) {
+            if (!nodeParser.isTextInputField(event.target)) {
                 if (event.key === '*' && screenReader.isNavigationActive()) {
                     screenReader.overlay.buttons['Peek'].click();
                 } else if (event.key === '?' && overlay.isVisible()) {
@@ -256,9 +256,8 @@ export class ScreenReader {
             return;
         }
         node.focus();
-        var activeElement = document.activeElement;
-        this.navigator.currentNode(activeElement);
-        this.caption.update(activeElement);
+        this.navigator.currentNode(node);
+        this.caption.update(node);
     }
 
     /**

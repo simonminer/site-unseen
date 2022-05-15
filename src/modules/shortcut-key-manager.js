@@ -76,23 +76,11 @@ export class ShortcutKeyManager {
         // that accepts text inupt.
         if (
             screenReader.caption.nodeParser.isTextInputField(
-                document.activeElement
+                event.target
             )
         ) {
             return;
         }
-        /*
-        const activeElement = document.activeElement;
-        const aNode =
-            ScreenReader.get().caption.nodeParser.parse(activeElement);
-        if (
-            aNode.role === 'textbox' ||
-            aNode.role === 'combobox' ||
-            activeElement.getAttribute('type') === 'password'
-        ) {
-            return;
-        }
-        */
 
         var skm = ScreenReader.get().shortcutKeyManager;
         skm.wrappedTo = undefined;

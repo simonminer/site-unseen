@@ -149,8 +149,8 @@ export class Navigator extends ElementList {
         }
 
         if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
-            // Is the node just tabbed to interactiv e?
-            var node = document.activeElement;
+            // Is the node just tabbed to interactive?
+            var node = event.target;
             const navigator = screenReader.navigator;
             if (!navigator.nodes.includes(node)) {
                 // If not, find the previous or next interactive element.
