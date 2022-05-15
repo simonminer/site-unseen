@@ -74,11 +74,7 @@ export class ShortcutKeyManager {
 
         // Don't do anything if the user is on a form field
         // that accepts text inupt.
-        if (
-            screenReader.caption.nodeParser.isTextInputField(
-                event.target
-            )
-        ) {
+        if (screenReader.caption.nodeParser.isTextInputField(event.target)) {
             return;
         }
 

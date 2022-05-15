@@ -410,7 +410,10 @@ export class NodeParser {
             this.parseCheckboxField(formFieldNode);
         } else {
             formFieldNode.name = formFieldNode.value;
-            formFieldNode.value = node.value;
+            formFieldNode.value =
+                node.getAttribute('type') === 'password'
+                    ? node.value.replace(/./g, '*')
+                    : node.value;
         }
     }
 

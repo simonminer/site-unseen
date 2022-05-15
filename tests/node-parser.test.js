@@ -323,12 +323,13 @@ describe('NodeParser class tests', function () {
     });
 
     test('nodeParser parses password input tag', () => {
-        // Tests for password field  with ARIA label.
+        // Tests for password field with ARIA label.
         var nodeName = 'test-password';
         var accessibleName = 'Test Password';
+        const nodeValue = `My password value`;
         const role = 'textbox';
         var node = htmlToElement(
-            `<input type="password" name="${nodeName}" aria-label="${accessibleName}" />`,
+            `<input type="password" name="${nodeName}" aria-label="${accessibleName}" value="${nodeValue}" />`,
             'input'
         );
         nodeParser = new NodeParser({
@@ -337,21 +338,21 @@ describe('NodeParser class tests', function () {
         var aNode = nodeParser.parse(node);
         expect(aNode.role).toBe(role);
         expect(aNode.name).toBe(accessibleName);
-        expect(aNode.value).toBe('');
+        expect(aNode.value).toBe(nodeValue.replace(/./g, '*'));
         expect(aNode.toString()).toBe(
-            `${aNode.role}${aNode.separator}${aNode.name}${aNode.value}`
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
         );
 
         // Tests for password  with label tag.
         const nodeId = `test-password-id`;
-        const html = `<body><form><label for="${nodeId}"><nput type="password" name="${nodeName}" id="${nodeId}" />`;
+        const html = `<body><form><label for="${nodeId}"><nput type="password" name="${nodeName}" id="${nodeId}" value="${nodeValue}"/>`;
         const tree = htmlToElement(html, 'body');
         node = htmlToElement(html, 'input');
         expect(aNode.role).toBe(role);
         expect(aNode.name).toBe(accessibleName);
-        expect(aNode.value).toBe('');
+        expect(aNode.value).toBe(nodeValue.replace(/./g, '*'));
         expect(aNode.toString()).toBe(
-            `${aNode.role}${aNode.separator}${aNode.name}${aNode.value}`
+            `${aNode.role}${aNode.separator}${aNode.name}${aNode.separator}${aNode.value}`
         );
     });
 
