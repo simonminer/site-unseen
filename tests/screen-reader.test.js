@@ -14,6 +14,7 @@ beforeEach(() => {
     </div>
     `;
     screenReader = new ScreenReader();
+    screenReader.setup();
 });
 
 describe('ScreenReader class tests', function () {
@@ -79,7 +80,7 @@ describe('ScreenReader class tests', function () {
         expect(screenReader.isNavigationActive()).toBe(true);
     });
 
-    test('cleanUp removes screen reader DOM elments, classes and attributes', () => {
+    test('teardown removes screen reader DOM elments, classes and attributes', () => {
         const navigator = screenReader.navigator;
         const className = navigator.className;
         expect(document.querySelectorAll(`.${className}`).length).toBe(
@@ -91,7 +92,7 @@ describe('ScreenReader class tests', function () {
         expect(document.querySelectorAll(`#${HelpContent.id}`).length).toBe(1);
         expect(document.querySelectorAll(`#${Caption.id}`).length).toBe(1);
         expect(document.querySelectorAll(`#${Overlay.id}`).length).toBe(1);
-        screenReader.cleanUp();
+        screenReader.teardown();
         expect(document.querySelectorAll(`.${className}`).length).toBe(0);
         expect(document.querySelectorAll(`[tabindex="-1"]`).length).toBe(0);
         expect(document.querySelectorAll(`#${HelpContent.id}`).length).toBe(0);

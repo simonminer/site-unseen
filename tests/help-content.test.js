@@ -6,9 +6,11 @@ const ScreenReader = require('../src/modules/screen-reader.js').ScreenReader;
 const id = `${Config.cssPrefix}help`;
 
 var help = undefined;
-const screenReader = new ScreenReader();
+var screenReader = undefined;
 beforeEach(() => {
     help = new HelpContent();
+    screenReader = new ScreenReader();
+    screenReader.setup();
 });
 
 describe('OHelpContent class tests', function () {

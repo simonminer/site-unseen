@@ -89,7 +89,7 @@ describe('ShortcutKeyManager class tests', function () {
         );
         expect(skm.bindShortcutKeysToFunction(returnTrue)).toBe(true);
         expect(skm.shortcutKeyFunction).toBe(returnTrue);
-        new ScreenReader();
+        new ScreenReader().setup();
         expect(typeof ScreenReader.get().shortcutKeyManager).toBe('object');
         expect(
             ScreenReader.get().shortcutKeyManager.shortcutKeys instanceof Map
@@ -108,7 +108,7 @@ describe('ShortcutKeyManager class tests', function () {
         });
         expect(skm.shortcutKeys.has('z')).toBe(false);
         expect(skm.shortcutKeyFunction).toBe(returnTrue);
-        new ScreenReader();
+        new ScreenReader().setup();
         expect(typeof ScreenReader.get().shortcutKeyManager).toBe('object');
         expect(
             ScreenReader.get().shortcutKeyManager.shortcutKeys instanceof Map

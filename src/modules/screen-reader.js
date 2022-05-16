@@ -101,28 +101,30 @@ export class ScreenReader {
     /**
      * @param {Node} rootNode - Root node of content manipulated by this screen reader (optional).
      * Defaults to document.body.
-     * @param {ShortcutKeyManager} skm - Object to manage shortcut key interactions (optional).
-     * Defaults to ShortcutKeyManager with its default keyboard shortcuts.
      * @returns {ScreenReader} - screen reader object
      */
-    constructor(rootNode, skm) {
+    constructor(rootNode) {
         this.rootNode = rootNode ? rootNode : document.body;
 
+        // Attach the new screen reader object to the top of the DOM for later use.
+        document._screenReader = this;
+    }
+
+    /**
+     * Parses and updates DOM elements, adding the overlay and other components
+     * to allow the screen reader to function.
+     */
+    setup() {
         // Prepare the content for processing by the screen reader.
         //this.setApplicationRoleOnChildren();
         this.setupNavigation();
 
         // Set up components of the screen reader.
         this.appendOverlay();
-        this.shortcutKeyManager = skm
-            ? skm
-            : new ShortcutKeyManager(this.rootNode);
+        this.shortcutKeyManager = new ShortcutKeyManager(this.rootNode);
 
         // Set up event listeners to facilitate screen reader keyboard controls.
         this.setupEventListeners();
-
-        // Attach the new screen reader object to the top of the DOM for later use.
-        document._screenReader = this;
     }
 
     /**
@@ -278,7 +280,7 @@ export class ScreenReader {
      * and removes its elements, classes, and attributes
      * from the DOM
      */
-    cleanUp() {
+    teardown() {
         // Remove class names added by the screen reader.
         this.navigator.nodes.forEach((node) => {
             node.classList.remove(this.navigator.className);
