@@ -32,7 +32,7 @@ export class HelpContent {
     margin: auto;
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
     font-family: sans-serif;
-    background-color: #fff;
+    background: #fff;
     color: #1c4bad;
     border-radius: 10px;
     position: relative;
@@ -48,7 +48,7 @@ export class HelpContent {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #1c4bad;
+    background: #1c4bad;
     color: #ffffff;
     font-size: 24px;
     border-radius: 3px;
@@ -64,7 +64,7 @@ export class HelpContent {
     width: 15%;
 }
 .${Config.cssPrefix}shortcut-keys kbd {
-    background-color: #fff;
+    background: #fff;
     color: #000;
     padding: 3px 5px;
     border-radius: 3px;

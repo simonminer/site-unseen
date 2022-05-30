@@ -28,7 +28,7 @@ export class Caption {
     css = `
 #${Caption.id} {
     color: #ffffff;
-    background-color: #000000;
+    background: #000000;
     border: 3px solid #ffffff;
     border-radius: 0.5rem;
     font-size: 1.1rem;
