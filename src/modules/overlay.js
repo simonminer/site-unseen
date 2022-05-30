@@ -38,7 +38,7 @@ export class Overlay {
      */
     css = `
 #${Overlay.id} {
-    background: #000000;
+    background-color: #000000;
     opacity: ${Overlay.opacity};
     z-index: 2147483647;
     position: fixed;
@@ -49,7 +49,10 @@ export class Overlay {
 }
 .${Config.cssPrefix}overlay-button {
     color: #ffffff;
-    background: #1c4bad;
+    background-color: #1c4bad;
+    background-image: none;
+    box-shadow: none;
+    border: none;
     margin: 10px 5px;
     padding: 5px 10px;
     float: right;
