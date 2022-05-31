@@ -30,22 +30,22 @@ export class Caption {
     color: #ffffff;
     background-color: #000000;
     border: 3px solid #ffffff;
-    border-radius: 0.5rem;
-    font-size: 1.1rem;
+    border-radius: 8px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 0.5rem;
+    padding: 8px;
     width: 50%;
     height: 30%;
     position: fixed;
-    bottom: 0.5rem;
-    right: 0.5rem;
+    bottom: 8px;
+    right: 8px;
     text-align: left;
 }
 @media only screen and (max-width: 825px) {
     #${Caption.id} {
         width: 91%;
         height: 55%;
-        font-size: 1rem;
+        font-size: 14px;
     }
 }
 `;

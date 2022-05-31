@@ -57,7 +57,7 @@ export class Overlay {
     padding: 5px 10px;
     float: right;
     border-radius: 10px;
-    font-size: 15pt;
+    font-size: 20px;
 }
 .${Overlay.hiddenClassName} {
     display: none;

@@ -32,6 +32,7 @@ export class HelpContent {
     margin: auto;
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
     font-family: sans-serif;
+    font-size: 16px;
     background-color: #fff;
     color: #1c4bad;
     border-radius: 10px;
@@ -69,11 +70,13 @@ export class HelpContent {
     padding: 3px 5px;
     border-radius: 3px;
     border: 1px solid #333333;
+    font-family: monospace;
     font-weight: bold;
+    line-height: 24px;
 }
 .${Config.cssPrefix}shortcut-keys, .${Config.cssPrefix}shortcut-description {
     border: none;
-    padding: 0.5rem;
+    padding: 8px;
 }
 .${Config.cssPrefix}shortcut-description {
     padding-right: 15px;
@@ -91,7 +94,7 @@ export class HelpContent {
         max-width: 80%;
     }
     .${Config.cssPrefix}shortcut-keys, .${Config.cssPrefix}shortcut-description {
-        padding: 0.2rem;
+        padding: 8px;
         text-align: left;
         width: 25%;
     }
