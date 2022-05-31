@@ -31,6 +31,7 @@ export class Caption {
     background-color: #000000;
     border: 3px solid #ffffff;
     border-radius: 8px;
+    font-family: sans-serif;
     font-size: 16px;
     font-weight: bold;
     padding: 8px;
