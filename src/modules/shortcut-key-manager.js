@@ -31,7 +31,7 @@ export class ShortcutKeyManager {
 
     /*
      * Shortcut key map whose keys are keys to press with ShortcutKey object values.
-     * @type {Object}
+     * @type {Map}
      */
     shortcutKeys = undefined;
 

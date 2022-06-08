@@ -112,7 +112,7 @@ export class HelpContent {
      * @type {string}
      */
     html = `
-<div id="${HelpContent.id}" class="${Overlay.hiddenClassName}">
+<div id="${HelpContent.id}" class="${Overlay.hiddenClassName}" role="dialog" aria-modal="true">
     <div class="${Config.cssPrefix}help-heading ${Config.cssPrefix}desktop">
         <h2>Keyboard Commands</h2>
         <button class="${HelpContent.closeButtonClassName}">x</button>
