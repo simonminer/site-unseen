@@ -146,10 +146,7 @@ export class ShortcutKeyManager {
                 const selector = shortcutKeyData[key];
                 const sk = new ShortcutKey(key, selector, rootNode);
                 if (sk.nodes.length > 0) {
-                    shortcutKeyMap.set(
-                        key,
-                        new ShortcutKey(key, selector, rootNode)
-                    );
+                    shortcutKeyMap.set(key, sk);
                 }
             }
         }
