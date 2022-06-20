@@ -13,7 +13,7 @@ beforeEach(() => {
     screenReader.setup();
 });
 
-describe('OHelpContent class tests', function () {
+describe('HelpContent class tests', function () {
     test('constructor creates help content', () => {
         expect(help instanceof HelpContent).toBe(true);
         expect(HelpContent.id).toBe(id);
