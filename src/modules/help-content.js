@@ -32,7 +32,8 @@ export class HelpContent {
     margin: auto;
     box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
     font-family: sans-serif;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: normal;
     background-color: #fff;
     color: #1c4bad;
     border-radius: 10px;
@@ -40,10 +41,15 @@ export class HelpContent {
     top: 10%;
     z-index: 100;
     padding: 5px;
+    letter-spacing: normal;
+    word-spacing: normal;
 }
 
-#${HelpContent.id} .${Config.cssPrefix}help-heading {
+#${HelpContent.id} .${Config.cssPrefix}help-heading h2 {
+    font-family: sans-serif;
+    font-size: 24px;
     text-align: center;
+    color: #1c4bad;
 }
 #${HelpContent.id} .${HelpContent.closeButtonClassName} {
     position: absolute;
@@ -77,6 +83,7 @@ export class HelpContent {
 }
 #${HelpContent.id} .${Config.cssPrefix}shortcut-keys,
 #${HelpContent.id} .${Config.cssPrefix}shortcut-description {
+    font-size: 14px;
     border: none;
     padding: 8px;
 }
