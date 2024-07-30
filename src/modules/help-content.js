@@ -136,7 +136,7 @@ export class HelpContent {
                 </tr>
                 <tr>
                     <td class="${Config.cssPrefix}shortcut-keys">
-                        <kbd>Tab</kbd> / <kbd>Shif+Tab</kbd>
+                        <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd>
                     </td>
                     <td class="${Config.cssPrefix}shortcut-Description">
                         Next / previous interactive element
