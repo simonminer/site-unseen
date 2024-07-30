@@ -42,7 +42,7 @@ export class HelpContent {
     padding: 5px;
 }
 
-#${HelpContent.id} .help-heading {
+#${HelpContent.id} .${Config.cssPrefix}help-heading {
     text-align: center;
 }
 #${HelpContent.id} .${HelpContent.closeButtonClassName} {
