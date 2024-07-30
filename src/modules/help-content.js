@@ -42,10 +42,10 @@ export class HelpContent {
     padding: 5px;
 }
 
-.help-heading {
+#${HelpContent.id} .help-heading {
     text-align: center;
 }
-.${HelpContent.closeButtonClassName} {
+#${HelpContent.id} .${HelpContent.closeButtonClassName} {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -55,16 +55,17 @@ export class HelpContent {
     border-radius: 3px;
     padding: 2px 8px;
 }
-.${Config.cssPrefix}help-content {
+#${HelpContent.id} .${Config.cssPrefix}help-content {
     padding: 0 20px;
 }
-.${Config.cssPrefix}shortcut-keys {
+#${HelpContent.id} .${Config.cssPrefix}shortcut-keys {
     text-align: right;
     padding-right: 20px;
     padding-bottom: 10px;
     width: 15%;
+    word-break: normal;
 }
-.${Config.cssPrefix}shortcut-keys kbd {
+#${HelpContent.id} .${Config.cssPrefix}shortcut-keys kbd {
     background-color: #fff;
     color: #000;
     padding: 3px 5px;
@@ -74,17 +75,18 @@ export class HelpContent {
     font-weight: bold;
     line-height: 24px;
 }
-.${Config.cssPrefix}shortcut-keys, .${Config.cssPrefix}shortcut-description {
+#${HelpContent.id} .${Config.cssPrefix}shortcut-keys,
+#${HelpContent.id} .${Config.cssPrefix}shortcut-description {
     border: none;
     padding: 8px;
 }
-.${Config.cssPrefix}shortcut-description {
+#${HelpContent.id} .${Config.cssPrefix}shortcut-description {
     padding-right: 15px;
 }
-.${Config.cssPrefix}desktop {
+#${HelpContent.id} .${Config.cssPrefix}desktop {
     display: block;
 }
-.${Config.cssPrefix}mobile {
+#${HelpContent.id} .${Config.cssPrefix}mobile {
     display: none;
 }
 
@@ -93,15 +95,16 @@ export class HelpContent {
         width: 350px;
         max-width: 80%;
     }
-    .${Config.cssPrefix}shortcut-keys, .${Config.cssPrefix}shortcut-description {
+    #${HelpContent.id} .${Config.cssPrefix}shortcut-keys,
+    #${HelpContent.id} .${Config.cssPrefix}shortcut-description {
         padding: 8px;
         text-align: left;
         width: 25%;
     }
-    .${Config.cssPrefix}desktop {
+    #${HelpContent.id} .${Config.cssPrefix}desktop {
         display: none;
     }
-    .${Config.cssPrefix}mobile {
+    #${HelpContent.id} .${Config.cssPrefix}mobile {
         display: block;
     }
 }
@@ -124,13 +127,13 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>&larr;</kbd> / <kbd>&rarr;</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous element
                     </td>
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>h</kbd> / <kbd>H</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous heading
                     </td>
                 </tr>
@@ -138,13 +141,13 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous interactive element
                     </td>
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>k</kbd> / <kbd>K</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous link
                     </td>
                 </tr>
@@ -164,7 +167,7 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>&uarr;</kbd> / <kbd>&darr;</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous radio button / checkbos / menu item
                     </td>
                     <td class="${Config.cssPrefix}shortcut-keys">
@@ -178,7 +181,7 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>Space</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Select current radio button / checkbox / menu item
                     </td>
                     <td class="${Config.cssPrefix}shortcut-keys">
@@ -192,13 +195,13 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>*</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Display web page content for a few seconds
                     </td>
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>i</kbd> / <kbd>I</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous image
                     </td>
                 </tr>
@@ -206,13 +209,13 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>?</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Display / hide this help documentation
                     </td>
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <kbd>r</kbd> / <kbd>R</kbd>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Next / previous landmark region
                     </td>
                 </tr>
@@ -230,7 +233,7 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <em>Swipe right</em>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Previous element
                     </td>
                 </tr>
@@ -238,7 +241,7 @@ export class HelpContent {
                     <td class="${Config.cssPrefix}shortcut-keys">
                         <em>Swipe left</em>
                     </td>
-                    <td class="${Config.cssPrefix}shortcut-Description">
+                    <td class="${Config.cssPrefix}shortcut-description">
                         Previous element
                     </td>
                     </td>
