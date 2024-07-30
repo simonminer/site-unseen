@@ -47,7 +47,7 @@ export class Overlay {
     width: 100%;
     height: 100%;
 }
-.${Config.cssPrefix}overlay-button {
+#${Overlay.id} .${Config.cssPrefix}overlay-button {
     color: #ffffff;
     background-color: #1c4bad;
     background-image: none;
@@ -59,6 +59,7 @@ export class Overlay {
     border-radius: 10px;
     font-family: sans-serif;
     font-size: 20px;
+    text-transform: none;
 }
 .${Overlay.hiddenClassName} {
     display: none;
