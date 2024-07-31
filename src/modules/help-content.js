@@ -43,6 +43,7 @@ export class HelpContent {
     padding: 5px;
     letter-spacing: normal;
     word-spacing: normal;
+    line-height: normal;
 }
 
 #${HelpContent.id} .${Config.cssPrefix}help-heading h2 {
